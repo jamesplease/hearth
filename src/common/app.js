@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import './app.css';
+import Nav from './nav';
 import CompoundInterest from '../compound-interest';
+import FireSimulation from '../fire-simulation';
 
-class App extends Component {
+const navMap = {
+  fireSimulation: FireSimulation,
+  compoundInterestCalculator: CompoundInterest
+};
+
+export default class App extends Component {
   render() {
+    const { activePage } = this.state;
+
+    const Child = navMap[activePage];
+
     return (
       <div className="app">
         <header className="app-header">
@@ -11,12 +22,15 @@ class App extends Component {
             Compound Interest Calculator
           </h1>
         </header>
+        <Nav onNavigate={activePage => this.setState({ activePage })}/>
         <div className="app-body">
-          <CompoundInterest/>
+          <Child/>
         </div>
       </div>
     );
   }
-}
 
-export default App;
+  state = {
+    activePage: 'compoundInterestCalculator'
+  }
+}

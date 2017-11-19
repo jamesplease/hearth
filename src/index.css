@@ -1,13 +1,17 @@
 :root {
   --contentWidth: 600px;
+  font-size: 10px;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   font-family: Helvetica, sans-serif;
-  font-size: 10px;
   cursor: default;
+}
+
+body {
+  font-size: 1.6rem;
 }
 
 code {
