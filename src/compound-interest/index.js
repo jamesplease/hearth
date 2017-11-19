@@ -64,38 +64,36 @@ export default class CompoundInterest extends Component {
 
     return (
       <form className="compoundInterest">
-        <div className="compoundInterest-formRow">
-          <label>
+        <div className="compoundInterest-inputContainer">
+          <label className="compoundInterest-label">
             Principal
           </label>
           <input
+            className="compoundInterest-input"
             type="text"
             onChange={event => this.updateValue('principal', event.target.value)}
             value={principal.value}/>
-        </div>
-        <div className="compoundInterest-formRow">
-          <label>
+          <label className="compoundInterest-label">
             Annual Contribution
           </label>
           <input
+            className="compoundInterest-input"
             type="text"
             onChange={event => this.updateValue('annualContribution', event.target.value)}
             value={annualContribution.value}/>
-        </div>
-        <div className="compoundInterest-formRow">
-          <label>
+          <label className="compoundInterest-label">
             Number of Years
           </label>
           <input
+            className="compoundInterest-input"
             type="text"
             onChange={event => this.updateValue('numberOfYears', event.target.value)}
             value={numberOfYears.value}/>
-        </div>
-        <div className="compoundInterest-formRow">
-          <label>
+          <label className="compoundInterest-label">
             Interest Rate
           </label>
           <input
+            className="compoundInterest-input"
             type="text"
             onChange={event => this.updateValue('interestRate', event.target.value)}
             value={interestRate.value}/>
