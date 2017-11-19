@@ -57,53 +57,58 @@ export default class CompoundInterest extends Component {
       interestRate
     } = inputs;
 
-    const formInvalid = _.chain(inputs)
-      .mapValues('error')
-      .some()
-      .value();
-
     return (
       <form className="compoundInterest">
         <div className="compoundInterest-inputContainer">
-          <label className="compoundInterest-label">
-            Principal
-          </label>
-          <input
-            className="compoundInterest-input"
-            type="text"
-            onChange={event => this.updateValue('principal', event.target.value)}
-            value={principal.value}/>
-          <label className="compoundInterest-label">
-            Annual Contribution
-          </label>
-          <input
-            className="compoundInterest-input"
-            type="text"
-            onChange={event => this.updateValue('annualContribution', event.target.value)}
-            value={annualContribution.value}/>
-          <label className="compoundInterest-label">
-            Number of Years
-          </label>
-          <input
-            className="compoundInterest-input"
-            type="text"
-            onChange={event => this.updateValue('numberOfYears', event.target.value)}
-            value={numberOfYears.value}/>
-          <label className="compoundInterest-label">
-            Interest Rate
-          </label>
-          <input
-            className="compoundInterest-input"
-            type="text"
-            onChange={event => this.updateValue('interestRate', event.target.value)}
-            value={interestRate.value}/>
+          <div className="compountInterest-value">
+            <label className="compoundInterest-label">
+              Principal
+            </label>
+            <input
+              className="compoundInterest-input"
+              type="text"
+              onChange={event => this.updateValue('principal', event.target.value)}
+              value={principal.value}/>
+          </div>
+          <div className="compountInterest-value">
+            <label className="compoundInterest-label">
+              Annual Contribution
+            </label>
+            <input
+              className="compoundInterest-input"
+              type="text"
+              onChange={event => this.updateValue('annualContribution', event.target.value)}
+              value={annualContribution.value}/>
+          </div>
+          <div className="compountInterest-value">
+            <label className="compoundInterest-label">
+              Number of Years
+            </label>
+            <input
+              className="compoundInterest-input"
+              type="text"
+              onChange={event => this.updateValue('numberOfYears', event.target.value)}
+              value={numberOfYears.value}/>
+          </div>
+          <div className="compountInterest-value">
+            <label className="compoundInterest-label">
+              Interest Rate
+            </label>
+            <input
+              className="compoundInterest-input"
+              type="text"
+              onChange={event => this.updateValue('interestRate', event.target.value)}
+              value={interestRate.value}/>
+          </div>
         </div>
         <div className="compoundInterest-result">
-          {result}
+          <div className="compoundInterest-label">
+            Result
+          </div>
+          <div className="compoundInterest-input">
+            {result}
+          </div>
         </div>
-        <button onClick={this.computeResult} disabled={formInvalid}>
-          Compute
-        </button>
       </form>
     );
   }
@@ -135,7 +140,8 @@ export default class CompoundInterest extends Component {
   }
 
   updateValue = (valueName, newValue) => {
-    const currentValue = this.state.inputs[valueName];
+    const { inputs } = this.state;
+    const currentValue = inputs[valueName];
 
     const validationFn = validators[valueName];
     let validationError;
@@ -143,22 +149,34 @@ export default class CompoundInterest extends Component {
       validationError = validationFn(newValue);
     }
 
-    this.setState({
-      inputs: {
-        ...this.state.inputs,
-        [valueName]: {
-          ...currentValue,
-          error: validationError ? validationError : null,
-          value: newValue
-        }
+    const newInputs = {
+      ...inputs,
+      [valueName]: {
+        ...currentValue,
+        error: validationError ? validationError : null,
+        value: newValue
       }
+    };
+
+    const formInvalid = _.chain(newInputs)
+    .mapValues('error')
+    .some()
+    .value();
+
+    let newResult;
+    if (!formInvalid) {
+      newResult = this.computeResult(newInputs);
+    } else {
+      newResult = 'There was an error';
+    }
+
+    this.setState({
+      inputs: newInputs,
+      result: newResult
     });
   }
 
-  computeResult = (event) => {
-    event.preventDefault();
-
-    const { inputs } = this.state;
+  computeResult = (inputs) => {
     const {
       principal,
       annualContribution,
@@ -187,6 +205,6 @@ export default class CompoundInterest extends Component {
       result = Number(result).toFixed(2);
     }
 
-    this.setState({ result });
+    return result;
   }
 }

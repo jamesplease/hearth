@@ -1,12 +1,14 @@
 .compoundInterest {
-  text-align: center;
   font-size: 1.6rem;
 }
 
 .compoundInterest-inputContainer {
   display: grid;
-  grid-gap: 10px 20px;
+  grid-gap: 30px 20px;
   grid-template-columns: 1fr 1fr;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ccc;
 }
 
 .compoundInterest-formRow {
@@ -14,12 +16,20 @@
 }
 
 .compoundInterest-label {
-  text-align: right;
+  font-size: 1.5rem;
+  color: #b3b3b3;
+  font-weight: bold;
+  display: block;
+}
+
+.compoundInterest-input {
+  border: 0;
+  font-size: 3.1rem;
+  color: #333;
+  font-weight: bold;
 }
 
 .compoundInterest-result {
   margin-bottom: 10px;
   font-size: 1.6rem;
-  height: 40px;
-  line-height: 40px;
 }
