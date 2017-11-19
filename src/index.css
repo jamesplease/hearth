@@ -7,4 +7,28 @@ html, body {
   padding: 0;
   font-family: Helvetica, sans-serif;
   font-size: 10px;
+  cursor: default;
+}
+
+code {
+	cursor: text;
+}
+
+/* 
+textarea and input[type="text"] already receive 
+"cursor: text" via browsers' base stylesheets 
+*/
+
+a,
+button, 
+input[type="button"], 
+input[type="radio"], 
+input[type="submit"], 
+input[type="checkbox"] {
+	cursor: pointer;
+}
+
+button[disabled], 
+input[disabled] {
+	cursor: default;
 }

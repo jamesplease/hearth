@@ -4,7 +4,7 @@
 
 .compoundInterest-inputContainer {
   display: grid;
-  grid-gap: 30px 20px;
+  grid-gap: 40px 30px;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 30px;
   margin-bottom: 30px;
@@ -20,6 +20,7 @@
   color: #b3b3b3;
   font-weight: bold;
   display: block;
+  margin-bottom: 4px;
 }
 
 .compoundInterest-input {
@@ -27,6 +28,7 @@
   font-size: 3.1rem;
   color: #333;
   font-weight: bold;
+  cursor: text;
 }
 
 .compoundInterest-result {
