@@ -17,8 +17,8 @@ export default function compoundInterest(options = {}) {
   const discountRate = interestRate / normalizedInterest;
   const growthFactor = normalizedInterest ** numberOfYears;
   
-  const rateToApply = contributionsMadeAtStart ? discountRate : interestRate; 
+  const rateToApply = contributionsMadeAtStart ? discountRate : interestRate;
   const appliedContributions = annualContribution / rateToApply;
 
-  return growthFactor * (principal + appliedContributions) - appliedContributions;
+  return (principal + appliedContributions) * growthFactor - appliedContributions;
 }

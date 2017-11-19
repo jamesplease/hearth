@@ -1,0 +1,15 @@
+.compoundInterest {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.compoundInterest-formRow {
+  margin-bottom: 10px;
+}
+
+.compoundInterest-result {
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  height: 40px;
+  line-height: 40px;
+}

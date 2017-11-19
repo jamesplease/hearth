@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import './app.css';
+import CompoundInterest from './compound-interest';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">FIRE Calculator</h1>
+      <div className="app">
+        <header className="app-header">
+          <h1 className="app-title">FIRE Calculator</h1>
         </header>
-        <p className="App-intro">
-          Welcome to a FIRE calculator website.
-        </p>
+        <div className="app-body">
+          <CompoundInterest/>
+        </div>
       </div>
     );
   }
