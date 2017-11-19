@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './app.css';
-import CompoundInterest from './compound-interest';
+import CompoundInterest from '../compound-interest';
 
 class App extends Component {
   render() {
