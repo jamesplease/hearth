@@ -1,6 +1,6 @@
 // Source:
 // https://math.stackexchange.com/a/1698634/297773
-export default function compoundInterest(options = {}) {
+export default function computeCompoundInterest(options = {}) {
   const {
     principal = 0,
     annualContribution = 0,

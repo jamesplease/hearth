@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import './index.css';
-import compoundInterest from './util/compound-interest';
+import computeCompoundInterest from './util/compute-compound-interest';
 
 // These return `undefined` if validation succeeds. Otherwise,
 // return a string that represents the error.
@@ -204,7 +204,7 @@ export default class CompoundInterest extends Component {
     // We convert that to the decimal form for the computation.
     const decimalInterest = Number(interestRate.value) / 100;
 
-    let result = compoundInterest({
+    let result = computeCompoundInterest({
       principal: Number(principal.value),
       annualContribution: Number(annualContribution.value),
       numberOfYears: Number(numberOfYears.value),
