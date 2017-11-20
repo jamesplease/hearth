@@ -57,6 +57,18 @@ const labeledData = _.chain(dataRows)
       // First, we get the "key" for this column from the attribute names array above
       const columnName = attributeNames[columnIndex].key;
 
+      if (columnName === 'date' && columnEntry) {
+        // For dates, we also store the month and year separately
+        const dateInformation = columnEntry.split('.');
+        result.year = dateInformation[0];
+        result.month = dateInformation[1];
+      } else if (columnName === 'dateFraction') {
+        // The fraction contains the year as well, so we store an extra field that's just
+        // the fractional value
+        const fractionInformation = columnEntry.split('.');
+        result.dateFractionDecimal = fractionInformation[1];
+      }
+
       // '\r' appears in every CAPE column, so we swap that out
       result[columnName] = columnEntry.replace('\r', '');
       return result;
