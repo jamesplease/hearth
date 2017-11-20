@@ -9,8 +9,8 @@ export default class Nav extends Component {
       <nav className="nav">
         <ul className="nav-navList">
           <li>
-            <a onClick={() => onNavigate('fireSimulation')}>
-              FIRE Simulation
+            <a onClick={() => onNavigate('historicalSuccess')}>
+              Historical Success
             </a>
           </li>
           <li>

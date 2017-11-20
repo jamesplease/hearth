@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import './app.css';
 import Nav from './nav';
 import CompoundInterest from '../compound-interest';
-import FireSimulation from '../fire-simulation';
+import HistoricalSuccess from '../historical-success';
 
 const navMap = {
-  fireSimulation: FireSimulation,
+  historicalSuccess: HistoricalSuccess,
   compoundInterestCalculator: CompoundInterest
 };
 
@@ -31,6 +31,6 @@ export default class App extends Component {
   }
 
   state = {
-    activePage: 'fireSimulation'
+    activePage: 'historicalSuccess'
   }
 }
