@@ -1,6 +1,6 @@
 /* Reserve this file for CSS variables */
 
 :root {
-  --contentWidth: 600px;
+  --appWidth: 940px;
   --baseFontSize: 10px;
 }

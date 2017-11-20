@@ -2,4 +2,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  grid-area: nav;
+}
+
+.nav-navListItem {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.nav-navListItem:last-child {
+  margin-bottom: 0;
 }

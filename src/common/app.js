@@ -19,7 +19,7 @@ export default class App extends Component {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">
-            Compound Interest Calculator
+            Hearth
           </h1>
         </header>
         <Nav onNavigate={activePage => this.setState({ activePage })}/>

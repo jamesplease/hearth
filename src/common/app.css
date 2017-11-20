@@ -1,15 +1,25 @@
+.app {
+  max-width: var(--appWidth);
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas: 
+    "header header"
+    "nav    content"
+    "nav    content"
+    "footer footer"
+}
+
 .app-header {
-  padding: 50px;
+  grid-area: header;
 }
 
 .app-title {
   font-size: 3.1rem;
   font-weight: bold;
-  max-width: var(--contentWidth);
-  margin: 0 auto;
 }
 
 .app-body {
-  margin: 0 auto;
-  max-width: var(--contentWidth);
+  grid-area: content;
 }

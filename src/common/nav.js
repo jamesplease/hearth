@@ -8,14 +8,14 @@ export default class Nav extends Component {
     return (
       <nav className="nav">
         <ul className="nav-navList">
-          <li>
+          <li className="nav-navListItem">
             <a onClick={() => onNavigate('historicalSuccess')}>
               Historical Success
             </a>
           </li>
-          <li>
+          <li className="nav-navListItem">
             <a onClick={() => onNavigate('compoundInterestCalculator')}>
-              Compound Interest Calculator
+              Compound Interest
             </a>
           </li>
         </ul>
