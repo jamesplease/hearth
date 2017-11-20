@@ -3,12 +3,9 @@
   font-size: 10px;
 }
 
-html, body {
+body {
   font-family: Helvetica, sans-serif;
   cursor: default;
-}
-
-body {
   font-size: 1.6rem;
 }
 
