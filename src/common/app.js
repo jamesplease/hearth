@@ -31,6 +31,6 @@ export default class App extends Component {
   }
 
   state = {
-    activePage: 'compoundInterestCalculator'
+    activePage: 'fireSimulation'
   }
 }
