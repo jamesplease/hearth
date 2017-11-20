@@ -1,7 +1,21 @@
-/* Reserve this file for CSS variables */
+/* Reserve this file for CSS variables and attributes on #root */
 
+/* Setup CSS variables here */
 :root {
   --appWidth: 940px;
   --fontColor: #222;
   --baseFontSize: 10px;
+}
+
+/* This is the root node of the React application */
+#root {
+  max-width: var(--appWidth);
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas: 
+    "header header"
+    "nav    content"
+    "footer footer"
 }

@@ -5,4 +5,4 @@ import './styles/typography.css';
 import './styles/cursor.css';
 import App from './common/app';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));

@@ -1,15 +1,3 @@
-.app {
-  max-width: var(--appWidth);
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 200px 1fr;
-  grid-template-areas: 
-    "header header"
-    "nav    content"
-    "footer footer"
-}
-
 .app-body {
   grid-area: content;
 }

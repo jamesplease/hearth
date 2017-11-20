@@ -3,6 +3,7 @@ import './app.css';
 import Header from './header';
 import Nav from './nav';
 import Footer from './footer';
+import Children from './children';
 import CompoundInterest from '../compound-interest';
 import HistoricalSuccess from '../historical-success';
 
@@ -14,18 +15,17 @@ const navMap = {
 export default class App extends Component {
   render() {
     const { activePage } = this.state;
-
     const Child = navMap[activePage];
 
     return (
-      <div className="app">
-        <Header/>
-        <Nav onNavigate={activePage => this.setState({ activePage })}/>
-        <div className="app-body">
+      <Children>
+        <Header key="header"/>
+        <Nav key="nav" onNavigate={activePage => this.setState({ activePage })}/>
+        <div className="app-body" key="appBody">
           <Child/>
         </div>
-        <Footer/>
-      </div>
+        <Footer key="footer"/>
+      </Children>
     );
   }
 
