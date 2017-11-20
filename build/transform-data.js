@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
-const DATA_DIRECTORY = path.join(process.cwd(), 'data');
+const SOURCE_DIRECTORY = path.join(__dirname, '..', 'data');
 const SOURCE_FILENAME = 'ie_data.csv';
+
+const DESTINATION_DIRECTORY = path.join(__dirname, '..', 'src', 'common', 'data');
 const DESTINATION_FILENAME = 'market-data.json';
 
-const marketDataFileLoc = path.join(DATA_DIRECTORY, SOURCE_FILENAME);
+const marketDataFileLoc = path.join(SOURCE_DIRECTORY, SOURCE_FILENAME);
 const marketData = fs.readFileSync(marketDataFileLoc, 'utf-8');
 
 const marketDataArray = marketData.split('\n').map(r => r.split(','));
@@ -68,5 +70,5 @@ const labeledData = _.chain(dataRows)
 
 const marketDataJson = JSON.stringify(labeledData);
 
-const destFileLoc = path.join(DATA_DIRECTORY, DESTINATION_FILENAME);
+const destFileLoc = path.join(DESTINATION_DIRECTORY, DESTINATION_FILENAME);
 fs.writeFileSync(destFileLoc, marketDataJson);
