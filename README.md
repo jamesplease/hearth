@@ -1,4 +1,4 @@
-# FIRE Calculator
+# Hearth
 
 Useful tools for Financial Independence / Retiring Early (FIRE).
 
@@ -7,6 +7,10 @@ Useful tools for Financial Independence / Retiring Early (FIRE).
 - Provide common calculators that may interest early retirees / financially independent persons
 - Improve upon the excellent [cFIREsim](https://github.com/boknows/cFIREsim-open)
 - Provide financial planning tools for FIRE'd folks
+
+### Contributing
+
+Looking to help out? Refer to the [Contributing Guide](./CONTRIBUTING.md). Also, thanks!
 
 ### Data Sources
 
