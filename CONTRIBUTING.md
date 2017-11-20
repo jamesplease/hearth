@@ -44,4 +44,10 @@ npm test
 
 ## Updating the Data
 
-Coming soon.
+First, download [the Market Data spreadsheet](http://www.econ.yale.edu/%7Eshiller/data/ie_data.xls). Open
+the file in your favorite spreadsheet software, and export the sheet named "Data" as a CSV file.
+
+Replace the file in this repository found at `./data/ie_data.csv` with the file you just exported.
+
+If you're developing locally, you'll want to run `npm run build-data` for the web app to see
+the changes.
