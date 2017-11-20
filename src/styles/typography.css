@@ -1,0 +1,10 @@
+/* Basic typography setup that applies to the whole app. */
+
+html {
+  font-size: var(--baseFontSize);
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  font-size: 1.6rem;
+}

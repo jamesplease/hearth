@@ -1,33 +1,6 @@
+/* Reserve this file for CSS variables */
+
 :root {
   --contentWidth: 600px;
-  font-size: 10px;
-}
-
-body {
-  font-family: Helvetica, sans-serif;
-  cursor: default;
-  font-size: 1.6rem;
-}
-
-code {
-	cursor: text;
-}
-
-/* 
-textarea and input[type="text"] already receive 
-"cursor: text" via browsers' base stylesheets 
-*/
-
-a,
-button, 
-input[type="button"], 
-input[type="radio"], 
-input[type="submit"], 
-input[type="checkbox"] {
-	cursor: pointer;
-}
-
-button[disabled], 
-input[disabled] {
-	cursor: default;
+  --baseFontSize: 10px;
 }
