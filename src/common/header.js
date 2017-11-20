@@ -6,7 +6,9 @@ export default class Header extends Component {
     return (
       <header className="header">
         <h1 className="header-title">
-          Hearth
+          <a href="/" className="header-titleLink">
+            Hearth
+          </a>
         </h1>
       </header>
     );

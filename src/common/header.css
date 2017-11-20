@@ -6,3 +6,8 @@
   font-size: 3.1rem;
   font-weight: bold;
 }
+
+.header-titleLink {
+  text-decoration: none;
+  color: var(--fontColor);
+}
