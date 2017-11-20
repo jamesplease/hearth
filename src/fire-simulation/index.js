@@ -15,12 +15,16 @@ export default class FireSimulation extends Component {
   }
 
   performCalculation = () => {
-    // One day, this can be obtained through user input
+    // One day, this value can be obtained through user input
     const duration = 30;
-
-    const results = _.chain(getStartYears())
-      .map(startYear => computeCycle({ startYear, duration }))
-      .value();
+    const initialWithdrawal = 25000;
+    // An array of years that we use as a starting year for cycles
+    const startYears = getStartYears();
+    const results = _.map(startYears, startYear => computeCycle({
+      startYear,
+      duration,
+      initialWithdrawal
+    }));
     
     console.log('results', results);
   }

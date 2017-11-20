@@ -4,7 +4,7 @@ import marketData from '../../common/data/market-data.json';
 
 const CURRENT_YEAR = (new Date()).getFullYear();
 
-export default function computeCycle({ startYear, duration }) {
+export default function computeCycle({ startYear, duration, initialWithdrawal }) {
   // This Boolean represents whether this is cycle contains the entire
   // duration or not.
   const isComplete = startYear + duration <= CURRENT_YEAR;
@@ -30,14 +30,20 @@ export default function computeCycle({ startYear, duration }) {
       return null;
     }
 
+    const cumulativeInflation = inflationFromCpi({
+      startCpi: firstYearCpi,
+      endCpi: yearMarketData.cpi
+    });
+
+    // For now, we use a simple inflation-adjusted withdrawal approach
+    const adjustedWithdrawal = cumulativeInflation * initialWithdrawal;
+
     return {
       year,
       marketData: yearMarketData,
       computedData: {
-        cumulativeInflation: inflationFromCpi({
-          startCpi: firstYearCpi,
-          endCpi: yearMarketData.cpi
-        })
+        cumulativeInflation,
+        adjustedWithdrawal
       }
     };
   });
