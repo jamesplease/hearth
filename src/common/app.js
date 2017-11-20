@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './app.css';
+import Header from './header';
 import Nav from './nav';
+import Footer from './footer';
 import CompoundInterest from '../compound-interest';
 import HistoricalSuccess from '../historical-success';
 
@@ -17,15 +19,12 @@ export default class App extends Component {
 
     return (
       <div className="app">
-        <header className="app-header">
-          <h1 className="app-title">
-            Hearth
-          </h1>
-        </header>
+        <Header/>
         <Nav onNavigate={activePage => this.setState({ activePage })}/>
         <div className="app-body">
           <Child/>
         </div>
+        <Footer/>
       </div>
     );
   }

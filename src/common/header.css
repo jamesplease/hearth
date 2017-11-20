@@ -1,0 +1,8 @@
+.header {
+  grid-area: header;
+}
+
+.header-title {
+  font-size: 3.1rem;
+  font-weight: bold;
+}
