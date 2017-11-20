@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const chalk = require('chalk');
 
 const SOURCE_DIRECTORY = path.join(__dirname, '..', 'data');
 const SOURCE_FILENAME = 'ie_data.csv';
@@ -42,8 +43,10 @@ const attributeNames = [
 
 const dataByYear = {};
 
+// An array of the indices for every row in the chart containing data
 const dataRows = _.times(DATA_ROW_COUNT, n => n + FIRST_DATA_LINE);
 
+// This maps the data from being an array of values to an object of key-value pairs
 const labeledData = _.chain(dataRows)
   .map(dataIndex => {
     const dataRow = marketDataArray[dataIndex];
@@ -68,7 +71,11 @@ const labeledData = _.chain(dataRows)
   .filter()
   .value();
 
+// This stringified data is what we will store on the filesystem
 const marketDataJson = JSON.stringify(labeledData);
 
+// Lastly, save the transformed data
 const destFileLoc = path.join(DESTINATION_DIRECTORY, DESTINATION_FILENAME);
 fs.writeFileSync(destFileLoc, marketDataJson);
+
+console.log(chalk.green(`Success! Market data created at: "${destFileLoc}"`));

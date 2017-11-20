@@ -14,5 +14,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-data": "node ./build/transform-data"
+  },
+  "devDependencies": {
+    "chalk": "^2.3.0"
   }
 }
