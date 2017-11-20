@@ -8,11 +8,15 @@ export default class Nav extends Component {
     return (
       <nav className="nav">
         <ul className="nav-navList">
-          <li onClick={() => onNavigate('fireSimulation')}>
-            FIRE Simulation
+          <li>
+            <a onClick={() => onNavigate('fireSimulation')}>
+              FIRE Simulation
+            </a>
           </li>
-          <li onClick={() => onNavigate('compoundInterestCalculator')}>
-            Compound Interest Calculator
+          <li>
+            <a onClick={() => onNavigate('compoundInterestCalculator')}>
+              Compound Interest Calculator
+            </a>
           </li>
         </ul>
       </nav>
