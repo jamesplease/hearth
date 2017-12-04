@@ -12,7 +12,6 @@ const validators = {
     }
   },
 
-  
   startYear(val, state) {
     const valueToVerify = Number(val);
     const { minYear, maxYear } = state;
