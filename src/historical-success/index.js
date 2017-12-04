@@ -22,21 +22,19 @@ export default class HistoricalSuccess extends Component {
 
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
-    // const results = computeCycle({
-    //   startYear: startYears[0],
-    //   duration: 2,
-    //   initialWithdrawal,
-    //   initialPortfolioValue
-    // });
-
-    const start = performance.now();
-    const results = _.map(startYears, startYear => computeCycle({
-      startYear,
-      duration,
+    const results = computeCycle({
+      startYear: startYears[0],
+      duration: 5,
       initialWithdrawal,
       initialPortfolioValue
-    }));
-    console.log(performance.now() - start);
+    });
+
+    // const results = _.map(startYears, startYear => computeCycle({
+    //   startYear,
+    //   duration,
+    //   initialWithdrawal,
+    //   initialPortfolioValue
+    // }));
 
     console.log('results', results);
   }

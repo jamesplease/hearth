@@ -25,9 +25,23 @@ export default function computeCycle(options = {}) {
 
   const resultsByYear = [];
 
+  // Whether or not this cycle "failed," where failure is defined as the portfolio
+  // value being equal to or less than 0.
+  let isCycleFailed = false;
+
   _.times(duration, n => {
     const year = Number(startYear) + n;
     const previousYear = n === 0 ? null : resultsByYear[n - 1];
+
+    // `isFailed` represents whether the portfolio has hit 0 or not.
+    let isFailed;
+
+    // If the previous year failed, then this one did, too. There's no
+    // recovery from a failed state, even if gains bring you back into
+    // the positive numbers (however unlikely that may be).
+    if (previousYear && previousYear.isFailed) {
+      isFailed = true;
+    }
 
     let previousValue;
     if (n === 0) {
@@ -52,7 +66,20 @@ export default function computeCycle(options = {}) {
 
     // For now, we use a simple inflation-adjusted withdrawal approach
     const inflationAdjustedWithdrawal = cumulativeInflation * initialWithdrawal;
-    const endValue = previousValue - inflationAdjustedWithdrawal;
+    const naiveEndValue = previousValue - inflationAdjustedWithdrawal;
+    // Portfolios that are less than 0 make no sense.
+    const endValue = Math.max(0, naiveEndValue);
+
+    // We only compute `isFailed` if we didn't already compute it as true before.
+    if (!isFailed) {
+      isFailed = naiveEndValue <= 0;
+
+      // If this year failed, and we haven't updated the cycle fail status yet,
+      // then we set that.
+      if (isFailed && !isCycleFailed) {
+        isCycleFailed = true;
+      }
+    }
 
     resultsByYear.push({
       year,
@@ -60,7 +87,9 @@ export default function computeCycle(options = {}) {
       computedData: {
         cumulativeInflation,
         inflationAdjustedWithdrawal,
-        endValue
+        naiveEndValue,
+        endValue,
+        isFailed
       }
     });
   });
@@ -69,6 +98,7 @@ export default function computeCycle(options = {}) {
     startYear,
     duration,
     isComplete,
-    resultsByYear
+    resultsByYear,
+    isFailed: isCycleFailed
   };
 }

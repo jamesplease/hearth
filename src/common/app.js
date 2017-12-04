@@ -32,6 +32,6 @@ export default class App extends Component {
   }
 
   state = {
-    activePage: 'inflationAdjusted'
+    activePage: 'historicalSuccess'
   }
 }
