@@ -1,10 +1,19 @@
 import _ from 'lodash';
 import inflationFromCpi from './inflation-from-cpi';
-import marketData from '../../common/data/market-data.json';
+import marketDataByYear from './market-data-by-year';
 
 const CURRENT_YEAR = (new Date()).getFullYear();
 
-export default function computeCycle({ startYear, duration, initialWithdrawal }) {
+// A cycle is one "simulation." Given a start year, a "duration,"
+// which is an integer number of years, and initial portfolio information,
+// it computes the changes to that portfolio over time.
+export default function computeCycle(options = {}) {
+  const {
+    startYear, duration, initialWithdrawal, initialPortfolioValue
+  } = options;
+
+  const marketData = marketDataByYear();
+  
   // This Boolean represents whether this is cycle contains the entire
   // duration or not.
   const isComplete = startYear + duration <= CURRENT_YEAR;
@@ -14,16 +23,22 @@ export default function computeCycle({ startYear, duration, initialWithdrawal })
   });
   const firstYearCpi = firstYearMarketData.cpi;
 
-  const resultsByYear = _.times(duration, n => {
-    const year = Number(startYear) + n;
+  const resultsByYear = [];
 
-    // Attempt to find the data for this year in the cycle
-    const yearMarketData = _.find(marketData, {
-      year: String(year),
-      // Why do we use January for each year? Because cFIREcalc does, and
-      // the first goal of this project is to recreate those same results.
-      month: '01'
-    });
+  _.times(duration, n => {
+    const year = Number(startYear) + n;
+    const previousYear = n === 0 ? null : resultsByYear[n - 1];
+
+    let previousValue;
+    if (n === 0) {
+      previousValue = initialPortfolioValue;
+    } else if (!previousYear) {
+      previousValue = 0;
+    } else {
+      previousValue = previousYear.computedData.endValue;
+    }
+
+    const yearMarketData = marketData[String(year)];
 
     // If we have no data for this year, then we have nothing to return.
     if (!yearMarketData) {
@@ -36,25 +51,24 @@ export default function computeCycle({ startYear, duration, initialWithdrawal })
     });
 
     // For now, we use a simple inflation-adjusted withdrawal approach
-    const adjustedWithdrawal = cumulativeInflation * initialWithdrawal;
+    const inflationAdjustedWithdrawal = cumulativeInflation * initialWithdrawal;
+    const endValue = previousValue - inflationAdjustedWithdrawal;
 
-    return {
+    resultsByYear.push({
       year,
       marketData: yearMarketData,
       computedData: {
         cumulativeInflation,
-        adjustedWithdrawal
+        inflationAdjustedWithdrawal,
+        endValue
       }
-    };
+    });
   });
-
-  // Remove any null values
-  const filteredResultsByYear = _.filter(resultsByYear)
 
   return {
     startYear,
     duration,
     isComplete,
-    resultsByYear: filteredResultsByYear
+    resultsByYear
   };
 }
