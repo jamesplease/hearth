@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import marketData from '../../common/data/market-data.json';
+import computedMarketData from './computed-market-data';
 
 let memoizedMarketDataByYear;
 
@@ -8,12 +8,16 @@ let memoizedMarketDataByYear;
 // for quick lookups.
 export default function marketDataByYear() {
   if (!memoizedMarketDataByYear) {
+    const marketData = computedMarketData();
+
     memoizedMarketDataByYear = _.chain(marketData)
       // We only look at the first month. Why? Because cFIREsim does, and
       // this is trying to replicate cFIREsim's behavior (for now).
       .filter(data => data.month === '01')
       .keyBy('year')
       .value();
+
+    console.log('Market Data', memoizedMarketDataByYear);  
   }
 
   return memoizedMarketDataByYear;

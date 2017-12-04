@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import getStartYears from './util/get-start-years';
 import computeCycle from './util/compute-cycle';
+import evaluateCycles from './util/evaluate-cycles';
 
 export default class HistoricalSuccess extends Component {
   render() {
@@ -16,26 +17,22 @@ export default class HistoricalSuccess extends Component {
 
   performCalculation = () => {
     // One day, these value can be obtained through user input
-    const duration = 30;
+    const duration = 3;
     const initialWithdrawal = 25000;
     const initialPortfolioValue = 625000;
 
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
-    const results = computeCycle({
-      startYear: startYears[0],
-      duration: 5,
+
+    const cycles = _.map(startYears, startYear => computeCycle({
+      startYear,
+      duration,
       initialWithdrawal,
       initialPortfolioValue
-    });
+    }));
 
-    // const results = _.map(startYears, startYear => computeCycle({
-    //   startYear,
-    //   duration,
-    //   initialWithdrawal,
-    //   initialPortfolioValue
-    // }));
+    const results = evaluateCycles({ cycles });
 
-    console.log('results', results);
+    console.log('results', results, cycles);
   }
 }

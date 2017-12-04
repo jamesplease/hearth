@@ -66,9 +66,18 @@ export default function computeCycle(options = {}) {
 
     // For now, we use a simple inflation-adjusted withdrawal approach
     const inflationAdjustedWithdrawal = cumulativeInflation * initialWithdrawal;
+    const otherInflationAdjustedWithdrawal = initialWithdrawal / cumulativeInflation;
+
     const naiveEndValue = previousValue - inflationAdjustedWithdrawal;
+
+    // Assume 0.07 growth for the current year
+    const stockMarketGrowth = yearMarketData.stockMarketGrowth || 0.07;
+
+    const naiveEndWithGains = naiveEndValue * (1 + stockMarketGrowth);
+    // console.log('da stuff', stockMarketGrowth, naiveEndValue, naiveEndWithGains);
+
     // Portfolios that are less than 0 make no sense.
-    const endValue = Math.max(0, naiveEndValue);
+    const endValue = Math.max(0, naiveEndWithGains);
 
     // We only compute `isFailed` if we didn't already compute it as true before.
     if (!isFailed) {
