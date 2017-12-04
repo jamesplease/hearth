@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import inflationFromCpi from './inflation-from-cpi';
-import marketDataByYear from './market-data-by-year';
+import inflationFromCpi from '../../common/util/inflation-from-cpi';
+import marketDataByYear from '../../common/util/market-data-by-year';
 
 const CURRENT_YEAR = (new Date()).getFullYear();
 

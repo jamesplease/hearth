@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import marketDataByYear from '../historical-success/util/market-data-by-year';
-import inflationFromCpi from '../historical-success/util/inflation-from-cpi';
+import marketDataByYear from '../common/util/market-data-by-year';
+import inflationFromCpi from '../common/util/inflation-from-cpi';
 
 const validators = {
   initialValue(val) {
