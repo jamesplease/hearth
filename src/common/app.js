@@ -6,10 +6,12 @@ import Footer from './footer';
 import Children from './children';
 import CompoundInterest from '../compound-interest';
 import HistoricalSuccess from '../historical-success';
+import InflationAdjusted from '../inflation-adjusted';
 
 const navMap = {
   historicalSuccess: HistoricalSuccess,
-  compoundInterestCalculator: CompoundInterest
+  compoundInterest: CompoundInterest,
+  inflationAdjusted: InflationAdjusted
 };
 
 export default class App extends Component {
@@ -20,7 +22,7 @@ export default class App extends Component {
     return (
       <Children>
         <Header key="header"/>
-        <Nav key="nav" onNavigate={activePage => this.setState({ activePage })}/>
+        <Nav key="nav" onNavigate={activePage => this.setState({ activePage })} activePage={activePage}/>
         <div className="app-body" key="appBody">
           <Child/>
         </div>
@@ -30,6 +32,6 @@ export default class App extends Component {
   }
 
   state = {
-    activePage: 'historicalSuccess'
+    activePage: 'inflationAdjusted'
   }
 }

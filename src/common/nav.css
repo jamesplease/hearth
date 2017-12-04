@@ -13,3 +13,7 @@
 .nav-navListItem:last-child {
   margin-bottom: 0;
 }
+
+.nav-navListLink_active {
+  text-decoration: underline;
+}
