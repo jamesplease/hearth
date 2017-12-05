@@ -16,8 +16,6 @@ export default function marketDataByYear() {
       .filter(data => data.month === '01')
       .keyBy('year')
       .value();
-
-    console.log('Market Data', memoizedMarketDataByYear);  
   }
 
   return memoizedMarketDataByYear;

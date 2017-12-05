@@ -9,7 +9,7 @@ const CURRENT_YEAR = (new Date()).getFullYear();
 // it computes the changes to that portfolio over time.
 export default function computeCycle(options = {}) {
   const {
-    startYear, duration, initialWithdrawal, initialPortfolioValue
+    startYear, duration, firstYearWithdrawal, initialPortfolioValue
   } = options;
 
   const marketData = marketDataByYear();
@@ -65,9 +65,7 @@ export default function computeCycle(options = {}) {
     });
 
     // For now, we use a simple inflation-adjusted withdrawal approach
-    const inflationAdjustedWithdrawal = cumulativeInflation * initialWithdrawal;
-    const otherInflationAdjustedWithdrawal = initialWithdrawal / cumulativeInflation;
-
+    const inflationAdjustedWithdrawal = cumulativeInflation * firstYearWithdrawal;
     const naiveEndValue = previousValue - inflationAdjustedWithdrawal;
 
     // Assume 0.07 growth for the current year

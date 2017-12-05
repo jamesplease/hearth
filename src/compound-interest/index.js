@@ -174,9 +174,9 @@ export default class CompoundInterest extends Component {
     };
 
     const formInvalid = _.chain(newInputs)
-    .mapValues('error')
-    .some()
-    .value();
+      .mapValues('error')
+      .some()
+      .value();
 
     let newResult;
     if (!formInvalid) {
