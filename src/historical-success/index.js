@@ -76,6 +76,10 @@ export default class HistoricalSuccess extends Component {
       duration: {
         value: '4',
         error: null
+      },
+      spendingMethod: {
+        value: 'inflationAdjusted',
+        error: null
       }
     },
     result: '',
@@ -124,7 +128,12 @@ export default class HistoricalSuccess extends Component {
   }
 
   computeResult = (inputs) => {
-    const { duration, firstYearWithdrawal, initialPortfolioValue } = inputs;
+    const {
+      duration,
+      firstYearWithdrawal,
+      initialPortfolioValue,
+      spendingMethod
+    } = inputs;
 
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
@@ -133,7 +142,8 @@ export default class HistoricalSuccess extends Component {
       startYear,
       duration: Number(duration.value),
       firstYearWithdrawal: Number(firstYearWithdrawal.value),
-      initialPortfolioValue: Number(initialPortfolioValue.value)
+      initialPortfolioValue: Number(initialPortfolioValue.value),
+      spendingMethod: spendingMethod.value
     }));
 
     const results = evaluateCycles({ cycles });
