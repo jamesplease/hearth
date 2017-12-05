@@ -67,18 +67,18 @@ export default function computeCycle(options = {}) {
     // For now, we use a simple inflation-adjusted withdrawal approach
     const inflationAdjustedWithdrawal = cumulativeInflation * firstYearWithdrawal;
     const naiveEndValue = previousValue - inflationAdjustedWithdrawal;
+    const realisticEndValue = Math.max(0, naiveEndValue);
 
     // Assume 0.07 growth for the current year
     const stockMarketGrowth = yearMarketData.stockMarketGrowth || 0.07;
+    const investmentGains = realisticEndValue * stockMarketGrowth;
+    const dividendGains = realisticEndValue * yearMarketData.dividendYields;
 
-    const naiveEndWithGains = naiveEndValue * (1 + stockMarketGrowth);
-
-    // Portfolios that are less than 0 make no sense.
-    const endValue = Math.max(0, naiveEndWithGains);
+    const endValue = realisticEndValue + dividendGains + investmentGains;
 
     // We only compute `isFailed` if we didn't already compute it as true before.
     if (!isFailed) {
-      isFailed = naiveEndValue <= 0;
+      isFailed = realisticEndValue === 0;
 
       // If this year failed, and we haven't updated the cycle fail status yet,
       // then we set that.
@@ -94,7 +94,10 @@ export default function computeCycle(options = {}) {
         cumulativeInflation,
         inflationAdjustedWithdrawal,
         naiveEndValue,
+        realisticEndValue,
         endValue,
+        investmentGains,
+        dividendGains,
         isFailed
       }
     });
