@@ -15,9 +15,12 @@ export default function computedMarketData() {
       stockMarketGrowth = nextYearData.comp / data.comp - 1;
     }
 
+    const dividendYields = data.dividend / data.comp;
+
     return {
       ...data,
-      stockMarketGrowth
+      stockMarketGrowth,
+      dividendYields
     };
   });
 }
