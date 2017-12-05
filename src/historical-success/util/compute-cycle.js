@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as spending from './spending';
 import inflationFromCpi from '../../common/util/inflation-from-cpi';
 import marketDataByYear from '../../common/util/market-data-by-year';
 
@@ -9,7 +10,7 @@ const CURRENT_YEAR = (new Date()).getFullYear();
 // it computes the changes to that portfolio over time.
 export default function computeCycle(options = {}) {
   const {
-    startYear, duration, firstYearWithdrawal, initialPortfolioValue
+    startYear, duration, firstYearWithdrawal, initialPortfolioValue, spendingMethod
   } = options;
 
   const marketData = marketDataByYear();
@@ -65,8 +66,12 @@ export default function computeCycle(options = {}) {
     });
 
     // For now, we use a simple inflation-adjusted withdrawal approach
-    const inflationAdjustedWithdrawal = cumulativeInflation * firstYearWithdrawal;
-    const naiveEndValue = previousValue - inflationAdjustedWithdrawal;
+    const withdrawalAmount = spending[spendingMethod]({
+      inflation: cumulativeInflation,
+      firstYearWithdrawal
+    });
+
+    const naiveEndValue = previousValue - withdrawalAmount;
     const realisticEndValue = Math.max(0, naiveEndValue);
 
     // Assume 0.07 growth for the current year
@@ -92,7 +97,7 @@ export default function computeCycle(options = {}) {
       marketData: yearMarketData,
       computedData: {
         cumulativeInflation,
-        inflationAdjustedWithdrawal,
+        withdrawalAmount,
         naiveEndValue,
         realisticEndValue,
         endValue,
