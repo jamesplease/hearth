@@ -72,7 +72,6 @@ export default function computeCycle(options = {}) {
     const stockMarketGrowth = yearMarketData.stockMarketGrowth || 0.07;
 
     const naiveEndWithGains = naiveEndValue * (1 + stockMarketGrowth);
-    // console.log('da stuff', stockMarketGrowth, naiveEndValue, naiveEndWithGains);
 
     // Portfolios that are less than 0 make no sense.
     const endValue = Math.max(0, naiveEndWithGains);
