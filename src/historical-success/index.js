@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import './index.css';
 import getStartYears from './util/get-start-years';
 import computeCycle from './util/compute-cycle';
 import evaluateCycles from './util/evaluate-cycles';
+import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
   const valueToVerify = Number(val);
@@ -18,6 +20,29 @@ const validators = {
   duration: isNumber
 };
 
+function formatNumber(val, unit) {
+  const naiveNumber = Number(val);
+
+  if (!_.isFinite(naiveNumber)) {
+    return 'Number required';
+  }
+
+  const number = Number(val).toLocaleString('en', {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
+
+  if (unit === '$') {
+    return `${unit}${number}`;
+  } else {
+    return `${number}${unit}`;
+  }
+}
+
+function formatYears(val) {
+  return `${val} Years`;
+}
+
 export default class HistoricalSuccess extends Component {
   render() {
     const {inputs, result} = this.state;
@@ -28,33 +53,48 @@ export default class HistoricalSuccess extends Component {
     } = inputs;
 
     return (
-      <div>
-        <div>
-          <label>Initial Portfolio Value</label>
-          <input
-            id="historicalSuccess_initialPortfolioValue"
-            type="number"
-            inputMode="numeric"
-            onChange={event => this.updateValue('initialPortfolioValue', event.target.value)}
-            value={initialPortfolioValue.value}/>
+      <div className="historicalSuccess">
+        <label className="historicalSuccess-label">Initial Portfolio Value</label>
+        <div className="historicalSuccess-inputContainer">
+          <InputWithUnit
+            value={initialPortfolioValue.value}
+            unit="$"
+            inputProps={{
+              type: 'number',
+              inputMode: 'numeric',
+              id: 'historicalSuccess_initialPortfolioValue'
+            }}
+            onChange={value => this.updateValue('initialPortfolioValue', value)}
+            unitOptions={['$', '%']}
+            formatValue={formatNumber}/>
         </div>
-        <div>
-          <label>First Year Withdrawal</label>
-          <input
-            id="inflationAdjusted_firstYearWithdrawal"
-            type="number"
-            inputMode="numeric"
-            onChange={event => this.updateValue('firstYearWithdrawal', event.target.value)}
-            value={firstYearWithdrawal.value}/>
+        <label className="historicalSuccess-label">First Year Withdrawal</label>
+        <div className="historicalSuccess-inputContainer">
+          <InputWithUnit
+            value={firstYearWithdrawal.value}
+            unit="$"
+            inputProps={{
+              type: 'number',
+              inputMode: 'numeric',
+              id: 'inflationAdjusted_firstYearWithdrawal'
+            }}
+            onChange={value => this.updateValue('firstYearWithdrawal', value)}
+            unitOptions={['$', '%']}
+            formatValue={formatNumber}/>
         </div>
-        <div>
-          <label>Duration</label>
-          <input
-            id="inflationAdjusted_duration"
-            type="number"
-            inputMode="numeric"
-            onChange={event => this.updateValue('duration', event.target.value)}
-            value={duration.value}/>
+        <label className="historicalSuccess-label">Duration</label>
+        <div className="historicalSuccess-inputContainer">
+          <InputWithUnit
+            value={duration.value}
+            unit="Years"
+            inputProps={{
+              type: 'number',
+              inputMode: 'numeric',
+              id: 'inflationAdjusted_duration'
+            }}
+            onChange={value => this.updateValue('duration', value)}
+            unitOptions={['$', '%']}
+            formatValue={formatYears}/>
         </div>
         <div>
           Success rate: {result}
@@ -64,6 +104,7 @@ export default class HistoricalSuccess extends Component {
   }
 
   state = {
+    test: '1000',
     inputs: {
       initialPortfolioValue: {
         value: '625000',
