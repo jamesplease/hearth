@@ -3,14 +3,7 @@ import './input-with-unit.css';
 
 export default class InputWithUnit extends Component {
   render() {
-    const {
-      value,
-      unit,
-      unitOptions,
-      formatValue,
-      onChange,
-      inputProps
-    } = this.props;
+    const { value, unit, formatValue, onChange, inputProps } = this.props;
     const { isDisplayMode } = this.state;
 
     const valueToDisplay = formatValue(value, unit);

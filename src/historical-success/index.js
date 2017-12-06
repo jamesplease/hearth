@@ -97,7 +97,14 @@ export default class HistoricalSuccess extends Component {
             formatValue={formatYears}
           />
         </div>
-        <div>Success rate: {result}</div>
+        <div>Success rate: {result.successRate}</div>
+        <div>Dip rate: {result.dipRate}</div>
+        <div>
+          Lowest dipped value:{' '}
+          {`$${Number(result.lowestDippedValue.value).toFixed(2)}`} in{' '}
+          {result.lowestDippedValue.year} starting in{' '}
+          {result.lowestDippedValue.startYear}
+        </div>
       </div>
     );
   }
@@ -110,11 +117,11 @@ export default class HistoricalSuccess extends Component {
         error: null
       },
       firstYearWithdrawal: {
-        value: '150000',
+        value: '25000',
         error: null
       },
       duration: {
-        value: '4',
+        value: '30',
         error: null
       },
       spendingMethod: {
@@ -122,7 +129,15 @@ export default class HistoricalSuccess extends Component {
         error: null
       }
     },
-    result: ''
+    result: {
+      successRate: '',
+      dipRate: '',
+      lowestDippedValue: {
+        year: '',
+        startYear: '',
+        value: ''
+      }
+    }
   };
 
   componentDidMount() {
@@ -178,9 +193,12 @@ export default class HistoricalSuccess extends Component {
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
 
+    const dipPercentage = 0.9;
+
     const cycles = _.map(startYears, startYear =>
       computeCycle({
         startYear,
+        dipPercentage,
         duration: Number(duration.value),
         firstYearWithdrawal: Number(firstYearWithdrawal.value),
         initialPortfolioValue: Number(initialPortfolioValue.value),
@@ -189,7 +207,12 @@ export default class HistoricalSuccess extends Component {
     );
 
     const results = evaluateCycles({ cycles });
+    const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
     const successRate = `${(results.successRate * 100).toFixed(2)}%`;
-    return successRate;
+    return {
+      dipRate,
+      successRate,
+      lowestDippedValue: results.lowestDippedValue
+    };
   };
 }

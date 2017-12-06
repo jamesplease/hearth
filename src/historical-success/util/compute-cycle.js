@@ -14,8 +14,11 @@ export default function computeCycle(options = {}) {
     duration,
     firstYearWithdrawal,
     initialPortfolioValue,
-    spendingMethod
+    spendingMethod,
+    dipPercentage
   } = options;
+
+  const dipThreshold = dipPercentage * initialPortfolioValue;
 
   const marketData = marketDataByYear();
 
@@ -32,21 +35,18 @@ export default function computeCycle(options = {}) {
 
   // Whether or not this cycle "failed," where failure is defined as the portfolio
   // value being equal to or less than 0.
-  let isCycleFailed = false;
+  let isFailed = false;
+  let didDip = false;
+  let lowestValue = Infinity;
+  let lowestSuccessfulDip = {
+    year: null,
+    value: Infinity
+  };
 
   _.times(duration, n => {
     const year = Number(startYear) + n;
+    const nextYear = year + 1;
     const previousYear = n === 0 ? null : resultsByYear[n - 1];
-
-    // `isFailed` represents whether the portfolio has hit 0 or not.
-    let isFailed;
-
-    // If the previous year failed, then this one did, too. There's no
-    // recovery from a failed state, even if gains bring you back into
-    // the positive numbers (however unlikely that may be).
-    if (previousYear && previousYear.isFailed) {
-      isFailed = true;
-    }
 
     let previousValue;
     if (n === 0) {
@@ -57,10 +57,13 @@ export default function computeCycle(options = {}) {
       previousValue = previousYear.computedData.endValue;
     }
 
-    const yearMarketData = marketData[String(year)];
+    const yearMarketData = marketData[year];
+    const nextYearMarketData = marketData[nextYear];
 
     // If we have no data for this year, then we have nothing to return.
-    if (!yearMarketData) {
+    // Likewise, if there is no data for _next_ year, then this year is the
+    // last datapoint in our set, so it cannot be used.
+    if (!yearMarketData || !nextYearMarketData) {
       return null;
     }
 
@@ -78,10 +81,8 @@ export default function computeCycle(options = {}) {
     const naiveEndValue = previousValue - withdrawalAmount;
     const realisticEndValue = Math.max(0, naiveEndValue);
 
-    // Assume 0.07 growth for the current year. This only applies for the last year,
-    // as the stockMarketGrowth is determined by looking ahead one year.
-    const stockMarketGrowth = yearMarketData.stockMarketGrowth || 0.07;
-    const investmentGains = realisticEndValue * stockMarketGrowth;
+    const investmentGains =
+      realisticEndValue * yearMarketData.stockMarketGrowth;
     const dividendGains = realisticEndValue * yearMarketData.dividendYields;
 
     const endValue = realisticEndValue + dividendGains + investmentGains;
@@ -89,11 +90,23 @@ export default function computeCycle(options = {}) {
     // We only compute `isFailed` if we didn't already compute it as true before.
     if (!isFailed) {
       isFailed = realisticEndValue === 0;
+    }
 
-      // If this year failed, and we haven't updated the cycle fail status yet,
-      // then we set that.
-      if (isFailed && !isCycleFailed) {
-        isCycleFailed = true;
+    if (!didDip) {
+      didDip = realisticEndValue <= dipThreshold;
+    }
+
+    if (realisticEndValue < lowestValue) {
+      lowestValue = realisticEndValue;
+    }
+
+    if (didDip) {
+      if (lowestValue < lowestSuccessfulDip.value) {
+        lowestSuccessfulDip = {
+          value: lowestValue,
+          startYear,
+          year
+        };
       }
     }
 
@@ -108,7 +121,7 @@ export default function computeCycle(options = {}) {
         endValue,
         investmentGains,
         dividendGains,
-        isFailed
+        lowestValue
       }
     });
   });
@@ -118,6 +131,8 @@ export default function computeCycle(options = {}) {
     duration,
     isComplete,
     resultsByYear,
-    isFailed: isCycleFailed
+    isFailed,
+    didDip,
+    lowestSuccessfulDip
   };
 }
