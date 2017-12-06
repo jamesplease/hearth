@@ -21,17 +21,21 @@ export default class App extends Component {
 
     return (
       <Children>
-        <Header key="header"/>
-        <Nav key="nav" onNavigate={activePage => this.setState({ activePage })} activePage={activePage}/>
+        <Header key="header" />
+        <Nav
+          key="nav"
+          onNavigate={activePage => this.setState({ activePage })}
+          activePage={activePage}
+        />
         <div className="app-body" key="appBody">
-          <Child/>
+          <Child />
         </div>
-        <Footer key="footer"/>
+        <Footer key="footer" />
       </Children>
     );
   }
 
   state = {
     activePage: 'historicalSuccess'
-  }
+  };
 }

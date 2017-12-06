@@ -29,7 +29,7 @@ function formatNumber(val, unit) {
 
   const number = Number(val).toLocaleString('en', {
     maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 0
   });
 
   if (unit === '$') {
@@ -45,16 +45,14 @@ function formatYears(val) {
 
 export default class HistoricalSuccess extends Component {
   render() {
-    const {inputs, result} = this.state;
-    const {
-      initialPortfolioValue,
-      firstYearWithdrawal,
-      duration
-    } = inputs;
+    const { inputs, result } = this.state;
+    const { initialPortfolioValue, firstYearWithdrawal, duration } = inputs;
 
     return (
       <div className="historicalSuccess">
-        <label className="historicalSuccess-label">Initial Portfolio Value</label>
+        <label className="historicalSuccess-label">
+          Initial Portfolio Value
+        </label>
         <div className="historicalSuccess-inputContainer">
           <InputWithUnit
             value={initialPortfolioValue.value}
@@ -66,7 +64,8 @@ export default class HistoricalSuccess extends Component {
             }}
             onChange={value => this.updateValue('initialPortfolioValue', value)}
             unitOptions={['$', '%']}
-            formatValue={formatNumber}/>
+            formatValue={formatNumber}
+          />
         </div>
         <label className="historicalSuccess-label">First Year Withdrawal</label>
         <div className="historicalSuccess-inputContainer">
@@ -80,7 +79,8 @@ export default class HistoricalSuccess extends Component {
             }}
             onChange={value => this.updateValue('firstYearWithdrawal', value)}
             unitOptions={['$', '%']}
-            formatValue={formatNumber}/>
+            formatValue={formatNumber}
+          />
         </div>
         <label className="historicalSuccess-label">Duration</label>
         <div className="historicalSuccess-inputContainer">
@@ -94,11 +94,10 @@ export default class HistoricalSuccess extends Component {
             }}
             onChange={value => this.updateValue('duration', value)}
             unitOptions={['$', '%']}
-            formatValue={formatYears}/>
+            formatValue={formatYears}
+          />
         </div>
-        <div>
-          Success rate: {result}
-        </div>
+        <div>Success rate: {result}</div>
       </div>
     );
   }
@@ -123,8 +122,8 @@ export default class HistoricalSuccess extends Component {
         error: null
       }
     },
-    result: '',
-  }
+    result: ''
+  };
 
   componentDidMount() {
     const result = this.computeResult(this.state.inputs);
@@ -166,9 +165,9 @@ export default class HistoricalSuccess extends Component {
       inputs: newInputs,
       result: newResult
     });
-  }
+  };
 
-  computeResult = (inputs) => {
+  computeResult = inputs => {
     const {
       duration,
       firstYearWithdrawal,
@@ -179,16 +178,18 @@ export default class HistoricalSuccess extends Component {
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
 
-    const cycles = _.map(startYears, startYear => computeCycle({
-      startYear,
-      duration: Number(duration.value),
-      firstYearWithdrawal: Number(firstYearWithdrawal.value),
-      initialPortfolioValue: Number(initialPortfolioValue.value),
-      spendingMethod: spendingMethod.value
-    }));
+    const cycles = _.map(startYears, startYear =>
+      computeCycle({
+        startYear,
+        duration: Number(duration.value),
+        firstYearWithdrawal: Number(firstYearWithdrawal.value),
+        initialPortfolioValue: Number(initialPortfolioValue.value),
+        spendingMethod: spendingMethod.value
+      })
+    );
 
     const results = evaluateCycles({ cycles });
     const successRate = `${(results.successRate * 100).toFixed(2)}%`;
     return successRate;
-  }
+  };
 }

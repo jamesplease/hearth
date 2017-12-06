@@ -14,7 +14,7 @@ const navItems = [
   {
     key: 'inflationAdjusted',
     label: 'Inflation Adjusted'
-  },
+  }
 ];
 
 export default class Nav extends Component {
@@ -31,11 +31,13 @@ export default class Nav extends Component {
             });
             return (
               <li className="nav-navListItem" key={navItem.key}>
-                <a onClick={() => onNavigate(navItem.key)} className={linkClassName}>
+                <a
+                  onClick={() => onNavigate(navItem.key)}
+                  className={linkClassName}>
                   {navItem.label}
                 </a>
               </li>
-            )
+            );
           })}
         </ul>
       </nav>
