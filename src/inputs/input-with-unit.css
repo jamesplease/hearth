@@ -21,7 +21,7 @@
 
 .inputWithUnit-inputField {
   padding: 4px 8px;
-  color: #222;
+  color: var(--fontColor);
   border: none;
   margin: 0;
   font-family: 'Source Sans Pro';

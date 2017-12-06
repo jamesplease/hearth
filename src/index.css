@@ -5,15 +5,24 @@
   --appWidth: 940px;
   --fontColor: #222;
   --baseFontSize: 10px;
+  --borderColor: #ddd;
+  --horizontalContentPadding: 10px;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 /* This is the root node of the React application */
 #root {
   max-width: var(--appWidth);
   margin: 0 auto;
+  min-height: 100%;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas: 
     "header header"
     "nav    content"
