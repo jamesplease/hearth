@@ -19,5 +19,5 @@
 }
 
 .nav-navListLink_active {
-  text-decoration: underline;
+  color: var(--accentColor);
 }
