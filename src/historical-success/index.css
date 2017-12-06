@@ -1,0 +1,10 @@
+.historicalSuccess {
+  display: grid;
+  grid-gap: 10px 15px;
+  grid-template-columns: 1fr 1fr;
+  max-width: 330px;
+}
+
+.historicalSuccess-inputContainer {
+  text-align: right;
+}

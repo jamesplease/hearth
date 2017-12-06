@@ -38,19 +38,15 @@ const validators = {
     } else if (valueToVerify < minYear) {
       return 'tooSmall';
     }
-    
+
     // Also need to make sure this is >= startYear
-  },
+  }
 };
 
 export default class InflationAdjusted extends Component {
   render() {
-    const {inputs, result} = this.state;
-    const {
-      initialValue,
-      startYear,
-      endYear
-    } = inputs;
+    const { inputs, result } = this.state;
+    const { initialValue, startYear, endYear } = inputs;
 
     return (
       <div className="inflationAdjusted">
@@ -60,8 +56,11 @@ export default class InflationAdjusted extends Component {
             id="inflationAdjusted_initialValue"
             type="number"
             inputMode="numeric"
-            onChange={event => this.updateValue('initialValue', event.target.value)}
-            value={initialValue.value}/>
+            onChange={event =>
+              this.updateValue('initialValue', event.target.value)
+            }
+            value={initialValue.value}
+          />
         </div>
         <div>
           <label>Start Year</label>
@@ -69,8 +68,11 @@ export default class InflationAdjusted extends Component {
             id="inflationAdjusted_startYear"
             type="number"
             inputMode="numeric"
-            onChange={event => this.updateValue('startYear', event.target.value)}
-            value={startYear.value}/>
+            onChange={event =>
+              this.updateValue('startYear', event.target.value)
+            }
+            value={startYear.value}
+          />
         </div>
         <div>
           <label>End Year</label>
@@ -79,11 +81,10 @@ export default class InflationAdjusted extends Component {
             type="number"
             inputMode="numeric"
             onChange={event => this.updateValue('endYear', event.target.value)}
-            value={endYear.value}/>
+            value={endYear.value}
+          />
         </div>
-        <div>
-          Result: {result}
-        </div>
+        <div>Result: {result}</div>
       </div>
     );
   }
@@ -105,7 +106,7 @@ export default class InflationAdjusted extends Component {
     },
     result: '',
     marketDataYears: []
-  }
+  };
 
   componentDidMount() {
     const marketData = marketDataByYear();
@@ -155,16 +156,16 @@ export default class InflationAdjusted extends Component {
       inputs: newInputs,
       result: newResult
     });
-  }
+  };
 
-  computeResult = (inputs) => {
+  computeResult = inputs => {
     const { initialValue, startYear, endYear } = inputs;
 
     const marketData = marketDataByYear();
     const startCpi = marketData[startYear.value].cpi;
     const endCpi = marketData[endYear.value].cpi;
 
-    const inflation = inflationFromCpi({startCpi, endCpi});
+    const inflation = inflationFromCpi({ startCpi, endCpi });
     return Number(initialValue.value) * inflation;
-  }
+  };
 }

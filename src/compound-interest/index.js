@@ -27,13 +27,9 @@ const validators = {
 
     if (!_.isFinite(valueToVerify)) {
       return 'NaN';
-    }
-
-    else if (!Number.isInteger(valueToVerify)) {
+    } else if (!Number.isInteger(valueToVerify)) {
       return 'nonInteger';
-    }
-
-    else if (valueToVerify < 0) {
+    } else if (valueToVerify < 0) {
       return 'negativeNumber';
     }
   },
@@ -44,7 +40,7 @@ const validators = {
     if (!_.isFinite(valueToVerify)) {
       return 'NaN';
     }
-  },
+  }
 };
 
 export default class CompoundInterest extends Component {
@@ -61,7 +57,9 @@ export default class CompoundInterest extends Component {
       <form className="compoundInterest">
         <div className="compoundInterest-inputContainer">
           <div className="compountInterest-value">
-            <label className="compoundInterest-label" htmlFor="compoundInterest_principal">
+            <label
+              className="compoundInterest-label"
+              htmlFor="compoundInterest_principal">
               Principal
             </label>
             <input
@@ -69,11 +67,16 @@ export default class CompoundInterest extends Component {
               className="compoundInterest-input"
               type="number"
               inputMode="numeric"
-              onChange={event => this.updateValue('principal', event.target.value)}
-              value={principal.value}/>
+              onChange={event =>
+                this.updateValue('principal', event.target.value)
+              }
+              value={principal.value}
+            />
           </div>
           <div className="compountInterest-value">
-            <label className="compoundInterest-label" htmlFor="compoundInterest_annualContribution">
+            <label
+              className="compoundInterest-label"
+              htmlFor="compoundInterest_annualContribution">
               Annual Contribution
             </label>
             <input
@@ -81,11 +84,16 @@ export default class CompoundInterest extends Component {
               className="compoundInterest-input"
               type="number"
               inputMode="numeric"
-              onChange={event => this.updateValue('annualContribution', event.target.value)}
-              value={annualContribution.value}/>
+              onChange={event =>
+                this.updateValue('annualContribution', event.target.value)
+              }
+              value={annualContribution.value}
+            />
           </div>
           <div className="compountInterest-value">
-            <label className="compoundInterest-label" htmlFor="compoundInterest_numberOfYears">
+            <label
+              className="compoundInterest-label"
+              htmlFor="compoundInterest_numberOfYears">
               Number of Years
             </label>
             <input
@@ -94,11 +102,16 @@ export default class CompoundInterest extends Component {
               type="number"
               inputMode="numeric"
               min="0"
-              onChange={event => this.updateValue('numberOfYears', event.target.value)}
-              value={numberOfYears.value}/>
+              onChange={event =>
+                this.updateValue('numberOfYears', event.target.value)
+              }
+              value={numberOfYears.value}
+            />
           </div>
           <div className="compountInterest-value">
-            <label className="compoundInterest-label" htmlFor="compoundInterest_interestRate">
+            <label
+              className="compoundInterest-label"
+              htmlFor="compoundInterest_interestRate">
               Interest Rate
             </label>
             <input
@@ -106,17 +119,16 @@ export default class CompoundInterest extends Component {
               className="compoundInterest-input"
               type="number"
               inputMode="numeric"
-              onChange={event => this.updateValue('interestRate', event.target.value)}
-              value={interestRate.value}/>
+              onChange={event =>
+                this.updateValue('interestRate', event.target.value)
+              }
+              value={interestRate.value}
+            />
           </div>
         </div>
         <div className="compoundInterest-result">
-          <div className="compoundInterest-label">
-            Result
-          </div>
-          <div className="compoundInterest-input">
-            {result}
-          </div>
+          <div className="compoundInterest-label">Result</div>
+          <div className="compoundInterest-input">{result}</div>
         </div>
       </form>
     );
@@ -143,10 +155,10 @@ export default class CompoundInterest extends Component {
       contributionsMadeAtStart: {
         value: false,
         error: null
-      },
+      }
     },
     result: ''
-  }
+  };
 
   componentDidMount() {
     const result = this.computeResult(this.state.inputs);
@@ -189,9 +201,9 @@ export default class CompoundInterest extends Component {
       inputs: newInputs,
       result: newResult
     });
-  }
+  };
 
-  computeResult = (inputs) => {
+  computeResult = inputs => {
     const {
       principal,
       annualContribution,
@@ -209,7 +221,7 @@ export default class CompoundInterest extends Component {
       annualContribution: Number(annualContribution.value),
       numberOfYears: Number(numberOfYears.value),
       contributionsMadeAtStart: Number(contributionsMadeAtStart.value),
-      interestRate: decimalInterest,
+      interestRate: decimalInterest
     });
 
     // There shouldn't be any problems with the utility, but just in case we show
@@ -219,10 +231,10 @@ export default class CompoundInterest extends Component {
     } else {
       result = Number(result).toLocaleString('en', {
         maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 2
       });
     }
 
     return result;
-  }
+  };
 }

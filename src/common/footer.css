@@ -1,3 +1,7 @@
 .footer {
   grid-area: footer;
+  padding: 15px var(--horizontalContentPadding);
+  font-size: 1.3rem;
+  color: #999;
+  border-top: 1px solid #ddd;
 }

@@ -3,18 +3,22 @@ import * as spending from './spending';
 import inflationFromCpi from '../../common/util/inflation-from-cpi';
 import marketDataByYear from '../../common/util/market-data-by-year';
 
-const CURRENT_YEAR = (new Date()).getFullYear();
+const CURRENT_YEAR = new Date().getFullYear();
 
 // A cycle is one "simulation." Given a start year, a "duration,"
 // which is an integer number of years, and initial portfolio information,
 // it computes the changes to that portfolio over time.
 export default function computeCycle(options = {}) {
   const {
-    startYear, duration, firstYearWithdrawal, initialPortfolioValue, spendingMethod
+    startYear,
+    duration,
+    firstYearWithdrawal,
+    initialPortfolioValue,
+    spendingMethod
   } = options;
 
   const marketData = marketDataByYear();
-  
+
   // This Boolean represents whether this is cycle contains the entire
   // duration or not.
   const isComplete = startYear + duration <= CURRENT_YEAR;
@@ -74,7 +78,8 @@ export default function computeCycle(options = {}) {
     const naiveEndValue = previousValue - withdrawalAmount;
     const realisticEndValue = Math.max(0, naiveEndValue);
 
-    // Assume 0.07 growth for the current year
+    // Assume 0.07 growth for the current year. This only applies for the last year,
+    // as the stockMarketGrowth is determined by looking ahead one year.
     const stockMarketGrowth = yearMarketData.stockMarketGrowth || 0.07;
     const investmentGains = realisticEndValue * stockMarketGrowth;
     const dividendGains = realisticEndValue * yearMarketData.dividendYields;

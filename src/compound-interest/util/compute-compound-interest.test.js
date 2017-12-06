@@ -54,4 +54,3 @@ describe('compoundInterest', () => {
     expect(result).toBeCloseTo(7345591.975238);
   });
 });
-
