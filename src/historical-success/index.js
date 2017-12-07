@@ -195,10 +195,22 @@ export default class HistoricalSuccess extends Component {
 
     const dipPercentage = 0.9;
 
+    const rebalancePortfolio = false;
+    const portfolio = [
+      {
+        type: 'equity',
+        fee: 0,
+        value: Number(initialPortfolioValue.value),
+        percentage: 1
+      }
+    ];
+
     const cycles = _.map(startYears, startYear =>
       computeCycle({
         startYear,
         dipPercentage,
+        rebalancePortfolio,
+        portfolio,
         duration: Number(duration.value),
         firstYearWithdrawal: Number(firstYearWithdrawal.value),
         initialPortfolioValue: Number(initialPortfolioValue.value),
