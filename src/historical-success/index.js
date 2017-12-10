@@ -196,7 +196,7 @@ export default class HistoricalSuccess extends Component {
 
     const dipPercentage = 0.9;
 
-    const rebalancePortfolio = false;
+    const rebalancePortfolioAnnually = false;
     const investments = [
       {
         type: 'equity',
@@ -212,13 +212,15 @@ export default class HistoricalSuccess extends Component {
       computeCycle({
         startYear,
         dipPercentage,
-        rebalancePortfolio,
+        rebalancePortfolioAnnually,
         portfolio,
         duration: Number(duration.value),
         firstYearWithdrawal: Number(firstYearWithdrawal.value),
         spendingMethod: spendingMethod.value
       })
     );
+
+    window._cycles = cycles;
 
     const results = evaluateCycles({ cycles });
     const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;

@@ -5,6 +5,12 @@ import marketDataByYear from '../../common/util/market-data-by-year';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+// This maps an investment type to the key on marketData that
+// represents its changes in a given year
+const investmentTypeToGrowthMap = {
+  equity: 'stockMarketGrowth'
+};
+
 // A cycle is one "simulation." Given a start year, a "duration,"
 // which is an integer number of years, and initial portfolio information,
 // it computes the changes to that portfolio over time.
@@ -14,11 +20,13 @@ export default function computeCycle(options = {}) {
     duration,
     portfolio,
     firstYearWithdrawal,
+    rebalancePortfolioAnnually,
     spendingMethod,
     dipPercentage
   } = options;
 
   const initialPortfolioValue = portfolio.totalValue;
+  const initialPortfolio = portfolio;
 
   const dipThreshold = dipPercentage * initialPortfolioValue;
 
@@ -45,19 +53,35 @@ export default function computeCycle(options = {}) {
     value: Infinity
   };
 
+  // This can be used to simulate a "previous" year for the 0th year,
+  // simplifying the logic below.
+  const initialComputedData = {
+    cumulativeInflation: 1,
+    withdrawalAmount: 0,
+    naiveEndValue: initialPortfolioValue,
+    realisticEndValue: initialPortfolioValue,
+    investmentGains: 0,
+    dividendGains: 0,
+    portfolio
+  };
+
   _.times(duration, n => {
+    const isFirstYear = n === 0;
     const year = Number(startYear) + n;
     const nextYear = year + 1;
-    const previousYear = n === 0 ? null : resultsByYear[n - 1];
+    const previousResults = resultsByYear[n - 1];
 
-    let previousValue;
-    if (n === 0) {
-      previousValue = initialPortfolioValue;
-    } else if (!previousYear) {
-      previousValue = 0;
-    } else {
-      previousValue = previousYear.computedData.endValue;
+    // If we had no results for last year, then we can't compute anything
+    // for this year either.
+    if (!isFirstYear && !previousResults) {
+      return null;
     }
+
+    const previousComputedData = isFirstYear
+      ? initialComputedData
+      : resultsByYear[n - 1].computedData;
+
+    const yearStartValue = previousComputedData.portfolio.totalValue;
 
     const yearMarketData = marketData[year];
     const nextYearMarketData = marketData[nextYear];
@@ -75,31 +99,82 @@ export default function computeCycle(options = {}) {
     });
 
     // For now, we use a simple inflation-adjusted withdrawal approach
-    const withdrawalAmount = spending[spendingMethod]({
+    const totalWithdrawalAmount = spending[spendingMethod]({
       inflation: cumulativeInflation,
       firstYearWithdrawal
     });
 
-    const naiveEndValue = previousValue - withdrawalAmount;
-    const realisticEndValue = Math.max(0, naiveEndValue);
+    const notEnoughMoney = totalWithdrawalAmount > yearStartValue;
 
-    const investmentGains =
-      realisticEndValue * yearMarketData.stockMarketGrowth;
-    const dividendGains = realisticEndValue * yearMarketData.dividendYields;
+    let adjustedInvestmentValues = _.map(
+      portfolio.investments,
+      (investment, index) => {
+        if (notEnoughMoney) {
+          return {
+            ...investment,
+            valueBeforeChange: investment.value,
+            valueAfterWithdrawal: 0,
+            growth: 0,
+            dividends: 0,
+            percentage: 0,
+            value: 0
+          };
+        }
 
-    const endValue = realisticEndValue + dividendGains + investmentGains;
+        const previousYearInvestment =
+          previousComputedData.portfolio.investments[index];
+
+        // If we rebalance yearly, then we keep the original percentage from the previous year.
+        // This assumes that the investor reinvests at the very beginning (or very end) of each year.
+        const percentage = rebalancePortfolioAnnually
+          ? initialPortfolio[index].percentage
+          : previousYearInvestment.percentage;
+
+        // We assume that the total yearly withdrawal is divided evenly between the different
+        // investments.
+        const withdrawalAmount = percentage * totalWithdrawalAmount;
+        const valueAfterWithdrawal =
+          previousYearInvestment.value - withdrawalAmount;
+        const growthKey = investmentTypeToGrowthMap[investment.type];
+        const growthPercentage = yearMarketData[growthKey];
+        const growth = valueAfterWithdrawal * growthPercentage;
+
+        let dividends =
+          investment.type === 'equity'
+            ? valueAfterWithdrawal * yearMarketData.dividendYields
+            : 0;
+
+        let value = valueAfterWithdrawal + growth + dividends;
+
+        return {
+          ...investment,
+          percentage,
+          growth,
+          dividends,
+          valueBeforeChange: investment.value,
+          valueAfterWithdrawal,
+          value
+        };
+      }
+    );
+
+    const endValue = _.reduce(
+      adjustedInvestmentValues,
+      (result, investment) => result + investment.value,
+      0
+    );
 
     // We only compute `isFailed` if we didn't already compute it as true before.
     if (!isFailed) {
-      isFailed = realisticEndValue === 0;
+      isFailed = endValue === 0;
     }
 
     if (!didDip) {
-      didDip = realisticEndValue <= dipThreshold;
+      didDip = endValue <= dipThreshold;
     }
 
-    if (realisticEndValue < lowestValue) {
-      lowestValue = realisticEndValue;
+    if (endValue < lowestValue) {
+      lowestValue = endValue;
     }
 
     if (didDip) {
@@ -117,13 +192,11 @@ export default function computeCycle(options = {}) {
       marketData: yearMarketData,
       computedData: {
         cumulativeInflation,
-        withdrawalAmount,
-        naiveEndValue,
-        realisticEndValue,
-        endValue,
-        investmentGains,
-        dividendGains,
-        lowestValue
+        totalWithdrawalAmount,
+        portfolio: {
+          totalValue: endValue,
+          investments: adjustedInvestmentValues
+        }
       }
     });
   });
