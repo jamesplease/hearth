@@ -12,11 +12,13 @@ export default function computeCycle(options = {}) {
   const {
     startYear,
     duration,
+    portfolio,
     firstYearWithdrawal,
-    initialPortfolioValue,
     spendingMethod,
     dipPercentage
   } = options;
+
+  const initialPortfolioValue = portfolio.totalValue;
 
   const dipThreshold = dipPercentage * initialPortfolioValue;
 

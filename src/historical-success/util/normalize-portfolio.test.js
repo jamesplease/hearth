@@ -1,6 +1,9 @@
-import { fromTotalAndPercentages, fromInvestments } from './compute-portfolio';
+import {
+  fromTotalAndPercentages,
+  fromInvestments
+} from './normalize-portfolio';
 
-describe('computePortfolio', () => {
+describe('normalizePortfolio', () => {
   describe('fromInvestments', () => {
     it('computes a single-investment portfolio correctly', () => {
       const result = fromInvestments({

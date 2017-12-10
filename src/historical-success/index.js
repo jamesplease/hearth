@@ -4,6 +4,7 @@ import './index.css';
 import getStartYears from './util/get-start-years';
 import computeCycle from './util/compute-cycle';
 import evaluateCycles from './util/evaluate-cycles';
+import { fromInvestments } from './util/normalize-portfolio';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
@@ -15,7 +16,7 @@ function isNumber(val) {
 }
 
 const validators = {
-  initialPortfolioValue: isNumber,
+  stockInvestmentValue: isNumber,
   firstYearWithdrawal: isNumber,
   duration: isNumber
 };
@@ -46,7 +47,7 @@ function formatYears(val) {
 export default class HistoricalSuccess extends Component {
   render() {
     const { inputs, result } = this.state;
-    const { initialPortfolioValue, firstYearWithdrawal, duration } = inputs;
+    const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
 
     return (
       <div className="historicalSuccess">
@@ -55,14 +56,14 @@ export default class HistoricalSuccess extends Component {
         </label>
         <div className="historicalSuccess-inputContainer">
           <InputWithUnit
-            value={initialPortfolioValue.value}
+            value={stockInvestmentValue.value}
             unit="$"
             inputProps={{
               type: 'number',
               inputMode: 'numeric',
-              id: 'historicalSuccess_initialPortfolioValue'
+              id: 'historicalSuccess_stockInvestmentValue'
             }}
-            onChange={value => this.updateValue('initialPortfolioValue', value)}
+            onChange={value => this.updateValue('stockInvestmentValue', value)}
             unitOptions={['$', '%']}
             formatValue={formatNumber}
           />
@@ -112,7 +113,7 @@ export default class HistoricalSuccess extends Component {
   state = {
     test: '1000',
     inputs: {
-      initialPortfolioValue: {
+      stockInvestmentValue: {
         value: '625000',
         error: null
       },
@@ -186,7 +187,7 @@ export default class HistoricalSuccess extends Component {
     const {
       duration,
       firstYearWithdrawal,
-      initialPortfolioValue,
+      stockInvestmentValue,
       spendingMethod
     } = inputs;
 
@@ -196,14 +197,16 @@ export default class HistoricalSuccess extends Component {
     const dipPercentage = 0.9;
 
     const rebalancePortfolio = false;
-    const portfolio = [
+    const investments = [
       {
         type: 'equity',
         fee: 0,
-        value: Number(initialPortfolioValue.value),
+        value: Number(stockInvestmentValue.value),
         percentage: 1
       }
     ];
+
+    const portfolio = fromInvestments({ investments });
 
     const cycles = _.map(startYears, startYear =>
       computeCycle({
@@ -213,7 +216,6 @@ export default class HistoricalSuccess extends Component {
         portfolio,
         duration: Number(duration.value),
         firstYearWithdrawal: Number(firstYearWithdrawal.value),
-        initialPortfolioValue: Number(initialPortfolioValue.value),
         spendingMethod: spendingMethod.value
       })
     );
