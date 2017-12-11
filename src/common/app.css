@@ -4,6 +4,7 @@
 }
 
 .appWrapper {
+  min-height: 100%;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 200px 1fr;

@@ -13,11 +13,12 @@
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 
 /* This is the root node of the React application */
 #root {
   width: var(--appWidth);
   margin: 0 auto;
-  min-height: 100%;
+  height: 100%;
 }
