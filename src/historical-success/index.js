@@ -4,6 +4,7 @@ import './index.css';
 import getStartYears from './util/get-start-years';
 import computeCycle from './util/compute-cycle';
 import evaluateCycles from './util/evaluate-cycles';
+import { fromInvestments } from './util/normalize-portfolio';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
@@ -15,7 +16,7 @@ function isNumber(val) {
 }
 
 const validators = {
-  initialPortfolioValue: isNumber,
+  stockInvestmentValue: isNumber,
   firstYearWithdrawal: isNumber,
   duration: isNumber
 };
@@ -46,7 +47,7 @@ function formatYears(val) {
 export default class HistoricalSuccess extends Component {
   render() {
     const { inputs, result } = this.state;
-    const { initialPortfolioValue, firstYearWithdrawal, duration } = inputs;
+    const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
 
     return (
       <div className="historicalSuccess">
@@ -55,14 +56,14 @@ export default class HistoricalSuccess extends Component {
         </label>
         <div className="historicalSuccess-inputContainer">
           <InputWithUnit
-            value={initialPortfolioValue.value}
+            value={stockInvestmentValue.value}
             unit="$"
             inputProps={{
               type: 'number',
               inputMode: 'numeric',
-              id: 'historicalSuccess_initialPortfolioValue'
+              id: 'historicalSuccess_stockInvestmentValue'
             }}
-            onChange={value => this.updateValue('initialPortfolioValue', value)}
+            onChange={value => this.updateValue('stockInvestmentValue', value)}
             unitOptions={['$', '%']}
             formatValue={formatNumber}
           />
@@ -97,7 +98,14 @@ export default class HistoricalSuccess extends Component {
             formatValue={formatYears}
           />
         </div>
-        <div>Success rate: {result}</div>
+        <div>Success rate: {result.successRate}</div>
+        <div>Dip rate: {result.dipRate}</div>
+        <div>
+          Lowest dipped value:{' '}
+          {`$${Number(result.lowestDippedValue.value).toFixed(2)}`} in{' '}
+          {result.lowestDippedValue.year} starting in{' '}
+          {result.lowestDippedValue.startYear}
+        </div>
       </div>
     );
   }
@@ -105,16 +113,16 @@ export default class HistoricalSuccess extends Component {
   state = {
     test: '1000',
     inputs: {
-      initialPortfolioValue: {
+      stockInvestmentValue: {
         value: '625000',
         error: null
       },
       firstYearWithdrawal: {
-        value: '150000',
+        value: '25000',
         error: null
       },
       duration: {
-        value: '4',
+        value: '30',
         error: null
       },
       spendingMethod: {
@@ -122,7 +130,15 @@ export default class HistoricalSuccess extends Component {
         error: null
       }
     },
-    result: ''
+    result: {
+      successRate: '',
+      dipRate: '',
+      lowestDippedValue: {
+        year: '',
+        startYear: '',
+        value: ''
+      }
+    }
   };
 
   componentDidMount() {
@@ -171,25 +187,46 @@ export default class HistoricalSuccess extends Component {
     const {
       duration,
       firstYearWithdrawal,
-      initialPortfolioValue,
+      stockInvestmentValue,
       spendingMethod
     } = inputs;
 
     // An array of years that we use as a starting year for cycles
     const startYears = getStartYears();
 
+    const dipPercentage = 0.9;
+
+    const rebalancePortfolioAnnually = false;
+    const investments = [
+      {
+        type: 'equity',
+        fees: 0.01,
+        value: Number(stockInvestmentValue.value),
+        percentage: 1
+      }
+    ];
+
+    const portfolio = fromInvestments({ investments });
+
     const cycles = _.map(startYears, startYear =>
       computeCycle({
         startYear,
+        dipPercentage,
+        rebalancePortfolioAnnually,
+        portfolio,
         duration: Number(duration.value),
         firstYearWithdrawal: Number(firstYearWithdrawal.value),
-        initialPortfolioValue: Number(initialPortfolioValue.value),
         spendingMethod: spendingMethod.value
       })
     );
 
     const results = evaluateCycles({ cycles });
+    const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
     const successRate = `${(results.successRate * 100).toFixed(2)}%`;
-    return successRate;
+    return {
+      dipRate,
+      successRate,
+      lowestDippedValue: results.lowestDippedValue
+    };
   };
 }
