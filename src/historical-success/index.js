@@ -200,7 +200,7 @@ export default class HistoricalSuccess extends Component {
     const investments = [
       {
         type: 'equity',
-        fee: 0,
+        fees: 0.01,
         value: Number(stockInvestmentValue.value),
         percentage: 1
       }
@@ -219,8 +219,6 @@ export default class HistoricalSuccess extends Component {
         spendingMethod: spendingMethod.value
       })
     );
-
-    window._cycles = cycles;
 
     const results = evaluateCycles({ cycles });
     const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;

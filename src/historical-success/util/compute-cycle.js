@@ -144,15 +144,23 @@ export default function computeCycle(options = {}) {
             ? valueAfterWithdrawal * yearMarketData.dividendYields
             : 0;
 
-        let value = valueAfterWithdrawal + growth + dividends;
+        const valueWithGrowth = valueAfterWithdrawal + growth;
+
+        // Fees aren't applied to dividends. This behavior matches cFIREsim.
+        const fees = investment.fees * valueWithGrowth;
+
+        // We factor everything in to get our end result for this investment
+        const value = valueWithGrowth + dividends - fees;
 
         return {
           ...investment,
           percentage,
           growth,
+          fees,
           dividends,
           valueBeforeChange: investment.value,
           valueAfterWithdrawal,
+          valueWithGrowth,
           value
         };
       }
