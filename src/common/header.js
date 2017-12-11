@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './header.css';
 
 export default class Header extends Component {
@@ -6,9 +7,9 @@ export default class Header extends Component {
     return (
       <header className="header">
         <h1 className="header-title">
-          <a href="/" className="header-titleLink">
+          <Link to="/" className="header-titleLink">
             Hearth
-          </a>
+          </Link>
         </h1>
       </header>
     );

@@ -1,41 +1,30 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.css';
+import Home from './home';
 import Header from './header';
 import Nav from './nav';
 import Footer from './footer';
-import Children from './children';
 import CompoundInterest from '../compound-interest';
 import HistoricalSuccess from '../historical-success';
 import InflationAdjusted from '../inflation-adjusted';
 
-const navMap = {
-  historicalSuccess: HistoricalSuccess,
-  compoundInterest: CompoundInterest,
-  inflationAdjusted: InflationAdjusted
-};
-
 export default class App extends Component {
   render() {
-    const { activePage } = this.state;
-    const Child = navMap[activePage];
-
     return (
-      <Children>
-        <Header key="header" />
-        <Nav
-          key="nav"
-          onNavigate={activePage => this.setState({ activePage })}
-          activePage={activePage}
-        />
-        <div className="app-body" key="appBody">
-          <Child />
+      <Router>
+        <div className="appWrapper">
+          <Header key="header" />
+          <Nav key="nav" />
+          <div className="app-body" key="appBody">
+            <Route exact path="/" component={Home} />
+            <Route path="/compound-interest" component={CompoundInterest} />
+            <Route path="/historical-success" component={HistoricalSuccess} />
+            <Route path="/inflation-adjusted" component={InflationAdjusted} />
+          </div>
+          <Footer key="footer" />
         </div>
-        <Footer key="footer" />
-      </Children>
+      </Router>
     );
   }
-
-  state = {
-    activePage: 'historicalSuccess'
-  };
 }
