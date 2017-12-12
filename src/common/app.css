@@ -2,15 +2,3 @@
   grid-area: content;
   padding-right: var(--horizontalContentPadding);
 }
-
-.appWrapper {
-  min-height: 100%;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    'header header'
-    'nav    content'
-    'footer footer';
-}
