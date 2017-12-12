@@ -6,6 +6,7 @@ import computeCycle from './util/compute-cycle';
 import evaluateCycles from './util/evaluate-cycles';
 import { fromInvestments } from './util/normalize-portfolio';
 import InputWithUnit from '../inputs/input-with-unit';
+import { percentOfPortfolio } from './util/spending';
 
 function isNumber(val) {
   const valueToVerify = Number(val);
@@ -206,6 +207,22 @@ export default class HistoricalSuccess extends Component {
       }
     ];
 
+    const spendingConfiguration = {
+      spendingMethod: spendingMethod.value,
+      firstYearWithdrawal: Number(firstYearWithdrawal.value)
+    };
+
+    //
+    // The example configuration below demonstrates using the percentOfPortfolio
+    // withdrawal method
+    //
+    // const spendingConfiguration = {
+    //   spendingMethod: 'percentOfPortfolio',
+    //   percentageOfPortfolio: 0.05,
+    //   minWithdrawal: 20000,
+    //   maxWithdrawal: 35000
+    // };
+
     const portfolio = fromInvestments({ investments });
 
     const cycles = _.map(startYears, startYear =>
@@ -214,9 +231,8 @@ export default class HistoricalSuccess extends Component {
         dipPercentage,
         rebalancePortfolioAnnually,
         portfolio,
-        duration: Number(duration.value),
-        firstYearWithdrawal: Number(firstYearWithdrawal.value),
-        spendingMethod: spendingMethod.value
+        spendingConfiguration,
+        duration: Number(duration.value)
       })
     );
 
