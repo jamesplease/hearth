@@ -14,6 +14,10 @@ const navItems = [
   {
     key: 'inflation-adjusted',
     label: 'Inflation Adjusted'
+  },
+  {
+    key: 'data-sources',
+    label: 'Data Sources'
   }
 ];
 
