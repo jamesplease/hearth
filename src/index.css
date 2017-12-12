@@ -13,12 +13,19 @@
 html,
 body {
   height: 100%;
-  width: 100%;
 }
 
 /* This is the root node of the React application */
 #root {
   width: var(--appWidth);
   margin: 0 auto;
-  height: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header header'
+    'nav    content'
+    'footer footer';
 }

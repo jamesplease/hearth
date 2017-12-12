@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.css';
 import Home from './home';
@@ -13,7 +13,7 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <div className="appWrapper">
+        <Fragment>
           <Header key="header" />
           <Nav key="nav" />
           <div className="app-body" key="appBody">
@@ -23,7 +23,7 @@ export default class App extends Component {
             <Route path="/inflation-adjusted" component={InflationAdjusted} />
           </div>
           <Footer key="footer" />
-        </div>
+        </Fragment>
       </Router>
     );
   }
