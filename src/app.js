@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.css';
-import Home from './home';
-import Header from './header';
-import Nav from './nav';
-import Footer from './footer';
-import CompoundInterest from '../compound-interest';
-import HistoricalSuccess from '../historical-success';
-import InflationAdjusted from '../inflation-adjusted';
+import Home from './common/home';
+import Header from './common/header';
+import Nav from './common/nav';
+import Footer from './common/footer';
+import CompoundInterest from './compound-interest';
+import HistoricalSuccess from './historical-success';
+import InflationAdjusted from './inflation-adjusted';
+import DataSources from './data-sources';
 
 export default class App extends Component {
   render() {
@@ -21,6 +22,7 @@ export default class App extends Component {
             <Route path="/compound-interest" component={CompoundInterest} />
             <Route path="/historical-success" component={HistoricalSuccess} />
             <Route path="/inflation-adjusted" component={InflationAdjusted} />
+            <Route path="/data-sources" component={DataSources} />
           </div>
           <Footer key="footer" />
         </Fragment>

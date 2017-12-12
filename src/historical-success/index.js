@@ -6,7 +6,6 @@ import computeCycle from './util/compute-cycle';
 import evaluateCycles from './util/evaluate-cycles';
 import { fromInvestments } from './util/normalize-portfolio';
 import InputWithUnit from '../inputs/input-with-unit';
-import { percentOfPortfolio } from './util/spending';
 
 function isNumber(val) {
   const valueToVerify = Number(val);
