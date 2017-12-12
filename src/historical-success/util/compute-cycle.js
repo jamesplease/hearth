@@ -139,12 +139,19 @@ export default function computeCycle(options = {}) {
         const growthPercentage = yearMarketData[growthKey];
         const growth = valueAfterWithdrawal * growthPercentage;
 
+        // This allows you to specify a fixed annual addition to this investment. This replaces
+        // the "growth of cash" feature of cFIREsim.
+        let annualGrowthAmount = investment.annualGrowthAmount
+          ? investment.annualGrowthAmount
+          : 0;
+
         let dividends =
           investment.type === 'equity'
             ? valueAfterWithdrawal * yearMarketData.dividendYields
             : 0;
 
-        const valueWithGrowth = valueAfterWithdrawal + growth;
+        const valueWithGrowth =
+          valueAfterWithdrawal + growth + annualGrowthAmount;
 
         // Fees aren't applied to dividends. This behavior matches cFIREsim.
         const fees = investment.fees * valueWithGrowth;
