@@ -19,9 +19,8 @@ export default function computeCycle(options = {}) {
     startYear,
     duration,
     portfolio,
-    firstYearWithdrawal,
+    spendingConfiguration,
     rebalancePortfolioAnnually,
-    spendingMethod,
     dipPercentage
   } = options;
 
@@ -98,10 +97,13 @@ export default function computeCycle(options = {}) {
       endCpi: yearMarketData.cpi
     });
 
+    const { spendingMethod } = spendingConfiguration;
+
     // For now, we use a simple inflation-adjusted withdrawal approach
     const totalWithdrawalAmount = spending[spendingMethod]({
-      inflation: cumulativeInflation,
-      firstYearWithdrawal
+      ...spendingConfiguration,
+      portfolioTotalValue: yearStartValue,
+      inflation: cumulativeInflation
     });
 
     const notEnoughMoney = totalWithdrawalAmount > yearStartValue;
