@@ -4,21 +4,17 @@ import './nav.css';
 
 const navItems = [
   {
-    key: 'historical-success',
-    label: 'Historical Success'
+    key: 'calculators',
+    label: 'Calculators'
   },
   {
-    key: 'compound-interest',
-    label: 'Compound Interest'
+    key: 'guides',
+    label: 'Guides'
   },
   {
-    key: 'inflation-adjusted',
-    label: 'Inflation Adjusted'
+    key: 'about',
+    label: 'About'
   },
-  {
-    key: 'data-sources',
-    label: 'Data Sources'
-  }
 ];
 
 export default class Nav extends Component {
