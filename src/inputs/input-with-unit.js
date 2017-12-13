@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './input-with-unit.css';
 
 export default class InputWithUnit extends Component {
@@ -8,30 +8,28 @@ export default class InputWithUnit extends Component {
 
     const valueToDisplay = formatValue(value, unit);
 
-    return [
-      isDisplayMode && (
-        <div
-          key="inputWithUnit_display"
-          className="inputWithUnit inputWithUnit-display"
-          onClick={() => this.setState({ isDisplayMode: false })}>
-          {valueToDisplay}
-        </div>
-      ),
-      !isDisplayMode && (
-        <div
-          {...inputProps}
-          key="inputWithUnit_edit"
-          className="inputWithUnit inputWithUnit-edit">
-          <input
-            className="inputWithUnit-inputField"
-            ref={this.inputRef}
-            value={value}
-            onChange={event => onChange(event.target.value)}
-            onKeyPress={this.handleKeyPress}
-          />
-        </div>
-      )
-    ];
+    return (
+      <Fragment>
+        {isDisplayMode && (
+          <div
+            className="inputWithUnit inputWithUnit-display"
+            onClick={() => this.setState({ isDisplayMode: false })}>
+            {valueToDisplay}
+          </div>
+        )}
+        {!isDisplayMode && (
+          <div {...inputProps} className="inputWithUnit inputWithUnit-edit">
+            <input
+              className="inputWithUnit-inputField"
+              ref={this.inputRef}
+              value={value}
+              onChange={event => onChange(event.target.value)}
+              onKeyPress={this.handleKeyPress}
+            />
+          </div>
+        )}
+      </Fragment>
+    );
   }
 
   state = {
