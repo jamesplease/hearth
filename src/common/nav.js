@@ -14,7 +14,7 @@ const navItems = [
   {
     key: 'about',
     label: 'About'
-  },
+  }
 ];
 
 export default class Nav extends Component {
@@ -25,7 +25,9 @@ export default class Nav extends Component {
           {navItems.map(navItem => {
             return (
               <li className="nav-navListItem" key={navItem.key}>
-                <Link to={`/${navItem.key}`}>{navItem.label}</Link>
+                <Link to={`/${navItem.key}`} className="nav-navListLink">
+                  {navItem.label}
+                </Link>
               </li>
             );
           })}

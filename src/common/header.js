@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
+import Nav from './nav';
 
 export default class Header extends Component {
   render() {
@@ -11,6 +12,7 @@ export default class Header extends Component {
             Hearth
           </Link>
         </h1>
+        <Nav />
       </header>
     );
   }
