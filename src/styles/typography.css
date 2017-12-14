@@ -9,3 +9,35 @@ body {
   color: var(--fontColor);
   font-size: 1.6rem;
 }
+
+.heroText {
+  font-size: 4rem;
+  text-align: center;
+  margin: 200px 0;
+}
+
+.primaryHeader {
+  font-size: 2.7rem;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+.primaryHeader_centered {
+  text-align: center;
+}
+
+.subheaderText {
+  font-size: 1.7rem;
+  padding: 0;
+  margin: 0 0 15px;
+}
+
+.subheaderText_centered {
+  text-align: center;
+}
+
+.appParagraph {
+  max-width: 650px;
+  font-size: 1.6rem;
+  line-height: 2.8rem;
+}
