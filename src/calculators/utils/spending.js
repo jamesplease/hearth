@@ -1,4 +1,4 @@
-import clamp from '../../common/util/clamp';
+import clamp from './clamp';
 
 // These are different methods to calculate the spending amount
 // for a given year.

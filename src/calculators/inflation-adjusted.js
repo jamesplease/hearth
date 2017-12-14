@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import marketDataByYear from '../common/util/market-data-by-year';
-import inflationFromCpi from '../common/util/inflation-from-cpi';
+import marketDataByYear from './utils/market-data-by-year';
+import inflationFromCpi from './utils/inflation-from-cpi';
 
 const validators = {
   initialValue(val) {
@@ -51,41 +51,45 @@ export default class InflationAdjusted extends Component {
     return (
       <div className="inflationAdjusted calculatorPage">
         <h1 className="primaryHeader">Inflation Adjusted</h1>
-        <div>
-          <label>Initial Value</label>
-          <input
-            id="inflationAdjusted_initialValue"
-            type="number"
-            inputMode="numeric"
-            onChange={event =>
-              this.updateValue('initialValue', event.target.value)
-            }
-            value={initialValue.value}
-          />
+        <div className="calculatorPage-contents">
+          <div>
+            <label>Initial Value</label>
+            <input
+              id="inflationAdjusted_initialValue"
+              type="number"
+              inputMode="numeric"
+              onChange={event =>
+                this.updateValue('initialValue', event.target.value)
+              }
+              value={initialValue.value}
+            />
+          </div>
+          <div>
+            <label>Start Year</label>
+            <input
+              id="inflationAdjusted_startYear"
+              type="number"
+              inputMode="numeric"
+              onChange={event =>
+                this.updateValue('startYear', event.target.value)
+              }
+              value={startYear.value}
+            />
+          </div>
+          <div>
+            <label>End Year</label>
+            <input
+              id="inflationAdjusted_endYear"
+              type="number"
+              inputMode="numeric"
+              onChange={event =>
+                this.updateValue('endYear', event.target.value)
+              }
+              value={endYear.value}
+            />
+          </div>
+          <div>Result: {result}</div>
         </div>
-        <div>
-          <label>Start Year</label>
-          <input
-            id="inflationAdjusted_startYear"
-            type="number"
-            inputMode="numeric"
-            onChange={event =>
-              this.updateValue('startYear', event.target.value)
-            }
-            value={startYear.value}
-          />
-        </div>
-        <div>
-          <label>End Year</label>
-          <input
-            id="inflationAdjusted_endYear"
-            type="number"
-            inputMode="numeric"
-            onChange={event => this.updateValue('endYear', event.target.value)}
-            value={endYear.value}
-          />
-        </div>
-        <div>Result: {result}</div>
       </div>
     );
   }

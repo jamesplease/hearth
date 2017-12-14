@@ -1,3 +1,10 @@
 .calculatorPage {
   margin: var(--verticalMargins) 0;
+  flex: 1;
+}
+
+.calculatorPage-contents {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 15px 20px;
 }

@@ -12,6 +12,12 @@
   --backgroundColor: #f6f6f6;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;

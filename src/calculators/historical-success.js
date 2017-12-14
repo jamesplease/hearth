@@ -5,9 +5,14 @@ import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
+import CalculatorResults from './calculator-results';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
+  if (typeof val === 'string' && val.length === 0) {
+    return 'Empty';
+  }
+
   const valueToVerify = Number(val);
 
   if (!_.isFinite(valueToVerify)) {
@@ -52,61 +57,73 @@ export default class HistoricalSuccess extends Component {
     return (
       <div className="historicalSuccess calculatorPage">
         <h1 className="primaryHeader">Historical Success</h1>
-        <label className="historicalSuccess-label">
-          Initial Portfolio Value
-        </label>
-        <div className="historicalSuccess-inputContainer">
-          <InputWithUnit
-            value={stockInvestmentValue.value}
-            unit="$"
-            inputProps={{
-              type: 'number',
-              inputMode: 'numeric',
-              id: 'historicalSuccess_stockInvestmentValue'
-            }}
-            onChange={value => this.updateValue('stockInvestmentValue', value)}
-            unitOptions={['$', '%']}
-            formatValue={formatNumber}
-          />
+        <div className="calculatorPage-contents">
+          <div className="historicalSuccess_contents">
+            <label className="historicalSuccess-label">
+              Initial Portfolio Value
+            </label>
+            <div className="historicalSuccess-inputContainer">
+              <InputWithUnit
+                value={stockInvestmentValue.value}
+                unit="$"
+                inputProps={{
+                  type: 'number',
+                  inputMode: 'numeric',
+                  id: 'historicalSuccess_stockInvestmentValue'
+                }}
+                onChange={value =>
+                  this.updateValue('stockInvestmentValue', value)
+                }
+                unitOptions={['$', '%']}
+                formatValue={formatNumber}
+              />
+            </div>
+            <label className="historicalSuccess-label">
+              First Year Withdrawal
+            </label>
+            <div className="historicalSuccess-inputContainer">
+              <InputWithUnit
+                value={firstYearWithdrawal.value}
+                unit="$"
+                inputProps={{
+                  type: 'number',
+                  inputMode: 'numeric',
+                  id: 'inflationAdjusted_firstYearWithdrawal'
+                }}
+                onChange={value =>
+                  this.updateValue('firstYearWithdrawal', value)
+                }
+                unitOptions={['$', '%']}
+                formatValue={formatNumber}
+              />
+            </div>
+            <label className="historicalSuccess-label">Duration</label>
+            <div className="historicalSuccess-inputContainer">
+              <InputWithUnit
+                value={duration.value}
+                unit="Years"
+                inputProps={{
+                  type: 'number',
+                  inputMode: 'numeric',
+                  id: 'inflationAdjusted_duration'
+                }}
+                onChange={value => this.updateValue('duration', value)}
+                unitOptions={['$', '%']}
+                formatValue={formatYears}
+              />
+            </div>
+          </div>
+
+          <div>Success rate: {result.successRate}</div>
+          <div>Dip rate: {result.dipRate}</div>
+          <div>
+            Lowest dipped value:{' '}
+            {`$${Number(result.lowestDippedValue.value).toFixed(2)}`} in{' '}
+            {result.lowestDippedValue.year} starting in{' '}
+            {result.lowestDippedValue.startYear}
+          </div>
         </div>
-        <label className="historicalSuccess-label">First Year Withdrawal</label>
-        <div className="historicalSuccess-inputContainer">
-          <InputWithUnit
-            value={firstYearWithdrawal.value}
-            unit="$"
-            inputProps={{
-              type: 'number',
-              inputMode: 'numeric',
-              id: 'inflationAdjusted_firstYearWithdrawal'
-            }}
-            onChange={value => this.updateValue('firstYearWithdrawal', value)}
-            unitOptions={['$', '%']}
-            formatValue={formatNumber}
-          />
-        </div>
-        <label className="historicalSuccess-label">Duration</label>
-        <div className="historicalSuccess-inputContainer">
-          <InputWithUnit
-            value={duration.value}
-            unit="Years"
-            inputProps={{
-              type: 'number',
-              inputMode: 'numeric',
-              id: 'inflationAdjusted_duration'
-            }}
-            onChange={value => this.updateValue('duration', value)}
-            unitOptions={['$', '%']}
-            formatValue={formatYears}
-          />
-        </div>
-        <div>Success rate: {result.successRate}</div>
-        <div>Dip rate: {result.dipRate}</div>
-        <div>
-          Lowest dipped value:{' '}
-          {`$${Number(result.lowestDippedValue.value).toFixed(2)}`} in{' '}
-          {result.lowestDippedValue.year} starting in{' '}
-          {result.lowestDippedValue.startYear}
-        </div>
+        <CalculatorResults />
       </div>
     );
   }

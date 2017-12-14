@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import './compound-interest.css';
 import computeCompoundInterest from './utils/compute-compound-interest';
 
 // These return `undefined` if validation succeeds. Otherwise,
@@ -56,80 +55,82 @@ export default class CompoundInterest extends Component {
     return (
       <form className="compoundInterest calculatorPage">
         <h1 className="primaryHeader">Compound Interest</h1>
-        <div className="compoundInterest-inputContainer">
-          <div className="compountInterest-value">
-            <label
-              className="compoundInterest-label"
-              htmlFor="compoundInterest_principal">
-              Principal
-            </label>
-            <input
-              id="compoundInterest_principal"
-              className="compoundInterest-input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('principal', event.target.value)
-              }
-              value={principal.value}
-            />
+        <div className="calculatorPage-contents">
+          <div className="compoundInterest-inputContainer">
+            <div className="compountInterest-value">
+              <label
+                className="compoundInterest-label"
+                htmlFor="compoundInterest_principal">
+                Principal
+              </label>
+              <input
+                id="compoundInterest_principal"
+                className="compoundInterest-input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('principal', event.target.value)
+                }
+                value={principal.value}
+              />
+            </div>
+            <div className="compountInterest-value">
+              <label
+                className="compoundInterest-label"
+                htmlFor="compoundInterest_annualContribution">
+                Annual Contribution
+              </label>
+              <input
+                id="compoundInterest_annualContribution"
+                className="compoundInterest-input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('annualContribution', event.target.value)
+                }
+                value={annualContribution.value}
+              />
+            </div>
+            <div className="compountInterest-value">
+              <label
+                className="compoundInterest-label"
+                htmlFor="compoundInterest_numberOfYears">
+                Number of Years
+              </label>
+              <input
+                id="compoundInterest_numberOfYears"
+                className="compoundInterest-input"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                onChange={event =>
+                  this.updateValue('numberOfYears', event.target.value)
+                }
+                value={numberOfYears.value}
+              />
+            </div>
+            <div className="compountInterest-value">
+              <label
+                className="compoundInterest-label"
+                htmlFor="compoundInterest_interestRate">
+                Interest Rate
+              </label>
+              <input
+                id="compoundInterest_interestRate"
+                className="compoundInterest-input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('interestRate', event.target.value)
+                }
+                value={interestRate.value}
+              />
+            </div>
           </div>
-          <div className="compountInterest-value">
-            <label
-              className="compoundInterest-label"
-              htmlFor="compoundInterest_annualContribution">
-              Annual Contribution
-            </label>
-            <input
-              id="compoundInterest_annualContribution"
-              className="compoundInterest-input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('annualContribution', event.target.value)
-              }
-              value={annualContribution.value}
-            />
+          <div className="compoundInterest-result">
+            <div className="compoundInterest-label">Result</div>
+            <div className="compoundInterest-input">{result}</div>
           </div>
-          <div className="compountInterest-value">
-            <label
-              className="compoundInterest-label"
-              htmlFor="compoundInterest_numberOfYears">
-              Number of Years
-            </label>
-            <input
-              id="compoundInterest_numberOfYears"
-              className="compoundInterest-input"
-              type="number"
-              inputMode="numeric"
-              min="0"
-              onChange={event =>
-                this.updateValue('numberOfYears', event.target.value)
-              }
-              value={numberOfYears.value}
-            />
-          </div>
-          <div className="compountInterest-value">
-            <label
-              className="compoundInterest-label"
-              htmlFor="compoundInterest_interestRate">
-              Interest Rate
-            </label>
-            <input
-              id="compoundInterest_interestRate"
-              className="compoundInterest-input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('interestRate', event.target.value)
-              }
-              value={interestRate.value}
-            />
-          </div>
-        </div>
-        <div className="compoundInterest-result">
-          <div className="compoundInterest-label">Result</div>
-          <div className="compoundInterest-input">{result}</div>
         </div>
       </form>
     );
