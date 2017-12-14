@@ -50,7 +50,8 @@ export default class HistoricalSuccess extends Component {
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
 
     return (
-      <div className="historicalSuccess">
+      <div className="historicalSuccess calculatorPage">
+        <h1 className="primaryHeader">Historical Success</h1>
         <label className="historicalSuccess-label">
           Initial Portfolio Value
         </label>

@@ -54,7 +54,8 @@ export default class CompoundInterest extends Component {
     } = inputs;
 
     return (
-      <form className="compoundInterest">
+      <form className="compoundInterest calculatorPage">
+        <h1 className="primaryHeader">Compound Interest</h1>
         <div className="compoundInterest-inputContainer">
           <div className="compountInterest-value">
             <label

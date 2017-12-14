@@ -1,0 +1,36 @@
+.sideNav {
+  --_sideNavWidth: var(--sideNavWidth, 250px);
+  --_sideNavRightMargin: var(--sideNavRightMargin, 60px);
+
+  margin: var(--verticalMargins) var(--_sideNavRightMargin)
+    var(--verticalMargins) 0;
+  width: var(--_sideNavWidth);
+  min-width: var(--_sideNavWidth);
+  max-width: var(--_sideNavWidth);
+  flex: 0 0 var(--_sideNavWidth);
+}
+
+.sideNav-header {
+  margin: 0 0 15px 0;
+  font-size: 1.9rem;
+}
+
+.sideNav-headerLink {
+  color: #000;
+  text-decoration: none;
+}
+
+.sideNav-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sideNav-listItem {
+  margin-bottom: 15px;
+}
+
+.sideNav-link {
+  color: #333;
+  text-decoration: none;
+}

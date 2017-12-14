@@ -49,7 +49,8 @@ export default class InflationAdjusted extends Component {
     const { initialValue, startYear, endYear } = inputs;
 
     return (
-      <div className="inflationAdjusted">
+      <div className="inflationAdjusted calculatorPage">
+        <h1 className="primaryHeader">Inflation Adjusted</h1>
         <div>
           <label>Initial Value</label>
           <input
