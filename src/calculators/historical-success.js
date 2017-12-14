@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import './index.css';
-import getStartYears from './util/get-start-years';
-import computeCycle from './util/compute-cycle';
-import evaluateCycles from './util/evaluate-cycles';
-import { fromInvestments } from './util/normalize-portfolio';
+import './historical-success.css';
+import getStartYears from './utils/get-start-years';
+import computeCycle from './utils/compute-cycle';
+import evaluateCycles from './utils/evaluate-cycles';
+import { fromInvestments } from './utils/normalize-portfolio';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {

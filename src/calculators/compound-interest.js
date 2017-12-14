@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import './index.css';
-import computeCompoundInterest from './util/compute-compound-interest';
+import './compound-interest.css';
+import computeCompoundInterest from './utils/compute-compound-interest';
 
 // These return `undefined` if validation succeeds. Otherwise,
 // return a string that represents the error.

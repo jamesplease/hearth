@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LandingPage from './landing-page';
-import CompoundInterest from '../compound-interest';
-import HistoricalSuccess from '../historical-success';
-import InflationAdjusted from '../inflation-adjusted';
+import CompoundInterest from './compound-interest';
+import HistoricalSuccess from './historical-success';
+import InflationAdjusted from './inflation-adjusted';
 
 export default class Calculators extends Component {
   render() {
