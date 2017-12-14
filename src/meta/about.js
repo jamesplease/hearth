@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import './about.css';
 
 export default class About extends Component {
   render() {
     return (
-      <div className="aboutPage">
+      <div className="standardPage">
         <h1 className="primaryHeader">About</h1>
         <p className="appParagraph">
           Being financially independent or early retired comes with its own set

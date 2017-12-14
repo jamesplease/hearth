@@ -1,0 +1,36 @@
+.glossary-entry {
+  margin: 0 0 20px;
+  position: relative;
+}
+
+.glossary-entryTitle {
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.glossary-entryDescription {
+  margin: 0;
+  padding: 0;
+  font-size: 1.6rem;
+}
+
+.glossary-entryTitleLink {
+  margin-right: 5px;
+  position: absolute;
+  left: -20px;
+  padding-right: 5px;
+}
+
+.glossary-entryTitleLinkIcon {
+  visibility: hidden;
+  color: #777;
+}
+
+.glossary-entryTitleLink:hover .glossary-entryTitleLinkIcon {
+  visibility: visible;
+}
+
+.glossary-entryTitle:hover .glossary-entryTitleLinkIcon {
+  visibility: visible;
+}
