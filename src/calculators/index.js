@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import './index.css';
 import './common.css';
 import LandingPage from './landing-page';
 import CompoundInterest from './compound-interest';
@@ -14,7 +13,7 @@ export default class Calculators extends Component {
     const { match } = this.props;
 
     return (
-      <div className="calculatorsWrapper">
+      <div className="standardPage-contentWithSideNav">
         <Route path={`${match.url}/:foo+`} component={CalculatorNav} />
         <Switch>
           <Route exact path={`${match.url}`} component={LandingPage} />

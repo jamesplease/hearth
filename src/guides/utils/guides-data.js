@@ -1,5 +1,10 @@
 export default [
   {
+    name: 'What is FIRE?',
+    url: '/fire',
+    description: 'What is this FIRE thing, anyway? Learn all about it here.'
+  },
+  {
     name: 'Glossary',
     url: '/glossary',
     description:
@@ -13,7 +18,7 @@ export default [
   },
   {
     name: 'Roth IRA Conversion Pipeline',
-    url: '/mega-backdoor-roth',
+    url: '/roth-ira-conversion-pipeline',
     description: 'Access your tax-advantaged funds earlier using this strategy.'
   }
 ];
