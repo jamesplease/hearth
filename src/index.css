@@ -5,27 +5,23 @@
   --appWidth: 940px;
   --baseFontSize: 10px;
   --horizontalContentPadding: 20px;
+  --standardVerticalPadding: 30px;
   --fontColor: #222;
   --borderColor: #ddd;
   --accentColor: #66bff9;
+  --backgroundColor: #f6f6f6;
 }
 
 html,
 body {
   height: 100%;
+  background-color: var(--backgroundColor);
 }
 
 /* This is the root node of the React application */
 #root {
-  width: var(--appWidth);
   margin: 0 auto;
   min-height: 100%;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    'header'
-    'content'
-    'footer';
+  display: flex;
+  flex-direction: column;
 }

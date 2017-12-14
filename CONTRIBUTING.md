@@ -11,8 +11,8 @@ to help you get set up.
 Hearth is a JavaScript web app. To run it locally, you'll need to install the following
 prerequisites:
 
-- [Node.js v8](https://nodejs.org/en/)
-- [npm v5](https://www.npmjs.com)
+* [Node.js v8](https://nodejs.org/en/)
+* [npm v5](https://www.npmjs.com)
 
 ### Installation
 
@@ -26,6 +26,12 @@ Then, navigate into the repository directory and install the dependencies:
 
 ```
 npm install
+```
+
+Lastly, build the market data:
+
+```
+npm run build-data
 ```
 
 ### Getting Started

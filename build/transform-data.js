@@ -2,11 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 const chalk = require('chalk');
+const mkdirp = require('mkdirp');
 
 const SOURCE_DIRECTORY = path.join(__dirname, '..', 'data');
 const SOURCE_FILENAME = 'ie_data.csv';
 
-const DESTINATION_DIRECTORY = path.join(__dirname, '..', 'src', 'common', 'data');
+const DESTINATION_DIRECTORY = path.join(
+  __dirname,
+  '..',
+  'src',
+  'common',
+  'data'
+);
 const DESTINATION_FILENAME = 'market-data.json';
 
 const marketDataFileLoc = path.join(SOURCE_DIRECTORY, SOURCE_FILENAME);
@@ -24,7 +31,7 @@ const HEADER_LINE = _.findIndex(marketDataArray, val => val[0] === 'Date');
 const FIRST_DATA_LINE = HEADER_LINE + 1;
 
 // The total number of rows that contain market data
-const DATA_ROW_COUNT = (marketDataArray.length - 1) - FIRST_DATA_LINE;
+const DATA_ROW_COUNT = marketDataArray.length - 1 - FIRST_DATA_LINE;
 
 // This is a mapping that represents the names of the columns on the chart
 const attributeNames = [
@@ -38,7 +45,10 @@ const attributeNames = [
   { displayName: 'Real Price', key: 'realPrice' },
   { displayName: 'Real Dividend', key: 'realDividend' },
   { displayName: 'Real Earnings', key: 'realEarnings' },
-  { displayName: 'Cyclically Adjusted Price Earnings Ratio (P/E10) or (CAPE)', key: 'cape' }
+  {
+    displayName: 'Cyclically Adjusted Price Earnings Ratio (P/E10) or (CAPE)',
+    key: 'cape'
+  }
 ];
 
 const dataByYear = {};
@@ -53,26 +63,30 @@ const labeledData = _.chain(dataRows)
 
     // This converts the array form of the row to be an object with keys mapped
     // to the `attributeNames` above
-    const labeledRow = _.reduce(dataRow, (result, columnEntry, columnIndex) => {
-      // First, we get the "key" for this column from the attribute names array above
-      const columnName = attributeNames[columnIndex].key;
+    const labeledRow = _.reduce(
+      dataRow,
+      (result, columnEntry, columnIndex) => {
+        // First, we get the "key" for this column from the attribute names array above
+        const columnName = attributeNames[columnIndex].key;
 
-      if (columnName === 'date' && columnEntry) {
-        // For dates, we also store the month and year separately
-        const dateInformation = columnEntry.split('.');
-        result.year = dateInformation[0];
-        result.month = dateInformation[1];
-      } else if (columnName === 'dateFraction') {
-        // The fraction contains the year as well, so we store an extra field that's just
-        // the fractional value
-        const fractionInformation = columnEntry.split('.');
-        result.dateFractionDecimal = fractionInformation[1];
-      }
+        if (columnName === 'date' && columnEntry) {
+          // For dates, we also store the month and year separately
+          const dateInformation = columnEntry.split('.');
+          result.year = dateInformation[0];
+          result.month = dateInformation[1];
+        } else if (columnName === 'dateFraction') {
+          // The fraction contains the year as well, so we store an extra field that's just
+          // the fractional value
+          const fractionInformation = columnEntry.split('.');
+          result.dateFractionDecimal = fractionInformation[1];
+        }
 
-      // '\r' appears in every CAPE column, so we swap that out
-      result[columnName] = columnEntry.replace('\r', '');
-      return result;
-    }, {});
+        // '\r' appears in every CAPE column, so we swap that out
+        result[columnName] = columnEntry.replace('\r', '');
+        return result;
+      },
+      {}
+    );
 
     // Sometimes, there are placeholder or empty rows. We check the date column
     // to see if that's the case
@@ -85,6 +99,9 @@ const labeledData = _.chain(dataRows)
 
 // This stringified data is what we will store on the filesystem
 const marketDataJson = JSON.stringify(labeledData);
+
+// Ensure the destination directory exists
+mkdirp.sync(DESTINATION_DIRECTORY);
 
 // Lastly, save the transformed data
 const destFileLoc = path.join(DESTINATION_DIRECTORY, DESTINATION_FILENAME);

@@ -10,7 +10,7 @@
 }
 
 .nav-navListItem {
-  font-weight: bold;
+  font-weight: 600;
   margin-right: 40px;
 }
 
@@ -21,6 +21,10 @@
 .nav-navListLink {
   color: var(--fontColor);
   text-decoration: none;
+}
+
+.nav-navListLink:hover {
+  color: var(--accentColor);
 }
 
 .nav-navListLink_active {

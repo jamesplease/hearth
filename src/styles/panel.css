@@ -1,0 +1,22 @@
+.panel {
+  background: #fff;
+  border-radius: 3px;
+  padding: 13px 20px;
+}
+
+.panelContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.panel-header {
+  margin: 0 0 10px;
+}
+
+.panel-headerLink {
+  font-weight: 600;
+  color: var(--accentColor);
+  text-decoration: none;
+  font-size: 2rem;
+}

@@ -1,4 +1,6 @@
 .app-body {
-  grid-area: content;
-  padding-right: var(--horizontalContentPadding);
+  width: var(--appWidth);
+  padding: 0 var(--horizontalContentPadding);
+  margin: 0 auto;
+  flex: 1;
 }

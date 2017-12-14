@@ -5,7 +5,9 @@ export default class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        Copyright © Hearth 2017. All rights reserved.
+        <div className="footerContent">
+          Copyright © Hearth 2017. All rights reserved.
+        </div>
       </footer>
     );
   }

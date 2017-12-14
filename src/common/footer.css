@@ -1,7 +1,11 @@
 .footer {
-  grid-area: footer;
-  padding: 15px var(--horizontalContentPadding);
+  border-top: 1px solid #ddd;
+}
+
+.footerContent {
   font-size: 1.3rem;
   color: #999;
-  border-top: 1px solid #ddd;
+  padding: 15px var(--horizontalContentPadding);
+  width: var(--appWidth);
+  margin: 0 auto;
 }
