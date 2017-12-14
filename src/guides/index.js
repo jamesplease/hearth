@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import LandingPage from './landing-page';
+import NotFound from '../common/not-found';
 
 export default class Guides extends Component {
   render() {
@@ -8,7 +9,10 @@ export default class Guides extends Component {
 
     return (
       <div>
-        <Route exact path={`${match.url}`} component={LandingPage} />
+        <Switch>
+          <Route exact path={`${match.url}`} component={LandingPage} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     );
   }

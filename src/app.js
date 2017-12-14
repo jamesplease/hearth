@@ -4,6 +4,7 @@ import './app.css';
 import Home from './common/home';
 import Header from './common/header';
 import Footer from './common/footer';
+import NotFound from './common/not-found';
 import Calculators from './calculators';
 import DataSources from './data-sources';
 import Guides from './guides';
@@ -20,8 +21,9 @@ export default class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path="/calculators" component={Calculators} />
               <Route path="/guides" component={Guides} />
-              <Route path="/data-sources" component={DataSources} />
-              <Route path="/about" component={About} />
+              <Route exact path="/data-sources" component={DataSources} />
+              <Route exact path="/about" component={About} />
+              <Route component={NotFound} />
             </Switch>
           </div>
           <Footer />

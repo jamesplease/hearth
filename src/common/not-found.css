@@ -1,0 +1,5 @@
+.notFound {
+  margin: var(--standardVerticalPadding) 0;
+  text-align: center;
+  font-size: 1.6rem;
+}

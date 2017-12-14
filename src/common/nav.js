@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './nav.css';
 
 const navItems = [
@@ -25,9 +25,12 @@ export default class Nav extends Component {
           {navItems.map(navItem => {
             return (
               <li className="nav-navListItem" key={navItem.key}>
-                <Link to={`/${navItem.key}`} className="nav-navListLink">
+                <NavLink
+                  to={`/${navItem.key}`}
+                  className="nav-navListLink"
+                  activeClassName="nav-navListLink_active">
                   {navItem.label}
-                </Link>
+                </NavLink>
               </li>
             );
           })}

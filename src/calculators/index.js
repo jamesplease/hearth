@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './index.css';
 import './common.css';
@@ -7,6 +7,7 @@ import CompoundInterest from './compound-interest';
 import HistoricalSuccess from './historical-success';
 import InflationAdjusted from './inflation-adjusted';
 import CalculatorNav from './calculator-nav';
+import NotFound from '../common/not-found';
 
 export default class Calculators extends Component {
   render() {
@@ -29,6 +30,7 @@ export default class Calculators extends Component {
             path={`${match.url}/inflation-adjusted`}
             component={InflationAdjusted}
           />
+          <Route component={NotFound} />
         </Switch>
       </div>
     );
