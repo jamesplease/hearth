@@ -9,6 +9,10 @@ import CalculatorResults from './calculator-results';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
+  if (typeof val === 'string' && val.length === 0) {
+    return 'Empty';
+  }
+
   const valueToVerify = Number(val);
 
   if (!_.isFinite(valueToVerify)) {
