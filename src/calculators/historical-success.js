@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import './historical-success.css';
 import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
@@ -69,6 +70,10 @@ export default class HistoricalSuccess extends Component {
 
     return (
       <div className="historicalSuccess calculatorPage">
+        <Link to="/calculators" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Calculators
+        </Link>
         <h1 className="primaryHeader">Historical Success</h1>
         <div className="panel calculatorPage-contents">
           <div className="calculatorPage-twoColumn">

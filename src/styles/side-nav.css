@@ -10,6 +10,12 @@
   flex: 0 0 var(--_sideNavWidth);
 }
 
+@media (max-width: 650px) {
+  .sideNav {
+    display: none;
+  }
+}
+
 .sideNav-header {
   margin: 0 0 15px 10px;
   font-size: 1.9rem;

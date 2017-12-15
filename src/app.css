@@ -1,5 +1,5 @@
 .app-body {
-  width: var(--appWidth);
+  max-width: var(--maxAppWidth);
   padding: 0 var(--horizontalContentPadding);
   margin: 0 auto;
   flex: 1;

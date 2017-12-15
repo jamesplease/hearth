@@ -6,6 +6,6 @@
   font-size: 1.3rem;
   color: #999;
   padding: 15px var(--horizontalContentPadding);
-  width: var(--appWidth);
+  max-width: var(--maxAppWidth);
   margin: 0 auto;
 }
