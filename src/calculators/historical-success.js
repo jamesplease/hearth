@@ -5,7 +5,6 @@ import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
-import CalculatorResults from './calculator-results';
 import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
@@ -57,7 +56,7 @@ export default class HistoricalSuccess extends Component {
     return (
       <div className="historicalSuccess calculatorPage">
         <h1 className="primaryHeader">Historical Success</h1>
-        <div className="calculatorPage-contents">
+        <div className="panel calculatorPage-contents">
           <div className="historicalSuccess_contents">
             <label className="historicalSuccess-label">
               Initial Portfolio Value
@@ -113,7 +112,8 @@ export default class HistoricalSuccess extends Component {
               />
             </div>
           </div>
-
+        </div>
+        <div className="panel">
           <div>Success rate: {result.successRate}</div>
           <div>Dip rate: {result.dipRate}</div>
           <div>
@@ -123,7 +123,6 @@ export default class HistoricalSuccess extends Component {
             {result.lowestDippedValue.startYear}
           </div>
         </div>
-        <CalculatorResults />
       </div>
     );
   }

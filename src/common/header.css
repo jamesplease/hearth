@@ -2,7 +2,7 @@
   --headerHeight: 50px;
   border-bottom: 1px solid var(--borderColor);
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(122, 122, 122, 0.15);
+  box-shadow: 0 1px 4px rgba(122, 122, 122, 0.15);
 }
 
 .header-content {

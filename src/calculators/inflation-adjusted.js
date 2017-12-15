@@ -51,7 +51,7 @@ export default class InflationAdjusted extends Component {
     return (
       <div className="inflationAdjusted calculatorPage">
         <h1 className="primaryHeader">Inflation Adjusted</h1>
-        <div className="calculatorPage-contents">
+        <div className="panel calculatorPage-contents">
           <div>
             <label>Initial Value</label>
             <input
@@ -88,8 +88,8 @@ export default class InflationAdjusted extends Component {
               value={endYear.value}
             />
           </div>
-          <div>Result: {result}</div>
         </div>
+        <div className="panel">Result: {result}</div>
       </div>
     );
   }
