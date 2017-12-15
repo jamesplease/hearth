@@ -48,16 +48,30 @@ function formatYears(val) {
   return `${val} Years`;
 }
 
+const successSummaryMap = {
+  SUCCESSFUL: 'This portfolio and withdrawal rate succeeded most of the time.',
+  MODERATE: 'This portfolio and withdrawal rate succeeded some of the time.',
+  UNSUCCESSFUL: 'This portfolio and withdrawal rate frequently failed.'
+};
+
 export default class HistoricalSuccess extends Component {
   render() {
     const { inputs, result } = this.state;
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
+    const { summary } = result;
+
+    let summaryText;
+    if (summary) {
+      summaryText = successSummaryMap[summary];
+    } else {
+      summaryText = '';
+    }
 
     return (
       <div className="historicalSuccess calculatorPage">
         <h1 className="primaryHeader">Historical Success</h1>
         <div className="panel calculatorPage-contents">
-          <div className="historicalSuccess_contents">
+          <div className="calculatorPage-twoColumn">
             <label className="historicalSuccess-label">
               Initial Portfolio Value
             </label>
@@ -113,15 +127,8 @@ export default class HistoricalSuccess extends Component {
             </div>
           </div>
         </div>
-        <div className="panel">
-          <div>Success rate: {result.successRate}</div>
-          <div>Dip rate: {result.dipRate}</div>
-          <div>
-            Lowest dipped value:{' '}
-            {`$${Number(result.lowestDippedValue.value).toFixed(2)}`} in{' '}
-            {result.lowestDippedValue.year} starting in{' '}
-            {result.lowestDippedValue.startYear}
-          </div>
+        <div className="panel calculatorPage-expandingResult">
+          <div>{summaryText}</div>
         </div>
       </div>
     );
@@ -150,6 +157,7 @@ export default class HistoricalSuccess extends Component {
     result: {
       successRate: '',
       dipRate: '',
+      summary: '',
       lowestDippedValue: {
         year: '',
         startYear: '',
@@ -255,10 +263,23 @@ export default class HistoricalSuccess extends Component {
     const results = evaluateCycles({ cycles });
     const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
     const successRate = `${(results.successRate * 100).toFixed(2)}%`;
+    const summary = this.computeSummary(results.successRate);
+
     return {
+      summary,
       dipRate,
       successRate,
       lowestDippedValue: results.lowestDippedValue
     };
+  };
+
+  computeSummary = successRate => {
+    if (successRate > 0.95) {
+      return 'SUCCESSFUL';
+    } else if (successRate > 0.85) {
+      return 'MODERATE';
+    } else {
+      return 'UNSUCCESSFUL';
+    }
   };
 }

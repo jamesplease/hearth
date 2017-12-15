@@ -13,11 +13,17 @@ body {
 .heroText {
   font-size: 4rem;
   text-align: center;
-  margin: 200px 0;
+  margin: 200px 0 50px;
 }
 
 .primaryHeader {
   font-size: 2.7rem;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+.secondaryHeader {
+  font-size: 2rem;
   margin: 0 0 15px;
   padding: 0;
 }
@@ -40,4 +46,8 @@ body {
   max-width: 650px;
   font-size: 1.6rem;
   line-height: 2.8rem;
+}
+
+.centeredText {
+  text-align: center;
 }

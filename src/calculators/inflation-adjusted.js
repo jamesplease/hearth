@@ -52,7 +52,7 @@ export default class InflationAdjusted extends Component {
       <div className="inflationAdjusted calculatorPage">
         <h1 className="primaryHeader">Inflation Adjusted</h1>
         <div className="panel calculatorPage-contents">
-          <div>
+          <div className="calculatorPage-twoColumn">
             <label>Initial Value</label>
             <input
               id="inflationAdjusted_initialValue"
@@ -63,8 +63,6 @@ export default class InflationAdjusted extends Component {
               }
               value={initialValue.value}
             />
-          </div>
-          <div>
             <label>Start Year</label>
             <input
               id="inflationAdjusted_startYear"
@@ -75,8 +73,6 @@ export default class InflationAdjusted extends Component {
               }
               value={startYear.value}
             />
-          </div>
-          <div>
             <label>End Year</label>
             <input
               id="inflationAdjusted_endYear"
@@ -89,7 +85,7 @@ export default class InflationAdjusted extends Component {
             />
           </div>
         </div>
-        <div className="panel">Result: {result}</div>
+        <div className="panel calculatorPage-result">{result}</div>
       </div>
     );
   }
@@ -171,6 +167,10 @@ export default class InflationAdjusted extends Component {
     const endCpi = marketData[endYear.value].cpi;
 
     const inflation = inflationFromCpi({ startCpi, endCpi });
-    return Number(initialValue.value) * inflation;
+    const rawNumber = Number(initialValue.value) * inflation;
+    return rawNumber.toLocaleString('en', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    });
   };
 }
