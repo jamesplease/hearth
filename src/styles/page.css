@@ -3,7 +3,7 @@
 }
 
 .standardPage-contentWithSideNav {
-  --verticalMargins: 40px;
+  --verticalMargins: 60px;
   --sideNavWidth: 250px;
   display: flex;
 }
