@@ -6,7 +6,6 @@ import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
-import InputWithUnit from '../inputs/input-with-unit';
 
 function isNumber(val) {
   if (typeof val === 'string' && val.length === 0) {
@@ -25,29 +24,6 @@ const validators = {
   firstYearWithdrawal: isNumber,
   duration: isNumber
 };
-
-function formatNumber(val, unit) {
-  const naiveNumber = Number(val);
-
-  if (!_.isFinite(naiveNumber)) {
-    return 'Number required';
-  }
-
-  const number = Number(val).toLocaleString('en', {
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0
-  });
-
-  if (unit === '$') {
-    return `${unit}${number}`;
-  } else {
-    return `${number}${unit}`;
-  }
-}
-
-function formatYears(val) {
-  return `${val} Years`;
-}
 
 const successSummaryMap = {
   SUCCESSFUL: 'This portfolio and withdrawal rate succeeded most of the time.',
@@ -87,8 +63,8 @@ export default class HistoricalSuccess extends Component {
                 type="number"
                 inputMode="numeric"
                 id="historicalSuccess_stockInvestmentValue"
-                onChange={value =>
-                  this.updateValue('stockInvestmentValue', value)
+                onChange={event =>
+                  this.updateValue('stockInvestmentValue', event.target.value)
                 }
               />
             </div>
@@ -102,8 +78,8 @@ export default class HistoricalSuccess extends Component {
                 type="number"
                 inputMode="numeric"
                 id="inflationAdjusted_firstYearWithdrawal"
-                onChange={value =>
-                  this.updateValue('firstYearWithdrawal', value)
+                onChange={event =>
+                  this.updateValue('firstYearWithdrawal', event.target.value)
                 }
               />
             </div>
@@ -115,7 +91,9 @@ export default class HistoricalSuccess extends Component {
                 type="number"
                 inputMode="numeric"
                 id="inflationAdjusted_duration"
-                onChange={value => this.updateValue('duration', value)}
+                onChange={event =>
+                  this.updateValue('duration', event.target.value)
+                }
               />
             </div>
           </div>
