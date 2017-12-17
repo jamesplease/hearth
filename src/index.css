@@ -2,10 +2,10 @@
 
 /* Setup CSS variables here */
 :root {
-  --maxAppWidth: 940px;
+  --maxAppWidth: 1024px;
   --baseFontSize: 10px;
   --horizontalContentPadding: 20px;
-  --standardVerticalPadding: 30px;
+  --standardVerticalPadding: 60px;
   --fontColor: #222;
   --borderColor: #ddd;
   --accentColor: #4d97ff;

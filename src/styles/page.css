@@ -4,7 +4,7 @@
 
 .standardPage-contentWithSideNav {
   --verticalMargins: 40px;
-  --sideNavWidth: 150px;
+  --sideNavWidth: 250px;
   display: flex;
 }
 

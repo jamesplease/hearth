@@ -1,5 +1,5 @@
 .sideNav {
-  --_sideNavWidth: var(--sideNavWidth, 250px);
+  --_sideNavWidth: var(--sideNavWidth, 300px);
   --_sideNavRightMargin: var(--sideNavRightMargin, 60px);
 
   margin: var(--verticalMargins) var(--_sideNavRightMargin)
@@ -10,14 +10,8 @@
   flex: 0 0 var(--_sideNavWidth);
 }
 
-@media (max-width: 650px) {
-  .sideNav {
-    display: none;
-  }
-}
-
 .sideNav-header {
-  margin: 0 0 15px 10px;
+  margin: 0 0 15px;
   font-size: 1.9rem;
 }
 
@@ -40,19 +34,24 @@
   display: block;
   color: #333;
   text-decoration: none;
-  padding: 4px 10px;
+  padding: 4px 0;
   border-radius: 3px;
 }
 
 .sideNav-link:hover {
-  background-color: #eee;
+  color: var(--primaryLinkColor);
 }
 
 .sideNav-link_active {
-  color: #111;
-  background-color: #e8e8e8;
+  color: var(--primaryLinkColor);
 }
 
 .sideNav-link_active:hover {
-  background-color: #e0e0e0;
+  color: var(--primaryLinkColor);
+}
+
+@media (max-width: 650px) {
+  .sideNav {
+    display: none;
+  }
 }

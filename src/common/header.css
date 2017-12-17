@@ -1,5 +1,5 @@
 .header {
-  --headerHeight: 50px;
+  --headerHeight: 55px;
   border-bottom: 1px solid var(--borderColor);
   background-color: #fff;
   box-shadow: 0 1px 4px rgba(122, 122, 122, 0.15);
@@ -27,6 +27,10 @@
 }
 
 @media (max-width: 650px) {
+  .header {
+    --headerHeight: 50px;
+  }
+
   .header-title {
     margin: 0 auto;
   }
