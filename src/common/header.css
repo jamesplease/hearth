@@ -1,12 +1,12 @@
 .header {
-  --headerHeight: 50px;
+  --headerHeight: 55px;
   border-bottom: 1px solid var(--borderColor);
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(122, 122, 122, 0.15);
+  box-shadow: 0 1px 4px rgba(122, 122, 122, 0.15);
 }
 
 .header-content {
-  width: var(--appWidth);
+  max-width: var(--maxAppWidth);
   padding: 0 var(--horizontalContentPadding);
   margin: 0 auto;
   display: flex;
@@ -24,4 +24,18 @@
 .header-titleLink {
   text-decoration: none;
   color: var(--fontColor);
+}
+
+@media (max-width: 650px) {
+  .header {
+    --headerHeight: 50px;
+  }
+
+  .header-title {
+    margin: 0 auto;
+  }
+
+  .header .nav {
+    display: none;
+  }
 }

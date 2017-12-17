@@ -2,14 +2,21 @@
 
 /* Setup CSS variables here */
 :root {
-  --appWidth: 940px;
+  --maxAppWidth: 1024px;
   --baseFontSize: 10px;
   --horizontalContentPadding: 20px;
-  --standardVerticalPadding: 30px;
+  --standardVerticalPadding: 60px;
   --fontColor: #222;
   --borderColor: #ddd;
-  --accentColor: #66bff9;
+  --accentColor: #4d97ff;
+  --primaryLinkColor: #c45184;
   --backgroundColor: #f6f6f6;
+}
+
+@media (max-width: 650px) {
+  :root {
+    --standardVerticalPadding: 20px;
+  }
 }
 
 *,

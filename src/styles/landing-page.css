@@ -5,3 +5,13 @@
 .landingPage-introduction {
   margin-bottom: 45px;
 }
+
+@media (max-width: 650px) {
+  .landingPage {
+    padding: 20px 0;
+  }
+
+  .landingPage-introduction {
+    margin-bottom: 20px;
+  }
+}

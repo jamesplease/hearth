@@ -2,6 +2,9 @@
   background: #fff;
   border-radius: 3px;
   padding: 13px 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-size: 1.6rem;
+  line-height: 2.5rem;
 }
 
 .panelContainer {
@@ -16,7 +19,13 @@
 
 .panel-headerLink {
   font-weight: 600;
-  color: var(--accentColor);
+  color: var(--fontColor);
   text-decoration: none;
   font-size: 2rem;
+}
+
+@media (max-width: 650px) {
+  .panelContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

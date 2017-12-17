@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import './glossary.css';
@@ -30,8 +30,8 @@ export default class Glossary extends Component {
         <h1 className="primaryHeader">Glossary</h1>
         <div className="glossary-contents">
           {sortedGlossaryData.map(({ term, description, hash }) => (
-            <div className="glossary-entry" key={term} id={hash}>
-              <h2 className="glossary-entryTitle">
+            <Fragment key={term}>
+              <h2 className="glossary-entryTitle" id={hash}>
                 <Link
                   to={{
                     pathname: '/guides/glossary/',
@@ -43,7 +43,7 @@ export default class Glossary extends Component {
                 {term}
               </h2>
               <p className="glossary-entryDescription">{description}</p>
-            </div>
+            </Fragment>
           ))}
         </div>
       </div>

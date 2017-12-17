@@ -4,7 +4,48 @@
 }
 
 .calculatorPage-contents {
-  background-color: #fff;
-  border-radius: 3px;
-  padding: 15px 20px;
+  margin-bottom: 25px;
+}
+
+.calculatorPage-twoColumn {
+  display: grid;
+  grid-gap: 10px 15px;
+  grid-template-columns: 1fr 1fr;
+  max-width: 360px;
+}
+
+.calculatorPage-result,
+.calculatorPage-expandingResult {
+  text-align: center;
+  position: relative;
+  padding: 20px 20px;
+}
+
+.calculatorPage-result {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.calculatorPage-result:after {
+  content: 'RESULT';
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  color: #bbb;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.calculatorPage-expandingResult {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.calculatorPage .primaryHeader {
+  /*
+    We reduce the size of the header on calculators, since the main content of the page
+    is the form
+  */
+  font-size: 2.6rem;
 }

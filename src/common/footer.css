@@ -3,9 +3,15 @@
 }
 
 .footerContent {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   color: #999;
-  padding: 15px var(--horizontalContentPadding);
-  width: var(--appWidth);
+  padding: 20px var(--horizontalContentPadding);
+  max-width: var(--maxAppWidth);
   margin: 0 auto;
+}
+
+@media (max-width: 650px) {
+  .footer {
+    display: none;
+  }
 }

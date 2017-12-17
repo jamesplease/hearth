@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
@@ -50,11 +51,16 @@ export default class InflationAdjusted extends Component {
 
     return (
       <div className="inflationAdjusted calculatorPage">
+        <Link to="/calculators" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Calculators
+        </Link>
         <h1 className="primaryHeader">Inflation Adjusted</h1>
-        <div className="calculatorPage-contents">
-          <div>
+        <div className="panel calculatorPage-contents">
+          <div className="calculatorPage-twoColumn">
             <label>Initial Value</label>
             <input
+              className="input"
               id="inflationAdjusted_initialValue"
               type="number"
               inputMode="numeric"
@@ -63,10 +69,9 @@ export default class InflationAdjusted extends Component {
               }
               value={initialValue.value}
             />
-          </div>
-          <div>
             <label>Start Year</label>
             <input
+              className="input"
               id="inflationAdjusted_startYear"
               type="number"
               inputMode="numeric"
@@ -75,10 +80,9 @@ export default class InflationAdjusted extends Component {
               }
               value={startYear.value}
             />
-          </div>
-          <div>
             <label>End Year</label>
             <input
+              className="input"
               id="inflationAdjusted_endYear"
               type="number"
               inputMode="numeric"
@@ -88,8 +92,8 @@ export default class InflationAdjusted extends Component {
               value={endYear.value}
             />
           </div>
-          <div>Result: {result}</div>
         </div>
+        <div className="panel calculatorPage-result">{result}</div>
       </div>
     );
   }
@@ -171,6 +175,10 @@ export default class InflationAdjusted extends Component {
     const endCpi = marketData[endYear.value].cpi;
 
     const inflation = inflationFromCpi({ startCpi, endCpi });
-    return Number(initialValue.value) * inflation;
+    const rawNumber = Number(initialValue.value) * inflation;
+    return rawNumber.toLocaleString('en', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    });
   };
 }
