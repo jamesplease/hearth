@@ -2,9 +2,8 @@
   font-size: 2rem;
   padding: 10px 15px;
   color: #fff;
-  background: var(--accentColor);
+  background: var(--primaryLinkColor);
   text-decoration: none;
-  border: 1px solid var(--accentColor);
   border-radius: 8px;
   font-weight: 600;
 }

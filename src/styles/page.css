@@ -7,3 +7,10 @@
   --sideNavWidth: 150px;
   display: flex;
 }
+
+@media (max-width: 650px) {
+  .standardPage-contentWithSideNav {
+    --verticalMargins: 15px;
+    display: block;
+  }
+}

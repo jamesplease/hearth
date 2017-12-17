@@ -10,7 +10,7 @@ export default class Header extends Component {
         <div className="header-content">
           <h1 className="header-title">
             <Link to="/" className="header-titleLink">
-              Hearth
+              <img src="/hearth-logo.svg" alt="Hearth" className="appLogo" />
             </Link>
           </h1>
           <Nav />

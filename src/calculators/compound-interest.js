@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
 
@@ -54,9 +55,13 @@ export default class CompoundInterest extends Component {
 
     return (
       <form className="compoundInterest calculatorPage">
+        <Link to="/calculators" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Calculators
+        </Link>
         <h1 className="primaryHeader">Compound Interest</h1>
         <div className="panel calculatorPage-contents">
-          <div className="compoundInterest-inputContainer calculatorPage-twoColumn">
+          <div className="inputContainer calculatorPage-twoColumn">
             <label
               className="compoundInterest-label"
               htmlFor="compoundInterest_principal">
@@ -64,7 +69,7 @@ export default class CompoundInterest extends Component {
             </label>
             <input
               id="compoundInterest_principal"
-              className="compoundInterest-input"
+              className="input"
               type="number"
               inputMode="numeric"
               onChange={event =>
@@ -79,7 +84,7 @@ export default class CompoundInterest extends Component {
             </label>
             <input
               id="compoundInterest_annualContribution"
-              className="compoundInterest-input"
+              className="input"
               type="number"
               inputMode="numeric"
               onChange={event =>
@@ -94,7 +99,7 @@ export default class CompoundInterest extends Component {
             </label>
             <input
               id="compoundInterest_numberOfYears"
-              className="compoundInterest-input"
+              className="input"
               type="number"
               inputMode="numeric"
               min="0"
@@ -110,7 +115,7 @@ export default class CompoundInterest extends Component {
             </label>
             <input
               id="compoundInterest_interestRate"
-              className="compoundInterest-input"
+              className="input"
               type="number"
               inputMode="numeric"
               onChange={event =>

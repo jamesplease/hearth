@@ -19,8 +19,9 @@ const navItems = [
 
 export default class Nav extends Component {
   render() {
+    const { className } = this.props;
     return (
-      <nav className="nav">
+      <nav className={`${className} nav`}>
         <ul className="nav-navList">
           {navItems.map(navItem => {
             return (

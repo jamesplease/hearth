@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
@@ -50,11 +51,16 @@ export default class InflationAdjusted extends Component {
 
     return (
       <div className="inflationAdjusted calculatorPage">
+        <Link to="/calculators" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Calculators
+        </Link>
         <h1 className="primaryHeader">Inflation Adjusted</h1>
         <div className="panel calculatorPage-contents">
           <div className="calculatorPage-twoColumn">
             <label>Initial Value</label>
             <input
+              className="input"
               id="inflationAdjusted_initialValue"
               type="number"
               inputMode="numeric"
@@ -65,6 +71,7 @@ export default class InflationAdjusted extends Component {
             />
             <label>Start Year</label>
             <input
+              className="input"
               id="inflationAdjusted_startYear"
               type="number"
               inputMode="numeric"
@@ -75,6 +82,7 @@ export default class InflationAdjusted extends Component {
             />
             <label>End Year</label>
             <input
+              className="input"
               id="inflationAdjusted_endYear"
               type="number"
               inputMode="numeric"

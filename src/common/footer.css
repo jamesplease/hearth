@@ -9,3 +9,9 @@
   max-width: var(--maxAppWidth);
   margin: 0 auto;
 }
+
+@media (max-width: 650px) {
+  .footer {
+    display: none;
+  }
+}

@@ -81,53 +81,41 @@ export default class HistoricalSuccess extends Component {
               Initial Portfolio Value
             </label>
             <div className="historicalSuccess-inputContainer">
-              <InputWithUnit
+              <input
                 value={stockInvestmentValue.value}
-                unit="$"
-                inputProps={{
-                  type: 'number',
-                  inputMode: 'numeric',
-                  id: 'historicalSuccess_stockInvestmentValue'
-                }}
+                className="input"
+                type="number"
+                inputMode="numeric"
+                id="historicalSuccess_stockInvestmentValue"
                 onChange={value =>
                   this.updateValue('stockInvestmentValue', value)
                 }
-                unitOptions={['$', '%']}
-                formatValue={formatNumber}
               />
             </div>
             <label className="historicalSuccess-label">
               First Year Withdrawal
             </label>
             <div className="historicalSuccess-inputContainer">
-              <InputWithUnit
+              <input
                 value={firstYearWithdrawal.value}
-                unit="$"
-                inputProps={{
-                  type: 'number',
-                  inputMode: 'numeric',
-                  id: 'inflationAdjusted_firstYearWithdrawal'
-                }}
+                className="input"
+                type="number"
+                inputMode="numeric"
+                id="inflationAdjusted_firstYearWithdrawal"
                 onChange={value =>
                   this.updateValue('firstYearWithdrawal', value)
                 }
-                unitOptions={['$', '%']}
-                formatValue={formatNumber}
               />
             </div>
             <label className="historicalSuccess-label">Duration</label>
             <div className="historicalSuccess-inputContainer">
-              <InputWithUnit
+              <input
                 value={duration.value}
-                unit="Years"
-                inputProps={{
-                  type: 'number',
-                  inputMode: 'numeric',
-                  id: 'inflationAdjusted_duration'
-                }}
+                className="input"
+                type="number"
+                inputMode="numeric"
+                id="inflationAdjusted_duration"
                 onChange={value => this.updateValue('duration', value)}
-                unitOptions={['$', '%']}
-                formatValue={formatYears}
               />
             </div>
           </div>

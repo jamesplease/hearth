@@ -1,5 +1,9 @@
 .nav {
-  padding-left: var(--horizontalContentPadding);
+  padding: 0 var(--horizontalContentPadding);
+}
+
+.nav_bottom {
+  display: none;
 }
 
 .nav-navList {
@@ -30,4 +34,38 @@
 .nav-navListLink_active,
 .nav-navListLink:hover {
   border-bottom-color: var(--accentColor);
+}
+
+@media (max-width: 650px) {
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    height: 50px;
+    border-top: 1px solid #ddd;
+  }
+
+  .nav_bottom {
+    display: block;
+  }
+
+  .nav-navList {
+    height: 100%;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  .nav-navListLink {
+    font-size: 1.4rem;
+    height: auto;
+    border-bottom: 0;
+    line-height: 50px;
+  }
+
+  .nav-navListLink_active,
+  .nav-navListLink:hover {
+    color: var(--primaryLinkColor);
+  }
 }

@@ -25,3 +25,13 @@
   text-decoration: none;
   color: var(--fontColor);
 }
+
+@media (max-width: 650px) {
+  .header-title {
+    margin: 0 auto;
+  }
+
+  .header .nav {
+    display: none;
+  }
+}

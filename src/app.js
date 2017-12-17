@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './app.css';
 import Home from './common/home';
 import Header from './common/header';
+import Nav from './common/nav';
 import Footer from './common/footer';
 import NotFound from './common/not-found';
 import Calculators from './calculators';
@@ -27,6 +28,7 @@ export default class App extends Component {
             </Switch>
           </div>
           <Footer />
+          <Nav className="nav_bottom" />
         </Fragment>
       </Router>
     );
