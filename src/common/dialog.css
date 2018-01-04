@@ -1,0 +1,91 @@
+.dialog {
+  --_dialog-transition-speed: var(--dialog-transition-speed, 300);
+  --_dialog-transition-speed-with-unit: calc(1ms * var(--_dialog-transition-speed));
+  --_dialog-text-color: var(--dialog-text-color, #212121);
+  --_min-height: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  pointer-events: none;
+  z-index: 9000;
+  color: var(--_dialog-text-color);
+}
+
+.dialog::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity var(--_dialog-transition-speed-with-unit) cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  pointer-events: none;
+}
+
+.dialog-active {
+  pointer-events: all;
+}
+
+.dialog-active::before {
+  opacity: 0.7;
+}
+
+.dialog_body {
+  pointer-events: none;
+  width: 80%;
+  max-width: 600px;
+  min-height: var(--_min-height);
+  border-radius: 3px;
+  background-color: #fff;
+  transform: translate3d(0, -40px, 0);
+  opacity: 0;
+  transition: opacity var(--_dialog-transition-speed-with-unit) cubic-bezier(0.4, 0, 0.2, 1), transform var(--_dialog-transition-speed-with-unit) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dialog_contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: var(--_min-height);
+}
+
+.dialog-active .dialog_body {
+  pointer-events: all;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.dialog_title {
+  min-height: 40px;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+}
+
+.dialog_title,
+.dialog_actions {
+  display: flex;
+  align-items: center;
+}
+
+.dialog_actions {
+  height: 50px;
+  padding: 0 3px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.dialog_content {
+  flex-grow: 1;
+  padding: 0 20px;
+}
