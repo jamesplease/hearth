@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './app.css';
+import ScrollToTop from './common/scroll-to-top';
 import Home from './common/home';
 import Header from './common/header';
 import Nav from './common/nav';
@@ -15,21 +16,23 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Fragment>
-          <Header />
-          <div className="app-body">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/calculators" component={Calculators} />
-              <Route path="/guides" component={Guides} />
-              <Route exact path="/data-sources" component={DataSources} />
-              <Route exact path="/about" component={About} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
-          <Footer />
-          <Nav isBottomNav={true}/>
-        </Fragment>
+        <ScrollToTop>
+          <Fragment>
+            <Header />
+            <div className="app-body">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/calculators" component={Calculators} />
+                <Route path="/guides" component={Guides} />
+                <Route exact path="/data-sources" component={DataSources} />
+                <Route exact path="/about" component={About} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+            <Footer />
+            <Nav isBottomNav={true} />
+          </Fragment>
+        </ScrollToTop>
       </Router>
     );
   }
