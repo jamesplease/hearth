@@ -28,7 +28,7 @@ export default class App extends Component {
             </Switch>
           </div>
           <Footer />
-          <Nav className="nav_bottom" />
+          <Nav isBottomNav={true}/>
         </Fragment>
       </Router>
     );

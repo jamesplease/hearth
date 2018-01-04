@@ -61,23 +61,28 @@ export default class CompoundInterest extends Component {
         </Link>
         <h1 className="primaryHeader">Compound Interest</h1>
         <div className="panel calculatorPage-contents">
-          <div className="inputContainer calculatorPage-twoColumn calculatorPage_calculator">
-            <label
-              className="compoundInterest-label"
-              htmlFor="compoundInterest_principal">
-              Principal
-            </label>
-            <div>
-              <input
-                id="compoundInterest_principal"
-                className="input"
-                type="number"
-                inputMode="numeric"
-                onChange={event =>
-                  this.updateValue('principal', event.target.value)
-                }
-                value={principal.value}
-              />
+          <div className="inputContainer calculatorPage_calculator">
+            <div className="calculatorPage-inputContainer">
+              <label
+                className="compoundInterest-label"
+                htmlFor="compoundInterest_principal">
+                Principal
+              </label>
+              <div>
+                <input
+                  id="compoundInterest_principal"
+                  className="input"
+                  type="number"
+                  inputMode="numeric"
+                  onChange={event =>
+                    this.updateValue('principal', event.target.value)
+                  }
+                  value={principal.value}
+                />
+              </div>
+              <div className="calculatorPage-error">
+                You mezzed up man
+              </div>
             </div>
             <label
               className="compoundInterest-label"
