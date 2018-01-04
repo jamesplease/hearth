@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class FireGuide extends Component {
   render() {
     return (
       <div className="standardPage">
+        <Link to="/guides" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Guides
+        </Link>
         <h1 className="primaryHeader">What is FIRE?</h1>
         <p className="appParagraph">
           FIRE is an acronym that stands for "Financial Independence, Retire

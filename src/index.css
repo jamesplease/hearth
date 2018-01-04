@@ -4,6 +4,7 @@
 :root {
   --maxAppWidth: 1024px;
   --baseFontSize: 10px;
+  --headerHeight: 50px;
   --horizontalContentPadding: 20px;
   --standardVerticalPadding: 60px;
   --fontColor: #222;
@@ -37,4 +38,10 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 650px) {
+  #root {
+    margin-top: 50px;
+  }
 }

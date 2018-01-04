@@ -1,5 +1,4 @@
 .header {
-  --headerHeight: 50px;
   border-bottom: 1px solid var(--borderColor);
   background-color: #fafafa;
 }
@@ -29,6 +28,13 @@
 @media (max-width: 650px) {
   .header-title {
     margin: 0 auto;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 
   .header .nav {

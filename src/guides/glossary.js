@@ -27,6 +27,10 @@ export default class Glossary extends Component {
 
     return (
       <div className="standardPage">
+        <Link to="/guides" className="navBackLink">
+          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          Guides
+        </Link>
         <h1 className="primaryHeader">Glossary</h1>
         <div className="glossary-contents">
           {sortedGlossaryData.map(({ term, description, hash }) => (
