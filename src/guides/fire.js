@@ -43,7 +43,7 @@ export default class FireGuide extends Component {
         </p>
         <p className="appParagraph">
           As a result of this, many Americans are not currently on a path to
-          FIRE. The neat thing is that FIRE is an option for many of us. The
+          FIRE. The neat thing is that FIRE is an option for many of them. The
           thing holding them back is that they don't know that it exists!
         </p>
         <h1 className="secondaryHeader">This sounds impossible</h1>
@@ -57,8 +57,8 @@ export default class FireGuide extends Component {
         <h1 className="secondaryHeader">Hearth</h1>
         <p className="appParagraph">
           That's where this website comes in. This website has guides and
-          information to help you learn about FIRE, to get started with FIRE, or
-          to live a successful FIRE'd life.
+          information to help you learn about FIRE, to get started with FIRE,
+          and tools to help you live a successful FIRE'd life.
         </p>
       </div>
     );
