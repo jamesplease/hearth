@@ -4,13 +4,20 @@
 
 .standardPage-contentWithSideNav {
   --verticalMargins: 60px;
-  --sideNavWidth: 250px;
+  --sideNavWidth: 200px;
   display: flex;
 }
 
 @media (max-width: 650px) {
+  .standardPage {
+    /*
+      The nav is on the bottom of the app on mobile devices, so we need some extra padding
+    */
+    margin-bottom: 100px;
+  }
   .standardPage-contentWithSideNav {
     --verticalMargins: 15px;
+    margin-bottom: 100px;
     display: block;
   }
 }

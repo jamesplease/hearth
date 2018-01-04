@@ -1,8 +1,15 @@
+.introText {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .heroButton {
   font-size: 2rem;
   padding: 10px 15px;
   color: #fff;
-  background: var(--primaryLinkColor);
+  background: radial-gradient(circle at top right, #47b9ff, #1683ff);
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;

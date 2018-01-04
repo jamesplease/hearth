@@ -15,7 +15,7 @@ export default class LandingPage extends Component {
         </div>
         <div className="panelContainer">
           {calculatorsData.map(calculator => (
-            <div className="panel" key={calculator.name}>
+            <div className="panel panel-padding" key={calculator.name}>
               <h2 className="panel-header">
                 <Link
                   to={`${match.url}${calculator.url}`}

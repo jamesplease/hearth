@@ -61,71 +61,79 @@ export default class CompoundInterest extends Component {
         </Link>
         <h1 className="primaryHeader">Compound Interest</h1>
         <div className="panel calculatorPage-contents">
-          <div className="inputContainer calculatorPage-twoColumn">
+          <div className="inputContainer calculatorPage-twoColumn calculatorPage_calculator">
             <label
               className="compoundInterest-label"
               htmlFor="compoundInterest_principal">
               Principal
             </label>
-            <input
-              id="compoundInterest_principal"
-              className="input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('principal', event.target.value)
-              }
-              value={principal.value}
-            />
+            <div>
+              <input
+                id="compoundInterest_principal"
+                className="input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('principal', event.target.value)
+                }
+                value={principal.value}
+              />
+            </div>
             <label
               className="compoundInterest-label"
               htmlFor="compoundInterest_annualContribution">
               Annual Contribution
             </label>
-            <input
-              id="compoundInterest_annualContribution"
-              className="input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('annualContribution', event.target.value)
-              }
-              value={annualContribution.value}
-            />
+            <div>
+              <input
+                id="compoundInterest_annualContribution"
+                className="input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('annualContribution', event.target.value)
+                }
+                value={annualContribution.value}
+              />
+            </div>
             <label
               className="compoundInterest-label"
               htmlFor="compoundInterest_numberOfYears">
               Number of Years
             </label>
-            <input
-              id="compoundInterest_numberOfYears"
-              className="input"
-              type="number"
-              inputMode="numeric"
-              min="0"
-              onChange={event =>
-                this.updateValue('numberOfYears', event.target.value)
-              }
-              value={numberOfYears.value}
-            />
+            <div>
+              <input
+                id="compoundInterest_numberOfYears"
+                className="input"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                onChange={event =>
+                  this.updateValue('numberOfYears', event.target.value)
+                }
+                value={numberOfYears.value}
+              />
+            </div>
             <label
               className="compoundInterest-label"
               htmlFor="compoundInterest_interestRate">
               Interest Rate (%)
             </label>
-            <input
-              id="compoundInterest_interestRate"
-              className="input"
-              type="number"
-              inputMode="numeric"
-              onChange={event =>
-                this.updateValue('interestRate', event.target.value)
-              }
-              value={interestRate.value}
-            />
+            <div>
+              <input
+                id="compoundInterest_interestRate"
+                className="input"
+                type="number"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('interestRate', event.target.value)
+                }
+                value={interestRate.value}
+              />
+            </div>
           </div>
+          <div className="calculatorPage-result">{result}</div>
         </div>
-        <div className="panel calculatorPage-result">{result}</div>
       </form>
     );
   }

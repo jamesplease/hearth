@@ -1,8 +1,7 @@
 .header {
-  --headerHeight: 55px;
+  --headerHeight: 50px;
   border-bottom: 1px solid var(--borderColor);
-  background-color: #fff;
-  box-shadow: 0 1px 4px rgba(122, 122, 122, 0.15);
+  background-color: #fafafa;
 }
 
 .header-content {
@@ -22,15 +21,12 @@
 }
 
 .header-titleLink {
+  padding: 5px;
   text-decoration: none;
   color: var(--fontColor);
 }
 
 @media (max-width: 650px) {
-  .header {
-    --headerHeight: 50px;
-  }
-
   .header-title {
     margin: 0 auto;
   }

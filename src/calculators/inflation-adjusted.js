@@ -4,6 +4,11 @@ import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
 
+const mapError = {
+  tooSmall: 'The start year must be later than or equal to 1870.',
+  tooLarge: 'The end year must be equal to or less than 2017.'
+};
+
 const validators = {
   initialValue(val) {
     const valueToVerify = Number(val);
@@ -49,6 +54,8 @@ export default class InflationAdjusted extends Component {
     const { inputs, result } = this.state;
     const { initialValue, startYear, endYear } = inputs;
 
+    const endYearError = mapError[endYear.error];
+
     return (
       <div className="inflationAdjusted calculatorPage">
         <Link to="/calculators" className="navBackLink">
@@ -57,7 +64,7 @@ export default class InflationAdjusted extends Component {
         </Link>
         <h1 className="primaryHeader">Inflation Adjusted</h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-twoColumn">
+          <div className="calculatorPage-twoColumn calculatorPage_calculator">
             <label>Initial Value</label>
             <input
               className="input"
@@ -91,9 +98,10 @@ export default class InflationAdjusted extends Component {
               }
               value={endYear.value}
             />
+            {endYearError && <div>{endYearError}</div>}
           </div>
+          <div className="calculatorPage-result">{result}</div>
         </div>
-        <div className="panel calculatorPage-result">{result}</div>
       </div>
     );
   }

@@ -29,13 +29,27 @@
   color: var(--fontColor);
   font-size: 1.65rem;
   text-decoration: none;
-  border-bottom: 3px solid transparent;
   padding: 0 10px;
+  position: relative;
 }
 
-.nav-navListLink_active,
-.nav-navListLink:hover {
-  border-bottom-color: var(--accentColor);
+.nav-navListLink_active:after,
+.nav-navListLink:hover:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.nav-navListLink:hover:after {
+  background: #d4d4d4;
+}
+
+.nav-navListLink_active:after,
+.nav-navListLink_active:hover:after {
+  background: linear-gradient(45deg, #8000d4, #de474e);
 }
 
 @media (max-width: 650px) {

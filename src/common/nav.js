@@ -19,7 +19,7 @@ const navItems = [
 
 export default class Nav extends Component {
   render() {
-    const { className } = this.props;
+    const { className = '' } = this.props;
     return (
       <nav className={`${className} nav`}>
         <ul className="nav-navList">

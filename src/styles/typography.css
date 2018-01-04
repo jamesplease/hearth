@@ -13,7 +13,7 @@ body {
 .heroText {
   font-size: 4rem;
   text-align: center;
-  margin: 200px 0 50px;
+  margin: 0 0 50px;
 }
 
 .primaryHeader {
@@ -67,5 +67,9 @@ body {
 @media (max-width: 650px) {
   .navBackLink {
     display: block;
+  }
+
+  .heroText {
+    margin: 110px 0 50px;
   }
 }

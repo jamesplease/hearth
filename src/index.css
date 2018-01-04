@@ -10,7 +10,7 @@
   --borderColor: #ddd;
   --accentColor: #4d97ff;
   --primaryLinkColor: #c45184;
-  --backgroundColor: #f6f6f6;
+  --backgroundColor: #fff;
 }
 
 @media (max-width: 650px) {

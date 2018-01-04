@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import './historical-success.css';
+import CalculatorResultsModal from './calculator-results-modal';
 import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
@@ -33,7 +33,7 @@ const successSummaryMap = {
 
 export default class HistoricalSuccess extends Component {
   render() {
-    const { inputs, result } = this.state;
+    const { inputs, result, isResultsModalOpen } = this.state;
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
     const { summary } = result;
 
@@ -52,11 +52,11 @@ export default class HistoricalSuccess extends Component {
         </Link>
         <h1 className="primaryHeader">Historical Success</h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-twoColumn">
+          <div className="calculatorPage-twoColumn calculatorPage_calculator">
             <label className="historicalSuccess-label">
               Initial Portfolio Value
             </label>
-            <div className="historicalSuccess-inputContainer">
+            <div>
               <input
                 value={stockInvestmentValue.value}
                 className="input"
@@ -71,7 +71,7 @@ export default class HistoricalSuccess extends Component {
             <label className="historicalSuccess-label">
               First Year Withdrawal
             </label>
-            <div className="historicalSuccess-inputContainer">
+            <div>
               <input
                 value={firstYearWithdrawal.value}
                 className="input"
@@ -84,7 +84,7 @@ export default class HistoricalSuccess extends Component {
               />
             </div>
             <label className="historicalSuccess-label">Duration</label>
-            <div className="historicalSuccess-inputContainer">
+            <div>
               <input
                 value={duration.value}
                 className="input"
@@ -97,10 +97,17 @@ export default class HistoricalSuccess extends Component {
               />
             </div>
           </div>
+          <div className="calculatorPage-expandingResult">
+            <span>{summaryText}</span>
+            <button onClick={() => this.setState({ isResultsModalOpen: true })}>
+              View results
+            </button>
+          </div>
         </div>
-        <div className="panel calculatorPage-expandingResult">
-          <div>{summaryText}</div>
-        </div>
+        <CalculatorResultsModal
+          active={isResultsModalOpen}
+          onClose={() => this.setState({ isResultsModalOpen: false })}
+        />
       </div>
     );
   }
@@ -134,7 +141,8 @@ export default class HistoricalSuccess extends Component {
         startYear: '',
         value: ''
       }
-    }
+    },
+    isResultsModalOpen: false
   };
 
   componentDidMount() {
@@ -252,5 +260,11 @@ export default class HistoricalSuccess extends Component {
     } else {
       return 'UNSUCCESSFUL';
     }
+  };
+
+  onToggleResultsModal = () => {
+    const { isResultsModalOpen } = this.state;
+
+    this.setState({ isResultsModalOpen: !isResultsModalOpen });
   };
 }

@@ -16,7 +16,7 @@ export default class GuidesLandingPage extends Component {
         </div>
         <div className="panelContainer">
           {guidesData.map(guide => (
-            <div className="panel" key={guide.name}>
+            <div className="panel panel-padding" key={guide.name}>
               <h2 className="panel-header">
                 <Link
                   to={`${match.url}${guide.url}`}
