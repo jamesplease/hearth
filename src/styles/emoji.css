@@ -2,3 +2,10 @@
   width: 20px;
   height: 20px;
 }
+
+@media (max-width: 650px) {
+  .emoji-img {
+    width: 32px;
+    height: 32px;
+  }
+}

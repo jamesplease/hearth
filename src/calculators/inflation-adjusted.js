@@ -15,6 +15,10 @@ const MAX_YEAR = 2017;
 
 const validators = {
   initialValue(val) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
 
     if (!_.isFinite(valueToVerify)) {
@@ -27,6 +31,10 @@ const validators = {
   },
 
   startYear(val, state) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
     const { minYear, maxYear, inputs } = state;
     const { endYear } = inputs;
@@ -45,6 +53,10 @@ const validators = {
   },
 
   endYear(val, state) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
     const { minYear, maxYear, inputs } = state;
     const { startYear } = inputs;

@@ -11,6 +11,10 @@ import maxDollarInput from './utils/max-dollar-input';
 // return a string that represents the error.
 const validators = {
   principal(val) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
 
     if (!_.isFinite(valueToVerify)) {
@@ -23,6 +27,10 @@ const validators = {
   },
 
   annualContribution(val) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
 
     if (!_.isFinite(valueToVerify)) {
@@ -35,6 +43,10 @@ const validators = {
   },
 
   numberOfYears(val) {
+    if (typeof val === 'string' && val.length === 0) {
+      return 'empty';
+    }
+
     const valueToVerify = Number(val);
 
     if (!_.isFinite(valueToVerify)) {

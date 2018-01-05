@@ -6,6 +6,10 @@ const MIN_YEAR = 1871;
 const MAX_YEAR = 2017;
 
 export default {
+  empty(inputName) {
+    const displayName = _.startCase(inputName);
+    return `${displayName} is required.`;
+  },
   tooSmall(inputName) {
     const displayName = _.startCase(inputName);
     return `${displayName} must be later than ${MIN_YEAR - 1}.`;
@@ -42,5 +46,8 @@ export default {
   tooMuchInterest(inputName) {
     const displayName = _.startCase(inputName);
     return `${displayName} must be less than one million percent.`;
+  },
+  durationTooLong() {
+    return 'The duration cannot be more than 300 years.';
   }
 };
