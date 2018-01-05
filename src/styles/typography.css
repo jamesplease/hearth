@@ -14,6 +14,7 @@ body {
   font-size: 4rem;
   text-align: center;
   margin: 0 0 50px;
+  padding: 0 var(--horizontalContentPadding);
 }
 
 .primaryHeader {
