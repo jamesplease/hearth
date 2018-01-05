@@ -1,9 +1,35 @@
+.introText {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .heroButton {
   font-size: 2rem;
   padding: 10px 15px;
   color: #fff;
-  background: var(--primaryLinkColor);
+  background: radial-gradient(circle at top right, #47b9ff, #1683ff);
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
+}
+
+.heroButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(193, 156, 160, 0.5);
+}
+
+.heroButton:hover {
+  background: radial-gradient(circle at top right, #44b1f5, #377ef6);
+}
+
+.heroButton:active {
+  background: radial-gradient(circle at top right, #3da9eb, #3174e6);
+}
+
+@media (max-width: 650px) {
+  .introText {
+    height: 40vh;
+  }
 }

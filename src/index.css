@@ -4,13 +4,15 @@
 :root {
   --maxAppWidth: 1024px;
   --baseFontSize: 10px;
+  --headerHeight: 50px;
   --horizontalContentPadding: 20px;
   --standardVerticalPadding: 60px;
   --fontColor: #222;
   --borderColor: #ddd;
   --accentColor: #4d97ff;
   --primaryLinkColor: #c45184;
-  --backgroundColor: #f6f6f6;
+  --errorTextColor: #bd2424;
+  --backgroundColor: #fff;
 }
 
 @media (max-width: 650px) {

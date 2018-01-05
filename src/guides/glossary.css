@@ -35,3 +35,9 @@
 .glossary-entryTitle:hover .glossary-entryTitleLinkIcon {
   visibility: visible;
 }
+
+@media (max-width: 650px) {
+  .glossary-contents {
+    grid-template-columns: 1fr;
+  }
+}

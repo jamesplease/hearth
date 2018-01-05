@@ -1,25 +1,38 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import './nav.css';
 
 const navItems = [
   {
     key: 'calculators',
-    label: 'Calculators'
+    label: 'Calculators',
+    icon: 'zmdi-apps'
   },
   {
     key: 'guides',
-    label: 'Guides'
+    label: 'Guides',
+    icon: 'zmdi-file-text'
   },
   {
     key: 'about',
-    label: 'About'
+    label: 'About',
+    icon: 'zmdi-info-outline'
   }
 ];
 
 export default class Nav extends Component {
   render() {
-    const { className } = this.props;
+    const { isBottomNav } = this.props;
+
+    const className = classnames('nav', {
+      'nav_bottom': isBottomNav
+    });
+
+    const linkClass = classnames('nav-navListLink', {
+      'nav-navListLink_bottomLink': isBottomNav
+    });
+
     return (
       <nav className={`${className} nav`}>
         <ul className="nav-navList">
@@ -28,8 +41,9 @@ export default class Nav extends Component {
               <li className="nav-navListItem" key={navItem.key}>
                 <NavLink
                   to={`/${navItem.key}`}
-                  className="nav-navListLink"
+                  className={linkClass}
                   activeClassName="nav-navListLink_active">
+                  <i className={`zmdi ${navItem.icon} nav-navListLinkIcon`}/>
                   {navItem.label}
                 </NavLink>
               </li>

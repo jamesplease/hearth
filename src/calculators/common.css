@@ -1,10 +1,26 @@
 .calculatorPage {
   margin: var(--verticalMargins) 0;
-  flex: 1;
+  flex: 2 2;
+}
+
+.calculatorPage-contentWithSideNav {
+  --verticalMargins: 60px;
+  --sideNavWidth: 200px;
+  display: flex;
+  padding: 0 var(--horizontalContentPadding);
 }
 
 .calculatorPage-contents {
   margin-bottom: 25px;
+}
+
+.calculatorPage-landingPage {
+  padding-left: var(--horizontalContentPadding);
+  padding-right: var(--horizontalContentPadding);
+}
+
+.calculatorPage-calculator {
+  padding: var(--panelVerticalPadding) var(--panelHorizontalPadding);
 }
 
 .calculatorPage-twoColumn {
@@ -22,6 +38,7 @@
 }
 
 .calculatorPage-result {
+  border-top: 1px solid #ddd;
   font-size: 2rem;
   font-weight: bold;
 }
@@ -30,7 +47,7 @@
   content: 'RESULT';
   position: absolute;
   top: 7px;
-  left: 7px;
+  left: 15px;
   color: #bbb;
   font-weight: 600;
   font-size: 1.4rem;
@@ -38,6 +55,7 @@
 }
 
 .calculatorPage-expandingResult {
+  border-top: 1px solid #ddd;
   font-size: 1.6rem;
   font-weight: normal;
 }
@@ -48,4 +66,83 @@
     is the form
   */
   font-size: 2.6rem;
+  /* This needs to match the spacing between the content and result */
+  margin-bottom: 25px;
+}
+
+.calculatorPage-label {
+  grid-area: label;
+}
+
+.calculatorPage-input {
+  grid-area: input;
+}
+
+.calculatorPage-errorMsg {
+  grid-area: error;
+  font-size: 1.7rem;
+  color: var(--errorTextColor);
+}
+
+.calculatorPage-formRow {
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-gap: 5px 15px;
+  grid-template-areas:
+    'label input'
+    'error error';
+}
+
+@media (max-width: 650px) {
+  .calculatorPage-formRow {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'label'
+      'input'
+      'error';
+  }
+
+  .calculatorPage .primaryHeader {
+    font-size: 2.4rem;
+    margin-bottom: 25px;
+  }
+
+  .calculatorPage-contentWithSideNav {
+    --verticalMargins: 15px;
+    padding: 0 0 50px;
+    display: block;
+  }
+
+  .calculatorPage-navBackLink,
+  .calculatorPage-primaryHeader {
+    padding: 0 var(--horizontalContentPadding);
+  }
+
+  .calculatorPage-contents {
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .calculatorPage-calculator {
+    margin-bottom: 25px;
+    padding: 0 var(--horizontalContentPadding);
+  }
+
+  .calculatorPage-result {
+    border-top: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+    font-size: 2.2rem;
+    font-weight: bold;
+    padding: 25px 20px;
+  }
+
+  .calculatorPage-result:after {
+    color: #aaa;
+    left: 15px;
+    /* This makes room for large number results */
+    top: 3px;
+    font-size: 1.5rem;
+  }
 }

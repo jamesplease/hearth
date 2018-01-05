@@ -3,9 +3,9 @@
 }
 
 .footerContent {
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   color: #999;
-  padding: 20px var(--horizontalContentPadding);
+  padding: 10px var(--horizontalContentPadding);
   max-width: var(--maxAppWidth);
   margin: 0 auto;
 }

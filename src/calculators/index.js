@@ -13,7 +13,7 @@ export default class Calculators extends Component {
     const { match } = this.props;
 
     return (
-      <div className="standardPage-contentWithSideNav">
+      <div className="calculatorPage-contentWithSideNav">
         <Route path={`${match.url}/:foo+`} component={CalculatorNav} />
         <Switch>
           <Route exact path={`${match.url}`} component={LandingPage} />

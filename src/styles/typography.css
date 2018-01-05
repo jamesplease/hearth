@@ -13,7 +13,8 @@ body {
 .heroText {
   font-size: 4rem;
   text-align: center;
-  margin: 200px 0 50px;
+  margin: 0 0 50px;
+  padding: 0 var(--horizontalContentPadding);
 }
 
 .primaryHeader {
@@ -56,8 +57,9 @@ body {
   display: none;
   color: var(--accentColor);
   text-decoration: none;
-  font-size: 1.7rem;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  margin-bottom: 7px;
+  font-weight: 600;
 }
 
 .navBackLink-icon {
@@ -67,5 +69,17 @@ body {
 @media (max-width: 650px) {
   .navBackLink {
     display: block;
+  }
+
+  .heroText {
+    margin: 110px 0 50px;
+  }
+
+  .primaryHeader {
+    font-size: 2.3rem;
+  }
+
+  .secondaryHeader {
+    font-size: 1.85rem;
   }
 }

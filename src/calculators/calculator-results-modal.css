@@ -1,0 +1,32 @@
+.calculatorResultsModal {
+  pointer-events: none;
+  visibility: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  transform: translateY(-55px) translateZ(0);
+  opacity: 0;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.calculatorResultsModal_open {
+  pointer-events: all;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.modalContents {
+  background: #fff;
+  border-radius: 3px;
+  padding: 13px 20px;
+  min-height: 500px;
+  min-width: 500px;
+}

@@ -1,13 +1,12 @@
 .sideNav {
   --_sideNavWidth: var(--sideNavWidth, 300px);
-  --_sideNavRightMargin: var(--sideNavRightMargin, 60px);
+  --_sideNavRightMargin: var(--sideNavRightMargin, 30px);
 
   margin: var(--verticalMargins) var(--_sideNavRightMargin)
     var(--verticalMargins) 0;
-  width: var(--_sideNavWidth);
-  min-width: var(--_sideNavWidth);
   max-width: var(--_sideNavWidth);
-  flex: 0 0 var(--_sideNavWidth);
+  min-width: 160px;
+  flex: 1 1;
 }
 
 .sideNav-header {
@@ -39,15 +38,15 @@
 }
 
 .sideNav-link:hover {
-  color: var(--primaryLinkColor);
+  color: var(--accentColor);
 }
 
 .sideNav-link_active {
-  color: var(--primaryLinkColor);
+  color: var(--accentColor);
 }
 
 .sideNav-link_active:hover {
-  color: var(--primaryLinkColor);
+  color: var(--accentColor);
 }
 
 @media (max-width: 650px) {
