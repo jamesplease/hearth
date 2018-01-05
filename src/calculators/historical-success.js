@@ -38,16 +38,10 @@ const validators = {
 
 const summaryMaps = {
   SUCCESSFUL: {
-    text: 'This simulation succeeded most of the time.',
-    emoji: '1f31f.png'
-  },
-  MODERATE: {
-    text: 'This simulation succeeded frequently.',
-    emoji: '1f44d.png'
+    emoji: '1f44d-1f3fe.png'
   },
   UNSUCCESSFUL: {
-    text: 'This simulation failed frequently.',
-    emoji: '274c.png'
+    emoji: '26a0-fe0f.png'
   }
 };
 
@@ -55,15 +49,15 @@ export default class HistoricalSuccess extends Component {
   render() {
     const { inputs, result, isResultsModalOpen } = this.state;
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
-    const { summary } = result;
+    const { summary, successRate } = result;
 
-    let summaryText, summaryImg;
+    const summaryText = `This portfolio succeeded ${successRate} of the time.`;
+
+    let summaryImg;
     if (summary) {
       const resultData = summaryMaps[summary];
-      summaryText = resultData.text;
       summaryImg = resultData.emoji;
     } else {
-      summaryText = '';
       summaryImg = '';
     }
 
@@ -310,7 +304,7 @@ export default class HistoricalSuccess extends Component {
     const investments = [
       {
         type: 'equity',
-        fees: 0.01,
+        fees: 0.0,
         value: Number(stockInvestmentValue.value),
         percentage: 1
       }
@@ -361,8 +355,6 @@ export default class HistoricalSuccess extends Component {
   computeSummary = successRate => {
     if (successRate > 0.95) {
       return 'SUCCESSFUL';
-    } else if (successRate > 0.85) {
-      return 'MODERATE';
     } else {
       return 'UNSUCCESSFUL';
     }
