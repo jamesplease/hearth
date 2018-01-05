@@ -4,18 +4,15 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
+import { ONE_QUADRILLION } from './utils/big-numbers';
+import formatOutputDollars from './utils/format-output-dollars';
 
 // These should be pulled from the market data at some point, but for
 // now the values are hard-coded.
 const MIN_YEAR = 1871;
 const MAX_YEAR = 2017;
 
-const ONE_BILLION = 1000000000;
-const ONE_TRILLION = ONE_BILLION * 1000;
-const ONE_QUADRILLION = ONE_TRILLION * 1000;
-const ONE_QUINTILLION = ONE_QUADRILLION * 1000;
-// The GDP of the USA in 2016 was 18 trillion
-const MAX_DOLLARS = ONE_TRILLION * 100;
+const MAX_DOLLARS = ONE_QUADRILLION;
 
 const mapError = {
   tooSmall(inputName) {
@@ -131,6 +128,7 @@ export default class InflationAdjusted extends Component {
                 })}
                 id="inflationAdjusted_initialValue"
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
                 step="1"
                 min="0"
@@ -159,6 +157,7 @@ export default class InflationAdjusted extends Component {
                 })}
                 id="inflationAdjusted_startYear"
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
                 step="1"
                 min={MIN_YEAR}
@@ -187,6 +186,7 @@ export default class InflationAdjusted extends Component {
                 })}
                 id="inflationAdjusted_endYear"
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
                 step="1"
                 min={MIN_YEAR}
@@ -241,6 +241,8 @@ export default class InflationAdjusted extends Component {
     this.setState({ result, marketDataYears, minYear, maxYear });
   }
 
+  // The entire form needs to be revalidated when a value changes due to the
+  // fact that validation depends on multiple fields.
   updateValue = (valueName, newValue) => {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
@@ -297,28 +299,6 @@ export default class InflationAdjusted extends Component {
     const inflation = inflationFromCpi({ startCpi, endCpi });
     const rawNumber = Number(initialValue.value) * inflation;
 
-    let adjustedNumber;
-    let suffix = '';
-
-    if (rawNumber >= ONE_QUINTILLION) {
-      adjustedNumber = rawNumber / ONE_QUINTILLION;
-      suffix = ' quintillion';
-    } else if (rawNumber >= ONE_QUADRILLION) {
-      adjustedNumber = rawNumber / ONE_QUADRILLION;
-      suffix = ' quadrillion';
-    } else if (rawNumber >= ONE_TRILLION) {
-      adjustedNumber = rawNumber / ONE_TRILLION;
-      suffix = ' trillion';
-    } else if (rawNumber >= ONE_BILLION) {
-      adjustedNumber = rawNumber / ONE_BILLION;
-      suffix = ' billion';
-    } else {
-      adjustedNumber = rawNumber;
-    }
-
-    return `$${adjustedNumber.toLocaleString('en', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    })}${suffix}`;
+    return formatOutputDollars(rawNumber);
   };
 }

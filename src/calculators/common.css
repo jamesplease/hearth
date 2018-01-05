@@ -47,7 +47,7 @@
   content: 'RESULT';
   position: absolute;
   top: 7px;
-  left: 7px;
+  left: 15px;
   color: #bbb;
   font-weight: 600;
   font-size: 1.4rem;
@@ -80,6 +80,7 @@
 
 .calculatorPage-errorMsg {
   grid-area: error;
+  font-size: 1.7rem;
   color: var(--errorTextColor);
 }
 

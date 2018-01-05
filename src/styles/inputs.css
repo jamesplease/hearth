@@ -8,6 +8,7 @@
 
 .input_error {
   border-color: var(--errorTextColor);
+  box-shadow: none;
 }
 
 .form-label {
@@ -16,4 +17,11 @@
 
 .form-label_error {
   color: var(--errorTextColor);
+}
+
+@media (max-width: 650px) {
+  .input {
+    font-size: 2rem;
+    padding: 7px 10px;
+  }
 }
