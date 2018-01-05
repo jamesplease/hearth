@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import CalculatorResultsModal from './calculator-results-modal';
@@ -6,29 +7,48 @@ import getStartYears from './utils/get-start-years';
 import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
-
-function isNumber(val) {
-  if (typeof val === 'string' && val.length === 0) {
-    return 'Empty';
-  }
-
-  const valueToVerify = Number(val);
-
-  if (!_.isFinite(valueToVerify)) {
-    return 'NaN';
-  }
-}
+import maxDollarInput from './utils/max-dollar-input';
+import errorMessages from './utils/error-messages';
+import {
+  isRequired,
+  numberRequired,
+  integerRequired,
+  greaterThanZero,
+  withinDollarLimit
+} from './utils/validators';
 
 const validators = {
-  stockInvestmentValue: isNumber,
-  firstYearWithdrawal: isNumber,
-  duration: isNumber
+  // Ensure this is larger than firstYearWithdrawal
+  stockInvestmentValue: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Ensure this is smaller than stockInvestmentValue
+  firstYearWithdrawal: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Add limit: 300
+  duration: [isRequired, numberRequired, integerRequired, greaterThanZero]
 };
 
-const successSummaryMap = {
-  SUCCESSFUL: 'This portfolio and withdrawal rate succeeded most of the time.',
-  MODERATE: 'This portfolio and withdrawal rate succeeded some of the time.',
-  UNSUCCESSFUL: 'This portfolio and withdrawal rate frequently failed.'
+const summaryMaps = {
+  SUCCESSFUL: {
+    text: 'This simulation succeeded most of the time.',
+    emoji: '1f31f.png'
+  },
+  MODERATE: {
+    text: 'This simulation succeeded frequently.',
+    emoji: '1f44d.png'
+  },
+  UNSUCCESSFUL: {
+    text: 'This simulation failed frequently.',
+    emoji: '274c.png'
+  }
 };
 
 export default class HistoricalSuccess extends Component {
@@ -37,11 +57,14 @@ export default class HistoricalSuccess extends Component {
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
     const { summary } = result;
 
-    let summaryText;
+    let summaryText, summaryImg;
     if (summary) {
-      summaryText = successSummaryMap[summary];
+      const resultData = summaryMaps[summary];
+      summaryText = resultData.text;
+      summaryImg = resultData.emoji;
     } else {
       summaryText = '';
+      summaryImg = '';
     }
 
     return (
@@ -56,54 +79,110 @@ export default class HistoricalSuccess extends Component {
           Historical Success
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-twoColumn calculatorPage-calculator">
-            <label className="calculatorPage-label">
-              Initial Portfolio Value
-            </label>
-            <div>
+          <div className="calculatorPage-calculator">
+            <div className="calculatorPage-formRow">
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': stockInvestmentValue.error
+                })}
+                htmlFor="historicalSuccess_stockInvestmentValue">
+                Initial Portfolio Value
+              </label>
               <input
                 value={stockInvestmentValue.value}
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: stockInvestmentValue.error
+                })}
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
+                min="0"
+                max={maxDollarInput}
                 id="historicalSuccess_stockInvestmentValue"
                 onChange={event =>
                   this.updateValue('stockInvestmentValue', event.target.value)
                 }
               />
+              {stockInvestmentValue.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {stockInvestmentValue.errorMsg}
+                </div>
+              )}
             </div>
-            <label className="calculatorPage-label">
-              First Year Withdrawal
-            </label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': firstYearWithdrawal.error
+                })}
+                htmlFor="inflationAdjusted_firstYearWithdrawal">
+                First Year Withdrawal
+              </label>
               <input
                 value={firstYearWithdrawal.value}
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: firstYearWithdrawal.error
+                })}
                 type="number"
+                pattern="\d*"
+                min="0"
+                max={maxDollarInput}
                 inputMode="numeric"
                 id="inflationAdjusted_firstYearWithdrawal"
                 onChange={event =>
                   this.updateValue('firstYearWithdrawal', event.target.value)
                 }
               />
+              {firstYearWithdrawal.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {firstYearWithdrawal.errorMsg}
+                </div>
+              )}
             </div>
-            <label className="calculatorPage-label">Duration</label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': duration.error
+                })}
+                htmlFor="inflationAdjusted_duration">
+                Duration
+              </label>
               <input
                 value={duration.value}
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: duration.error
+                })}
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
+                step="1"
+                min="0"
+                max="300"
                 id="inflationAdjusted_duration"
                 onChange={event =>
                   this.updateValue('duration', event.target.value)
                 }
               />
+              {duration.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {duration.errorMsg}
+                </div>
+              )}
             </div>
           </div>
           <div className="calculatorPage-expandingResult">
+            <span>
+              {summaryImg && (
+                <img
+                  alt=""
+                  className="emoji-img calculatorPage-emojiResult"
+                  src={`/${summaryImg}`}
+                />
+              )}
+            </span>
             <span>{summaryText}</span>
-            <button onClick={() => this.setState({ isResultsModalOpen: true })}>
+            <button
+              onClick={() => this.setState({ isResultsModalOpen: true })}
+              className="calculatorPage-viewResultsBtn">
               View results
             </button>
           </div>
@@ -158,18 +237,41 @@ export default class HistoricalSuccess extends Component {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
 
-    const validationFn = validators[valueName];
+    const validationFns = validators[valueName];
+
     let validationError;
-    if (typeof validationFn === 'function') {
-      validationError = validationFn(newValue, this.state);
+    _.forEach(validationFns, fn => {
+      validationError = fn(newValue, this.state);
+      if (validationError) {
+        return false;
+      }
+    });
+
+    let validationErrorFn = validationError && errorMessages[validationError];
+
+    const newInputObj = {
+      ...currentValue,
+      error: validationError ? validationError : null,
+      value: newValue
+    };
+
+    let errorMsg;
+    if (validationError && validationErrorFn) {
+      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
+    } else if (validationError) {
+      // The intention is that this LoC is _never_ called! There should
+      // always be a more descriptive error for each type of error. But
+      // just in case...
+      errorMsg = 'This input is invalid.';
+    } else {
+      errorMsg = null;
     }
 
     const newInputs = {
       ...inputs,
       [valueName]: {
-        ...currentValue,
-        error: validationError ? validationError : null,
-        value: newValue
+        ...newInputObj,
+        errorMsg
       }
     };
 

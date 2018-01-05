@@ -12,10 +12,6 @@
   box-shadow: none;
 }
 
-.form-label {
-  font-size: 1.9rem;
-}
-
 .form-label_error {
   color: var(--errorTextColor);
 }
@@ -24,5 +20,9 @@
   .input {
     font-size: 2rem;
     padding: 7px 10px;
+  }
+
+  .form-label {
+    font-size: 1.7rem;
   }
 }

@@ -1,59 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
 import formatOutputDollars from './utils/format-output-dollars';
 import errorMessages from './utils/error-messages';
-import maxDollarInput from './utils/max-dollar-input';
+import {
+  isRequired,
+  numberRequired,
+  greaterThanZero,
+  withinDollarLimit,
+  integerRequired
+} from './utils/validators';
 
 // These return `undefined` if validation succeeds. Otherwise,
 // return a string that represents the error.
 const validators = {
-  principal(val) {
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    }
-  },
-
-  annualContribution(val) {
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    }
-  },
-
-  numberOfYears(val) {
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (!Number.isInteger(valueToVerify)) {
-      return 'nonInteger';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify >= 1000) {
-      return 'tooManyYears';
-    }
-  },
-
-  interestRate(val) {
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    }
-  }
+  principal: [isRequired, numberRequired, greaterThanZero, withinDollarLimit],
+  annualContribution: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Add numberLimit: 1000
+  numberOfYears: [isRequired, numberRequired, integerRequired, greaterThanZero],
+  // Add numberLimit: 1000000
+  interestRate: [isRequired, numberRequired]
 };
 
 export default class CompoundInterest extends Component {
@@ -81,13 +54,17 @@ export default class CompoundInterest extends Component {
           <div className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
-                className="calculatorPage-label"
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': principal.error
+                })}
                 htmlFor="compoundInterest_principal">
                 Principal
               </label>
               <input
                 id="compoundInterest_principal"
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: principal.error
+                })}
                 type="number"
                 pattern="\d*"
                 inputMode="numeric"
@@ -104,13 +81,17 @@ export default class CompoundInterest extends Component {
             </div>
             <div className="calculatorPage-formRow">
               <label
-                className="calculatorPage-label"
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': annualContribution.error
+                })}
                 htmlFor="compoundInterest_annualContribution">
                 Annual Contribution
               </label>
               <input
                 id="compoundInterest_annualContribution"
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: annualContribution.error
+                })}
                 type="number"
                 pattern="\d*"
                 inputMode="numeric"
@@ -127,13 +108,17 @@ export default class CompoundInterest extends Component {
             </div>
             <div className="calculatorPage-formRow">
               <label
-                className="calculatorPage-label"
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': numberOfYears.error
+                })}
                 htmlFor="compoundInterest_numberOfYears">
                 Number of Years
               </label>
               <input
                 id="compoundInterest_numberOfYears"
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: numberOfYears.error
+                })}
                 type="number"
                 pattern="\d*"
                 inputMode="numeric"
@@ -151,13 +136,17 @@ export default class CompoundInterest extends Component {
             </div>
             <div className="calculatorPage-formRow">
               <label
-                className="calculatorPage-label"
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': interestRate.error
+                })}
                 htmlFor="compoundInterest_interestRate">
                 Interest Rate (%)
               </label>
               <input
                 id="compoundInterest_interestRate"
-                className="input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: interestRate.error
+                })}
                 type="number"
                 inputMode="numeric"
                 onChange={event =>
@@ -214,11 +203,15 @@ export default class CompoundInterest extends Component {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
 
-    const validationFn = validators[valueName];
+    const validationFns = validators[valueName];
+
     let validationError;
-    if (typeof validationFn === 'function') {
-      validationError = validationFn(newValue);
-    }
+    _.forEach(validationFns, fn => {
+      validationError = fn(newValue, this.state);
+      if (validationError) {
+        return false;
+      }
+    });
 
     let validationErrorFn = validationError && errorMessages[validationError];
 
@@ -228,13 +221,23 @@ export default class CompoundInterest extends Component {
       value: newValue
     };
 
+    let errorMsg;
+    if (validationError && validationErrorFn) {
+      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
+    } else if (validationError) {
+      // The intention is that this LoC is _never_ called! There should
+      // always be a more descriptive error for each type of error. But
+      // just in case...
+      errorMsg = 'This input is invalid.';
+    } else {
+      errorMsg = null;
+    }
+
     const newInputs = {
       ...inputs,
       [valueName]: {
         ...newInputObj,
-        errorMsg: validationErrorFn
-          ? validationErrorFn(valueName, newInputObj, inputs)
-          : null
+        errorMsg
       }
     };
 
