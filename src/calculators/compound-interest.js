@@ -119,6 +119,11 @@ export default class CompoundInterest extends Component {
                 }
                 value={annualContribution.value}
               />
+              {annualContribution.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {annualContribution.errorMsg}
+                </div>
+              )}
             </div>
             <div className="calculatorPage-formRow">
               <label
@@ -138,6 +143,11 @@ export default class CompoundInterest extends Component {
                 }
                 value={numberOfYears.value}
               />
+              {numberOfYears.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {numberOfYears.errorMsg}
+                </div>
+              )}
             </div>
             <div className="calculatorPage-formRow">
               <label
@@ -155,6 +165,11 @@ export default class CompoundInterest extends Component {
                 }
                 value={interestRate.value}
               />
+              {interestRate.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {interestRate.errorMsg}
+                </div>
+              )}
             </div>
           </div>
           <div className="calculatorPage-result">{result}</div>
