@@ -138,7 +138,7 @@ export default class HistoricalSuccess extends Component {
                   'form-label_error': duration.error
                 })}
                 htmlFor="inflationAdjusted_duration">
-                Duration
+                Duration (years)
               </label>
               <input
                 value={duration.value}
