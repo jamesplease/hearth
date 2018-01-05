@@ -173,12 +173,16 @@ export default class HistoricalSuccess extends Component {
                 />
               )}
             </span>
-            <span>{summaryText}</span>
-            <button
-              onClick={() => this.setState({ isResultsModalOpen: true })}
-              className="calculatorPage-viewResultsBtn">
-              View results
-            </button>
+            <div>
+              <span className="calculatorPage-viewResultsText">
+                {summaryText}
+              </span>
+              {/* <button
+                onClick={() => this.setState({ isResultsModalOpen: true })}
+                className="calculatorPage-viewResultsBtn">
+                View results
+              </button> */}
+            </div>
           </div>
         </div>
         <CalculatorResultsModal
