@@ -46,14 +46,18 @@ export default class HistoricalSuccess extends Component {
 
     return (
       <div className="historicalSuccess calculatorPage">
-        <Link to="/calculators" className="navBackLink">
+        <Link
+          to="/calculators"
+          className="navBackLink calculatorPage-navBackLink">
           <i className="zmdi zmdi-chevron-left navBackLink-icon" />
           Calculators
         </Link>
-        <h1 className="primaryHeader">Historical Success</h1>
+        <h1 className="primaryHeader calculatorPage-primaryHeader">
+          Historical Success
+        </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-twoColumn calculatorPage_calculator">
-            <label className="historicalSuccess-label">
+          <div className="calculatorPage-twoColumn calculatorPage-calculator">
+            <label className="calculatorPage-label">
               Initial Portfolio Value
             </label>
             <div>
@@ -68,7 +72,7 @@ export default class HistoricalSuccess extends Component {
                 }
               />
             </div>
-            <label className="historicalSuccess-label">
+            <label className="calculatorPage-label">
               First Year Withdrawal
             </label>
             <div>
@@ -83,7 +87,7 @@ export default class HistoricalSuccess extends Component {
                 }
               />
             </div>
-            <label className="historicalSuccess-label">Duration</label>
+            <label className="calculatorPage-label">Duration</label>
             <div>
               <input
                 value={duration.value}

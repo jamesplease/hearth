@@ -27,3 +27,9 @@
 .heroButton:active {
   background: radial-gradient(circle at top right, #3da9eb, #3174e6);
 }
+
+@media (max-width: 650px) {
+  .introText {
+    height: 40vh;
+  }
+}

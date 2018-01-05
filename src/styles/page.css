@@ -1,11 +1,17 @@
 .standardPage {
   margin: var(--standardVerticalPadding) 0;
+  padding: 0 var(--horizontalContentPadding);
 }
 
 .standardPage-contentWithSideNav {
   --verticalMargins: 60px;
   --sideNavWidth: 200px;
   display: flex;
+  padding: 0 var(--horizontalContentPadding);
+}
+
+.standardPage-contentWithSideNavBody {
+  margin: var(--standardVerticalPadding) 0;
 }
 
 @media (max-width: 650px) {

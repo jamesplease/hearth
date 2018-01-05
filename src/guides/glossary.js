@@ -26,7 +26,7 @@ export default class Glossary extends Component {
     sortedGlossaryData = getSortedGlossaryData();
 
     return (
-      <div className="standardPage">
+      <div className="standardPage-contentWithSideNavBody">
         <Link to="/guides" className="navBackLink">
           <i className="zmdi zmdi-chevron-left navBackLink-icon" />
           Guides

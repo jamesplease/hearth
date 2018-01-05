@@ -55,16 +55,20 @@ export default class CompoundInterest extends Component {
 
     return (
       <form className="compoundInterest calculatorPage">
-        <Link to="/calculators" className="navBackLink">
+        <Link
+          to="/calculators"
+          className="navBackLink calculatorPage-navBackLink">
           <i className="zmdi zmdi-chevron-left navBackLink-icon" />
           Calculators
         </Link>
-        <h1 className="primaryHeader">Compound Interest</h1>
+        <h1 className="primaryHeader calculatorPage-primaryHeader">
+          Compound Interest
+        </h1>
         <div className="panel calculatorPage-contents">
-          <div className="inputContainer calculatorPage_calculator">
+          <div className="inputContainer calculatorPage-calculator">
             <div className="calculatorPage-inputContainer">
               <label
-                className="compoundInterest-label"
+                className="calculatorPage-label"
                 htmlFor="compoundInterest_principal">
                 Principal
               </label>
@@ -80,12 +84,10 @@ export default class CompoundInterest extends Component {
                   value={principal.value}
                 />
               </div>
-              <div className="calculatorPage-error">
-                You mezzed up man
-              </div>
+              <div className="calculatorPage-error">You mezzed up man</div>
             </div>
             <label
-              className="compoundInterest-label"
+              className="calculatorPage-label"
               htmlFor="compoundInterest_annualContribution">
               Annual Contribution
             </label>
@@ -102,7 +104,7 @@ export default class CompoundInterest extends Component {
               />
             </div>
             <label
-              className="compoundInterest-label"
+              className="calculatorPage-label"
               htmlFor="compoundInterest_numberOfYears">
               Number of Years
             </label>
@@ -120,7 +122,7 @@ export default class CompoundInterest extends Component {
               />
             </div>
             <label
-              className="compoundInterest-label"
+              className="calculatorPage-label"
               htmlFor="compoundInterest_interestRate">
               Interest Rate (%)
             </label>

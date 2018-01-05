@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default class FireGuide extends Component {
   render() {
     return (
-      <div className="standardPage">
+      <div className="standardPage-contentWithSideNavBody">
         <Link to="/guides" className="navBackLink">
           <i className="zmdi zmdi-chevron-left navBackLink-icon" />
           Guides

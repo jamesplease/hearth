@@ -6,11 +6,11 @@ export default class LandingPage extends Component {
   render() {
     const { match } = this.props;
     return (
-      <div className="landingPage">
+      <div className="landingPage calculatorPage-landingPage">
         <div className="landingPage-introduction">
           <h1 className="primaryHeader primaryHeader_centered">Calculators</h1>
           <p className="subheaderText subheaderText_centered">
-            These calculators should help you reach FIRE.
+            These calculators can help you reach FIRE.
           </p>
         </div>
         <div className="panelContainer">
