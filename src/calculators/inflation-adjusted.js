@@ -6,79 +6,64 @@ import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
 import formatOutputDollars from './utils/format-output-dollars';
 import maxDollarInput from './utils/max-dollar-input';
+import getYearRange from './utils/get-year-range';
 import errorMessages from './utils/error-messages';
+import {
+  isRequired,
+  greaterThanZero,
+  withinDollarLimit,
+  integerRequired,
+  withinYearLimit,
+  numberRequired
+} from './utils/validators';
 
-// These should be pulled from the market data at some point, but for
-// now the values are hard-coded.
-const MIN_YEAR = 1871;
-const MAX_YEAR = 2017;
+function startYearBeforeEndYear(val, state) {
+  const valueToVerify = Number(val);
+  const { endYear } = state.inputs;
+
+  if (Number(endYear.value) < valueToVerify) {
+    return 'laterThanEnd';
+  }
+}
+
+function endYearAfterStartYear(val, state) {
+  const valueToVerify = Number(val);
+  const { startYear } = state.inputs;
+
+  if (Number(startYear.value) > valueToVerify) {
+    return 'earlierThanStart';
+  }
+}
 
 const validators = {
-  initialValue(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    }
-  },
-
-  startYear(val, state) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-    const { minYear, maxYear, inputs } = state;
-    const { endYear } = inputs;
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (!Number.isInteger(valueToVerify)) {
-      return 'nonInteger';
-    } else if (valueToVerify > maxYear) {
-      return 'tooLarge';
-    } else if (valueToVerify < minYear) {
-      return 'tooSmall';
-    } else if (Number(endYear.value) < valueToVerify) {
-      return 'earlierThanEnd';
-    }
-  },
-
-  endYear(val, state) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-    const { minYear, maxYear, inputs } = state;
-    const { startYear } = inputs;
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (!Number.isInteger(valueToVerify)) {
-      return 'nonInteger';
-    } else if (valueToVerify > maxYear) {
-      return 'tooLarge';
-    } else if (valueToVerify < minYear) {
-      return 'tooSmall';
-    } else if (Number(startYear.value) > valueToVerify) {
-      return 'laterThanStart';
-    }
-  }
+  initialValue: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  startYear: [
+    isRequired,
+    numberRequired,
+    integerRequired,
+    withinYearLimit,
+    startYearBeforeEndYear
+  ],
+  endYear: [
+    isRequired,
+    numberRequired,
+    integerRequired,
+    withinYearLimit,
+    endYearAfterStartYear
+  ]
 };
 
 export default class InflationAdjusted extends Component {
   render() {
     const { inputs, result } = this.state;
     const { initialValue, startYear, endYear } = inputs;
+
+    const { minYear, maxYear } = getYearRange();
 
     return (
       <div className="inflationAdjusted calculatorPage">
@@ -140,8 +125,8 @@ export default class InflationAdjusted extends Component {
                 pattern="\d*"
                 inputMode="numeric"
                 step="1"
-                min={MIN_YEAR}
-                max={MAX_YEAR}
+                min={minYear}
+                max={maxYear}
                 onChange={event =>
                   this.updateValue('startYear', event.target.value)
                 }
@@ -170,8 +155,8 @@ export default class InflationAdjusted extends Component {
                 pattern="\d*"
                 inputMode="numeric"
                 step="1"
-                min={MIN_YEAR}
-                max={MAX_YEAR}
+                min={minYear}
+                max={maxYear}
                 onChange={event =>
                   this.updateValue('endYear', event.target.value)
                 }
@@ -215,11 +200,8 @@ export default class InflationAdjusted extends Component {
       .map(data => Number(data.year))
       .value();
 
-    const minYear = Math.min(...marketDataYears);
-    const maxYear = Math.max(...marketDataYears);
-
     const result = this.computeResult(this.state.inputs);
-    this.setState({ result, marketDataYears, minYear, maxYear });
+    this.setState({ result, marketDataYears });
   }
 
   // The entire form needs to be revalidated when a value changes due to the
@@ -228,11 +210,15 @@ export default class InflationAdjusted extends Component {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
 
-    const validationFn = validators[valueName];
+    const validationFns = validators[valueName];
+
     let validationError;
-    if (typeof validationFn === 'function') {
-      validationError = validationFn(newValue, this.state);
-    }
+    _.forEach(validationFns, fn => {
+      validationError = fn(newValue, this.state);
+      if (validationError) {
+        return false;
+      }
+    });
 
     let validationErrorFn = validationError && errorMessages[validationError];
 

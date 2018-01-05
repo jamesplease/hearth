@@ -1,9 +1,5 @@
 import _ from 'lodash';
-
-// These should be pulled from the market data at some point, but for
-// now the values are hard-coded.
-const MIN_YEAR = 1871;
-const MAX_YEAR = 2017;
+import getYearRange from './get-year-range';
 
 export default {
   empty(inputName) {
@@ -12,11 +8,13 @@ export default {
   },
   tooSmall(inputName) {
     const displayName = _.startCase(inputName);
-    return `${displayName} must be later than ${MIN_YEAR - 1}.`;
+    const { minYear } = getYearRange();
+    return `${displayName} must be later than ${minYear - 1}.`;
   },
   tooLarge(inputName, inputValue, inputs) {
     const displayName = _.startCase(inputName);
-    return `${displayName} must be earlier than ${MAX_YEAR + 1}.`;
+    const { maxYear } = getYearRange();
+    return `${displayName} must be earlier than ${maxYear + 1}.`;
   },
   lessThanZero(inputName) {
     const displayName = _.startCase(inputName);
@@ -34,10 +32,10 @@ export default {
     const displayName = _.startCase(inputName);
     return `${displayName} must be less than one quadrillion dollars.`;
   },
-  earlierThanEnd() {
+  laterThanEnd() {
     return 'The Start Year must be earlier than the End Year.';
   },
-  laterThanStart() {
+  earlierThanStart() {
     return 'The End Year must be later than the Start Year.';
   },
   tooManyYears() {
