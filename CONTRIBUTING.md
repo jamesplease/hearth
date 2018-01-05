@@ -39,7 +39,7 @@ npm run build-data
 To run the application locally, use:
 
 ```
-npm start
+npm run watch
 ```
 
 And to run the unit tests:

@@ -49,12 +49,19 @@
   font-weight: bold;
 }
 
+.calculatorPage-viewResultsText {
+  display: inline-block;
+  margin-right: 5px;
+}
+
 .calculatorPage-viewResultsBtn {
   font-family: 'Source Sans Pro';
   background: transparent;
   border: none;
   font-weight: 600;
   color: var(--accentColor);
+  padding: 0;
+  margin: 0;
 }
 
 .calculatorPage-result:after {
@@ -163,5 +170,9 @@
     /* This makes room for large number results */
     top: 3px;
     font-size: 1.5rem;
+  }
+
+  .calculatorPage-emojiResult {
+    margin-right: 10px;
   }
 }

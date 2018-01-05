@@ -1,11 +1,12 @@
 .footer {
+  background: #fafafa;
   border-top: 1px solid #ddd;
 }
 
 .footerContent {
   font-size: 1.4rem;
   color: #999;
-  padding: 10px var(--horizontalContentPadding);
+  padding: 20px var(--horizontalContentPadding);
   max-width: var(--maxAppWidth);
   margin: 0 auto;
 }
