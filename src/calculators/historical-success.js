@@ -9,53 +9,31 @@ import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
 import maxDollarInput from './utils/max-dollar-input';
 import errorMessages from './utils/error-messages';
+import {
+  isRequired,
+  numberRequired,
+  integerRequired,
+  greaterThanZero,
+  withinDollarLimit
+} from './utils/validators';
 
 const validators = {
-  stockInvestmentValue(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    }
-  },
-  firstYearWithdrawal(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    }
-  },
-  duration(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > 300) {
-      return 'durationTooLong';
-    }
-  }
+  // Ensure this is larger than firstYearWithdrawal
+  stockInvestmentValue: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Ensure this is smaller than stockInvestmentValue
+  firstYearWithdrawal: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Add limit: 300
+  duration: [isRequired, numberRequired, integerRequired, greaterThanZero]
 };
 
 const summaryMaps = {
@@ -259,11 +237,15 @@ export default class HistoricalSuccess extends Component {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
 
-    const validationFn = validators[valueName];
+    const validationFns = validators[valueName];
+
     let validationError;
-    if (typeof validationFn === 'function') {
-      validationError = validationFn(newValue, this.state);
-    }
+    _.forEach(validationFns, fn => {
+      validationError = fn(newValue, this.state);
+      if (validationError) {
+        return false;
+      }
+    });
 
     let validationErrorFn = validationError && errorMessages[validationError];
 
