@@ -25,10 +25,19 @@ const validators = {
   duration: isNumber
 };
 
-const successSummaryMap = {
-  SUCCESSFUL: 'This portfolio and withdrawal rate succeeded most of the time.',
-  MODERATE: 'This portfolio and withdrawal rate succeeded some of the time.',
-  UNSUCCESSFUL: 'This portfolio and withdrawal rate frequently failed.'
+const summaryMaps = {
+  SUCCESSFUL: {
+    text: 'This portfolio and withdrawal rate succeeded most of the time.',
+    emoji: '1f31f.png'
+  },
+  MODERATE: {
+    text: 'This portfolio and withdrawal rate succeeded frequently.',
+    emoji: '1f44d.png'
+  },
+  UNSUCCESSFUL: {
+    text: 'This portfolio and withdrawal rate failed frequently.',
+    emoji: '274c.png'
+  }
 };
 
 export default class HistoricalSuccess extends Component {
@@ -37,11 +46,14 @@ export default class HistoricalSuccess extends Component {
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
     const { summary } = result;
 
-    let summaryText;
+    let summaryText, summaryImg;
     if (summary) {
-      summaryText = successSummaryMap[summary];
+      const resultData = summaryMaps[summary];
+      summaryText = resultData.text;
+      summaryImg = resultData.emoji;
     } else {
       summaryText = '';
+      summaryImg = '';
     }
 
     return (
@@ -56,11 +68,13 @@ export default class HistoricalSuccess extends Component {
           Historical Success
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-twoColumn calculatorPage-calculator">
-            <label className="calculatorPage-label">
-              Initial Portfolio Value
-            </label>
-            <div>
+          <div className="calculatorPage-calculator">
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="historicalSuccess_stockInvestmentValue">
+                Initial Portfolio Value
+              </label>
               <input
                 value={stockInvestmentValue.value}
                 className="input"
@@ -72,10 +86,12 @@ export default class HistoricalSuccess extends Component {
                 }
               />
             </div>
-            <label className="calculatorPage-label">
-              First Year Withdrawal
-            </label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="inflationAdjusted_firstYearWithdrawal">
+                First Year Withdrawal
+              </label>
               <input
                 value={firstYearWithdrawal.value}
                 className="input"
@@ -87,8 +103,12 @@ export default class HistoricalSuccess extends Component {
                 }
               />
             </div>
-            <label className="calculatorPage-label">Duration</label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="inflationAdjusted_duration">
+                Duration
+              </label>
               <input
                 value={duration.value}
                 className="input"
@@ -102,8 +122,16 @@ export default class HistoricalSuccess extends Component {
             </div>
           </div>
           <div className="calculatorPage-expandingResult">
+            {summaryImg && (
+              <img
+                className="emoji-img calculatorPage-emojiResult"
+                src={`/${summaryImg}`}
+              />
+            )}
             <span>{summaryText}</span>
-            <button onClick={() => this.setState({ isResultsModalOpen: true })}>
+            <button
+              onClick={() => this.setState({ isResultsModalOpen: true })}
+              className="calculatorPage-viewResultsBtn">
               View results
             </button>
           </div>
