@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
@@ -118,9 +119,16 @@ export default class InflationAdjusted extends Component {
         <div className="panel calculatorPage-contents">
           <div className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
-              <label className="calculatorPage-label">Initial Value</label>
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': initialValue.error
+                })}>
+                Initial Value
+              </label>
               <input
-                className="input calculatorPage-input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: initialValue.error
+                })}
                 id="inflationAdjusted_initialValue"
                 type="number"
                 inputMode="numeric"
@@ -139,9 +147,16 @@ export default class InflationAdjusted extends Component {
               )}
             </div>
             <div className="calculatorPage-formRow">
-              <label className="calculatorPage-label">Start Year</label>
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': startYear.error
+                })}>
+                Start Year
+              </label>
               <input
-                className="input calculatorPage-input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: startYear.error
+                })}
                 id="inflationAdjusted_startYear"
                 type="number"
                 inputMode="numeric"
@@ -160,9 +175,16 @@ export default class InflationAdjusted extends Component {
               )}
             </div>
             <div className="calculatorPage-formRow">
-              <label className="calculatorPage-label">End Year</label>
+              <label
+                className={classnames('form-label calculatorPage-label', {
+                  'form-label_error': endYear.error
+                })}>
+                End Year
+              </label>
               <input
-                className="input calculatorPage-input"
+                className={classnames('input calculatorPage-input', {
+                  input_error: endYear.error
+                })}
                 id="inflationAdjusted_endYear"
                 type="number"
                 inputMode="numeric"

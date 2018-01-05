@@ -71,7 +71,6 @@
 }
 
 .calculatorPage-label {
-  font-size: 1.9rem;
   grid-area: label;
 }
 
@@ -85,9 +84,10 @@
 }
 
 .calculatorPage-formRow {
+  margin-bottom: 10px;
   display: grid;
   grid-template-columns: 150px 1fr;
-  grid-gap: 10px 15px;
+  grid-gap: 5px 15px;
   grid-template-areas:
     'label input'
     'error error';
