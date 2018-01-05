@@ -110,7 +110,7 @@
 
   .calculatorPage-contentWithSideNav {
     --verticalMargins: 15px;
-    padding: 0;
+    padding: 0 0 50px;
     display: block;
   }
 

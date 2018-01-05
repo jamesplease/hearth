@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
+import formatOutputDollars from './utils/format-output-dollars';
+import errorMessages from './utils/error-messages';
+import maxDollarInput from './utils/max-dollar-input';
 
 // These return `undefined` if validation succeeds. Otherwise,
 // return a string that represents the error.
@@ -11,6 +14,10 @@ const validators = {
 
     if (!_.isFinite(valueToVerify)) {
       return 'NaN';
+    } else if (valueToVerify < 0) {
+      return 'lessThanZero';
+    } else if (valueToVerify > maxDollarInput) {
+      return 'tooManyDollars';
     }
   },
 
@@ -19,6 +26,10 @@ const validators = {
 
     if (!_.isFinite(valueToVerify)) {
       return 'NaN';
+    } else if (valueToVerify < 0) {
+      return 'lessThanZero';
+    } else if (valueToVerify > maxDollarInput) {
+      return 'tooManyDollars';
     }
   },
 
@@ -30,7 +41,9 @@ const validators = {
     } else if (!Number.isInteger(valueToVerify)) {
       return 'nonInteger';
     } else if (valueToVerify < 0) {
-      return 'negativeNumber';
+      return 'lessThanZero';
+    } else if (valueToVerify >= 1000) {
+      return 'tooManyYears';
     }
   },
 
@@ -65,37 +78,41 @@ export default class CompoundInterest extends Component {
           Compound Interest
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="inputContainer calculatorPage-calculator">
-            <div className="calculatorPage-inputContainer">
+          <div className="calculatorPage-calculator">
+            <div className="calculatorPage-formRow">
               <label
                 className="calculatorPage-label"
                 htmlFor="compoundInterest_principal">
                 Principal
               </label>
-              <div>
-                <input
-                  id="compoundInterest_principal"
-                  className="input"
-                  type="number"
-                  inputMode="numeric"
-                  onChange={event =>
-                    this.updateValue('principal', event.target.value)
-                  }
-                  value={principal.value}
-                />
-              </div>
-              <div className="calculatorPage-error">You mezzed up man</div>
+              <input
+                id="compoundInterest_principal"
+                className="input"
+                type="number"
+                pattern="\d*"
+                inputMode="numeric"
+                onChange={event =>
+                  this.updateValue('principal', event.target.value)
+                }
+                value={principal.value}
+              />
+              {principal.errorMsg && (
+                <div className="calculatorPage-errorMsg">
+                  {principal.errorMsg}
+                </div>
+              )}
             </div>
-            <label
-              className="calculatorPage-label"
-              htmlFor="compoundInterest_annualContribution">
-              Annual Contribution
-            </label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="compoundInterest_annualContribution">
+                Annual Contribution
+              </label>
               <input
                 id="compoundInterest_annualContribution"
                 className="input"
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
                 onChange={event =>
                   this.updateValue('annualContribution', event.target.value)
@@ -103,16 +120,17 @@ export default class CompoundInterest extends Component {
                 value={annualContribution.value}
               />
             </div>
-            <label
-              className="calculatorPage-label"
-              htmlFor="compoundInterest_numberOfYears">
-              Number of Years
-            </label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="compoundInterest_numberOfYears">
+                Number of Years
+              </label>
               <input
                 id="compoundInterest_numberOfYears"
                 className="input"
                 type="number"
+                pattern="\d*"
                 inputMode="numeric"
                 min="0"
                 onChange={event =>
@@ -121,12 +139,12 @@ export default class CompoundInterest extends Component {
                 value={numberOfYears.value}
               />
             </div>
-            <label
-              className="calculatorPage-label"
-              htmlFor="compoundInterest_interestRate">
-              Interest Rate (%)
-            </label>
-            <div>
+            <div className="calculatorPage-formRow">
+              <label
+                className="calculatorPage-label"
+                htmlFor="compoundInterest_interestRate">
+                Interest Rate (%)
+              </label>
               <input
                 id="compoundInterest_interestRate"
                 className="input"
@@ -187,12 +205,21 @@ export default class CompoundInterest extends Component {
       validationError = validationFn(newValue);
     }
 
+    let validationErrorFn = validationError && errorMessages[validationError];
+
+    const newInputObj = {
+      ...currentValue,
+      error: validationError ? validationError : null,
+      value: newValue
+    };
+
     const newInputs = {
       ...inputs,
       [valueName]: {
-        ...currentValue,
-        error: validationError ? validationError : null,
-        value: newValue
+        ...newInputObj,
+        errorMsg: validationErrorFn
+          ? validationErrorFn(valueName, newInputObj, inputs)
+          : null
       }
     };
 
@@ -205,7 +232,7 @@ export default class CompoundInterest extends Component {
     if (!formInvalid) {
       newResult = this.computeResult(newInputs);
     } else {
-      newResult = 'There was an error';
+      newResult = '-';
     }
 
     this.setState({
@@ -235,17 +262,6 @@ export default class CompoundInterest extends Component {
       interestRate: decimalInterest
     });
 
-    // There shouldn't be any problems with the utility, but just in case we show
-    // a better error message to the user.
-    if (Number.isNaN(result)) {
-      result = 'There was an error.';
-    } else {
-      result = Number(result).toLocaleString('en', {
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2
-      });
-    }
-
-    return result;
+    return formatOutputDollars(result);
   };
 }

@@ -35,5 +35,8 @@ export default {
   },
   laterThanStart() {
     return 'The End Year must be later than the Start Year.';
+  },
+  tooManyYears() {
+    return 'The Number of Years must be less than 1000';
   }
 };

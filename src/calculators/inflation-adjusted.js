@@ -85,6 +85,7 @@ export default class InflationAdjusted extends Component {
           <div className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
+                htmlFor="inflationAdjusted_initialValue"
                 className={classnames('form-label calculatorPage-label', {
                   'form-label_error': initialValue.error
                 })}>
@@ -114,6 +115,7 @@ export default class InflationAdjusted extends Component {
             </div>
             <div className="calculatorPage-formRow">
               <label
+                htmlFor="inflationAdjusted_startYear"
                 className={classnames('form-label calculatorPage-label', {
                   'form-label_error': startYear.error
                 })}>
@@ -143,6 +145,7 @@ export default class InflationAdjusted extends Component {
             </div>
             <div className="calculatorPage-formRow">
               <label
+                htmlFor="inflationAdjusted_endYear"
                 className={classnames('form-label calculatorPage-label', {
                   'form-label_error': endYear.error
                 })}>

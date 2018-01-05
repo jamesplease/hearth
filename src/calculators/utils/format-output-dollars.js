@@ -1,13 +1,6 @@
-import {
-  ONE_BILLION,
-  ONE_TRILLION,
-  ONE_QUADRILLION,
-  ONE_QUINTILLION,
-  ONE_SEXTILLION,
-  ONE_SEPTILLION
-} from './big-numbers';
+import { ONE_BILLION, ONE_TRILLION, ONE_QUADRILLION } from './big-numbers';
 
-// rawNumber: A number such as 124000000000
+// rawNumber: A number such as 1240000000
 //
 // Returns a formatted string suitable for display to the user, such as:
 // "1.92 quadrillion"
@@ -15,29 +8,28 @@ import {
 // Anything greater than or equal to 1 billion dollars is given a string
 // suffix, otherwise the "raw number" is returned.
 export default function(rawNumber) {
+  const number = Number(rawNumber);
+
+  if (Number.isNaN(number)) {
+    return '–';
+  } else if (!Number.isSafeInteger(Math.round(number))) {
+    return 'The number is too large to display.';
+  }
+
   let adjustedNumber;
   let suffix = '';
 
-  if (rawNumber >= ONE_SEPTILLION) {
-    adjustedNumber = rawNumber / ONE_SEPTILLION;
-    suffix = ' quintillion';
-  } else if (rawNumber >= ONE_SEXTILLION) {
-    adjustedNumber = rawNumber / ONE_SEXTILLION;
-    suffix = ' quintillion';
-  } else if (rawNumber >= ONE_QUINTILLION) {
-    adjustedNumber = rawNumber / ONE_QUINTILLION;
-    suffix = ' quintillion';
-  } else if (rawNumber >= ONE_QUADRILLION) {
-    adjustedNumber = rawNumber / ONE_QUADRILLION;
+  if (number >= ONE_QUADRILLION) {
+    adjustedNumber = number / ONE_QUADRILLION;
     suffix = ' quadrillion';
-  } else if (rawNumber >= ONE_TRILLION) {
-    adjustedNumber = rawNumber / ONE_TRILLION;
+  } else if (number >= ONE_TRILLION) {
+    adjustedNumber = number / ONE_TRILLION;
     suffix = ' trillion';
-  } else if (rawNumber >= ONE_BILLION) {
-    adjustedNumber = rawNumber / ONE_BILLION;
+  } else if (number >= ONE_BILLION) {
+    adjustedNumber = number / ONE_BILLION;
     suffix = ' billion';
   } else {
-    adjustedNumber = rawNumber;
+    adjustedNumber = number;
   }
 
   return `$${adjustedNumber.toLocaleString('en', {
