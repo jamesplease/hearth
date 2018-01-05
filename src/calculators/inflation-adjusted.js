@@ -10,11 +10,11 @@ import getYearRange from './utils/get-year-range';
 import errorMessages from './utils/error-messages';
 import {
   isRequired,
+  numberRequired,
+  integerRequired,
   greaterThanZero,
   withinDollarLimit,
-  integerRequired,
-  withinYearLimit,
-  numberRequired
+  withinYearLimit
 } from './utils/validators';
 
 function startYearBeforeEndYear(val, state) {

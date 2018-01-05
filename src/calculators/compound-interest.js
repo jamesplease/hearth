@@ -5,70 +5,28 @@ import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
 import formatOutputDollars from './utils/format-output-dollars';
 import errorMessages from './utils/error-messages';
-import maxDollarInput from './utils/max-dollar-input';
+import {
+  isRequired,
+  numberRequired,
+  greaterThanZero,
+  withinDollarLimit,
+  integerRequired
+} from './utils/validators';
 
 // These return `undefined` if validation succeeds. Otherwise,
 // return a string that represents the error.
 const validators = {
-  principal(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    }
-  },
-
-  annualContribution(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify > maxDollarInput) {
-      return 'tooManyDollars';
-    }
-  },
-
-  numberOfYears(val) {
-    if (typeof val === 'string' && val.length === 0) {
-      return 'empty';
-    }
-
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (!Number.isInteger(valueToVerify)) {
-      return 'nonInteger';
-    } else if (valueToVerify < 0) {
-      return 'lessThanZero';
-    } else if (valueToVerify >= 1000) {
-      return 'tooManyYears';
-    }
-  },
-
-  interestRate(val) {
-    const valueToVerify = Number(val);
-
-    if (!_.isFinite(valueToVerify)) {
-      return 'NaN';
-    } else if (valueToVerify >= 1000000) {
-      return 'tooMuchInterest';
-    }
-  }
+  principal: [isRequired, numberRequired, greaterThanZero, withinDollarLimit],
+  annualContribution: [
+    isRequired,
+    numberRequired,
+    greaterThanZero,
+    withinDollarLimit
+  ],
+  // Add numberLimit: 1000
+  numberOfYears: [isRequired, numberRequired, integerRequired, greaterThanZero],
+  // Add numberLimit: 1000000
+  interestRate: [isRequired, numberRequired]
 };
 
 export default class CompoundInterest extends Component {
@@ -245,11 +203,15 @@ export default class CompoundInterest extends Component {
     const { inputs } = this.state;
     const currentValue = inputs[valueName];
 
-    const validationFn = validators[valueName];
+    const validationFns = validators[valueName];
+
     let validationError;
-    if (typeof validationFn === 'function') {
-      validationError = validationFn(newValue);
-    }
+    _.forEach(validationFns, fn => {
+      validationError = fn(newValue, this.state);
+      if (validationError) {
+        return false;
+      }
+    });
 
     let validationErrorFn = validationError && errorMessages[validationError];
 
