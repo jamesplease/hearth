@@ -38,5 +38,9 @@ export default {
   },
   tooManyYears() {
     return 'The Number of Years must be less than 1000';
+  },
+  tooMuchInterest(inputName) {
+    const displayName = _.startCase(inputName);
+    return `${displayName} must be less than one million percent.`;
   }
 };

@@ -4,16 +4,14 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
-import { ONE_QUADRILLION } from './utils/big-numbers';
 import formatOutputDollars from './utils/format-output-dollars';
+import maxDollarInput from './utils/max-dollar-input';
 import errorMessages from './utils/error-messages';
 
 // These should be pulled from the market data at some point, but for
 // now the values are hard-coded.
 const MIN_YEAR = 1871;
 const MAX_YEAR = 2017;
-
-const MAX_DOLLARS = ONE_QUADRILLION;
 
 const validators = {
   initialValue(val) {
@@ -23,7 +21,7 @@ const validators = {
       return 'NaN';
     } else if (valueToVerify < 0) {
       return 'lessThanZero';
-    } else if (valueToVerify > MAX_DOLLARS) {
+    } else if (valueToVerify > maxDollarInput) {
       return 'tooManyDollars';
     }
   },
@@ -101,7 +99,7 @@ export default class InflationAdjusted extends Component {
                 inputMode="numeric"
                 step="1"
                 min="0"
-                max={MAX_DOLLARS}
+                max={maxDollarInput}
                 onChange={event =>
                   this.updateValue('initialValue', event.target.value)
                 }
@@ -232,13 +230,23 @@ export default class InflationAdjusted extends Component {
       value: newValue
     };
 
+    let errorMsg;
+    if (validationError && validationErrorFn) {
+      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
+    } else if (validationError) {
+      // The intention is that this LoC is _never_ called! There should
+      // always be a more descriptive error for each type of error. But
+      // just in case...
+      errorMsg = 'This input is invalid.';
+    } else {
+      errorMsg = null;
+    }
+
     const newInputs = {
       ...inputs,
       [valueName]: {
         ...newInputObj,
-        errorMsg: validationErrorFn
-          ? validationErrorFn(valueName, newInputObj, inputs)
-          : null
+        errorMsg
       }
     };
 
