@@ -14,7 +14,7 @@ body {
   font-size: 4rem;
   text-align: center;
   margin: 0 0 50px;
-  padding: 0 var(--horizontalContentPadding);
+  padding: 0 30px;
 }
 
 .primaryHeader {
@@ -72,6 +72,7 @@ body {
   }
 
   .heroText {
+    font-size: 3.5rem;
     margin: 110px 0 50px;
   }
 
