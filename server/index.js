@@ -2,14 +2,14 @@
 // This is the production server for Hearth. It is not used
 // for local development.
 //
-// If you're developing locally, run `npm start`, which will
+// If you're developing locally, run `npm run watch`, which will
 // use the development environment scaffolded out by Create React App.
 //
 // When deploying Hearth to a production environment, you must first
 // build the production version of the browser app by executing
 // `npm run build`.
 //
-// Then, run `npm run serve` to start this server.
+// Then, execute `npm start` to start this server.
 //
 
 require('./utils/uncaught-things');
