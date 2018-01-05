@@ -6,6 +6,7 @@ import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
 import { ONE_QUADRILLION } from './utils/big-numbers';
 import formatOutputDollars from './utils/format-output-dollars';
+import errorMessages from './utils/error-messages';
 
 // These should be pulled from the market data at some point, but for
 // now the values are hard-coded.
@@ -13,39 +14,6 @@ const MIN_YEAR = 1871;
 const MAX_YEAR = 2017;
 
 const MAX_DOLLARS = ONE_QUADRILLION;
-
-const mapError = {
-  tooSmall(inputName) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be later than ${MIN_YEAR - 1}.`;
-  },
-  tooLarge(inputName, inputValue, inputs) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be earlier than ${MAX_YEAR + 1}.`;
-  },
-  lessThanZero(inputName) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be greater than 0.`;
-  },
-  NaN(inputName) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be a number.`;
-  },
-  nonInteger(inputName) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be an integer.`;
-  },
-  tooManyDollars(inputName) {
-    const displayName = _.startCase(inputName);
-    return `${displayName} must be less than 100 trillion dollars.`;
-  },
-  earlierThanEnd() {
-    return 'The Start Year must be earlier than the End Year.';
-  },
-  laterThanStart() {
-    return 'The End Year must be later than the Start Year.';
-  }
-};
 
 const validators = {
   initialValue(val) {
@@ -253,7 +221,7 @@ export default class InflationAdjusted extends Component {
       validationError = validationFn(newValue, this.state);
     }
 
-    let validationErrorFn = validationError && mapError[validationError];
+    let validationErrorFn = validationError && errorMessages[validationError];
 
     const newInputObj = {
       ...currentValue,
