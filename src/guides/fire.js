@@ -24,8 +24,7 @@ export default class FireGuide extends Component {
         <p className="appParagraph">
           The thing is, doing nothing would get boring quickly! FIRE'ing is
           about being able to do the things you find most valuable or fun in
-          life. This is why many FIRE'd folks emphasize the first half of the
-          acronym over the second.
+          life.
         </p>
         <h1 className="secondaryHeader">How does it work?</h1>
         <p className="appParagraph">
