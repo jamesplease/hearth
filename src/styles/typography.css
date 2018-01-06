@@ -10,6 +10,10 @@ body {
   font-size: 1.6rem;
 }
 
+a {
+  color: var(--accentColor);
+}
+
 .heroText {
   font-size: 4rem;
   text-align: center;
@@ -25,8 +29,9 @@ body {
 
 .secondaryHeader {
   font-size: 2rem;
-  margin: 0 0 15px;
+  margin: 20px 0 15px;
   padding: 0;
+  font-weight: 600;
 }
 
 .primaryHeader_centered {
@@ -44,6 +49,7 @@ body {
 }
 
 .appParagraph {
+  margin: 0 0 10px 0;
   max-width: 650px;
   font-size: 1.8rem;
   line-height: 3.1rem;

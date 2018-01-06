@@ -11,6 +11,9 @@ import Calculators from './calculators';
 import DataSources from './data-sources';
 import Guides from './guides';
 import About from './meta/about';
+import Contact from './meta/contact';
+import Privacy from './meta/privacy';
+import Terms from './meta/terms';
 
 export default class App extends Component {
   render() {
@@ -26,6 +29,9 @@ export default class App extends Component {
                 <Route path="/guides" component={Guides} />
                 <Route exact path="/data-sources" component={DataSources} />
                 <Route exact path="/about" component={About} />
+                <Route exact path="/privacy" component={Privacy} />
+                <Route exact path="/terms" component={Terms} />
+                <Route exact path="/contact" component={Contact} />
                 <Route component={NotFound} />
               </Switch>
             </div>

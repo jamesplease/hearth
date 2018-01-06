@@ -4,11 +4,36 @@
 }
 
 .footerContent {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #999;
   padding: 20px var(--horizontalContentPadding);
   max-width: var(--maxAppWidth);
   margin: 0 auto;
+  display: flex;
+}
+
+.footerLinks {
+  margin: 0 0 0 auto;
+  list-style: none;
+  display: flex;
+}
+
+.footerLinkItem {
+  margin-right: 30px;
+}
+
+.footerLink {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+  color: #888;
+}
+
+.footerLinkItem:last-child {
+  margin: 0;
 }
 
 @media (max-width: 650px) {
