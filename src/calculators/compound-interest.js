@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import queryString from 'query-string';
 import classnames from 'classnames';
 import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
 import formatOutputDollars from './utils/format-output-dollars';
-import errorMessages from './utils/error-messages';
+import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
 import {
   isRequired,
   numberRequired,
@@ -30,8 +29,33 @@ const validators = {
   interestRate: [isRequired, numberRequired]
 };
 
+function computeResult(inputs) {
+  const {
+    principal,
+    annualContribution,
+    numberOfYears,
+    interestRate,
+    contributionsMadeAtStart
+  } = inputs;
+
+  // Users input the interest rate as a percentage, such as 7%.
+  // We convert that to the decimal form for the computation.
+  const decimalInterest = Number(interestRate.value) / 100;
+
+  let result = computeCompoundInterest({
+    principal: Number(principal.value),
+    annualContribution: Number(annualContribution.value),
+    numberOfYears: Number(numberOfYears.value),
+    contributionsMadeAtStart: Number(contributionsMadeAtStart.value),
+    interestRate: decimalInterest
+  });
+
+  return formatOutputDollars(result);
+}
+
 export default class CompoundInterest extends Component {
   render() {
+    const { location } = this.props;
     const { inputs, result, displayingShareLink, isFormValid } = this.state;
     const {
       principal,
@@ -40,7 +64,7 @@ export default class CompoundInterest extends Component {
       interestRate
     } = inputs;
 
-    const formUrl = this.getFormUrl(inputs);
+    const formUrl = getFormUrl(location, inputs);
 
     return (
       <form className="compoundInterest calculatorPage">
@@ -248,71 +272,12 @@ export default class CompoundInterest extends Component {
       }
     });
 
-    const newFormState = this.getUpdatedFormState(initialInputs);
-    this.setState(newFormState);
-  }
-
-  // Pass in some `inputs`, and you'll get back an object to set on state
-  // that includes form-related information
-  getUpdatedFormState(inputs) {
-    const newInputs = this.computeInputErrors(inputs);
-
-    const formIsInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formIsInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = '–';
-    }
-
-    return {
-      isFormValid: !formIsInvalid,
-      inputs: newInputs,
-      result: newResult
-    };
-  }
-
-  // Pass in some `inputs`, and you'll get a copy of it back with
-  // updated errors.
-  computeInputErrors(inputs) {
-    return _.mapValues(inputs, (inputObj, inputName) => {
-      const validationFns = validators[inputName];
-
-      let validationError;
-      _.forEach(validationFns, fn => {
-        validationError = fn(inputObj.value, inputs);
-        if (validationError) {
-          return false;
-        }
-      });
-
-      if (!validationError) {
-        return {
-          ...inputObj,
-          error: null,
-          errorMsg: null
-        };
-      }
-
-      let validationErrorFn = errorMessages[validationError];
-
-      let validationErrorMsg;
-      if (validationErrorFn) {
-        validationErrorMsg = validationErrorFn(inputName, inputObj, inputs);
-      } else {
-        validationErrorMsg = null;
-      }
-
-      return {
-        ...inputObj,
-        error: validationError,
-        errorMsg: validationErrorMsg
-      };
+    const newFormState = getUpdatedFormState({
+      inputs: initialInputs,
+      computeResult,
+      validators
     });
+    this.setState(newFormState);
   }
 
   updateValue = (valueName, newValue) => {
@@ -324,45 +289,15 @@ export default class CompoundInterest extends Component {
       }
     });
 
-    const newFormState = this.getUpdatedFormState(newInputs);
+    const newFormState = getUpdatedFormState({
+      inputs: newInputs,
+      computeResult,
+      validators
+    });
     this.setState({
       ...newFormState,
       displayingShareLink: false
     });
-  };
-
-  computeResult = inputs => {
-    const {
-      principal,
-      annualContribution,
-      numberOfYears,
-      interestRate,
-      contributionsMadeAtStart
-    } = inputs;
-
-    // Users input the interest rate as a percentage, such as 7%.
-    // We convert that to the decimal form for the computation.
-    const decimalInterest = Number(interestRate.value) / 100;
-
-    let result = computeCompoundInterest({
-      principal: Number(principal.value),
-      annualContribution: Number(annualContribution.value),
-      numberOfYears: Number(numberOfYears.value),
-      contributionsMadeAtStart: Number(contributionsMadeAtStart.value),
-      interestRate: decimalInterest
-    });
-
-    return formatOutputDollars(result);
-  };
-
-  getFormUrl = inputs => {
-    const { location } = this.props;
-    const { pathname } = location;
-
-    const inputValues = _.mapValues(inputs, 'value');
-    const qs = queryString.stringify(inputValues);
-
-    return `${window.location.origin}${pathname}?${qs}`;
   };
 
   clickShareButton = event => {
