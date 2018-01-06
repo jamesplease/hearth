@@ -92,7 +92,7 @@ export default class InflationAdjusted extends Component {
           Inflation Adjusted
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-calculator">
+          <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
                 htmlFor="inflationAdjusted_initialValue"
@@ -183,7 +183,7 @@ export default class InflationAdjusted extends Component {
                 </div>
               )}
             </div>
-          </div>
+          </form>
           <div className="calculatorPage-result">
             <div className="calculatorPage-shareResult">
               <button
@@ -204,10 +204,10 @@ export default class InflationAdjusted extends Component {
                   <div className="calculatorPage-shareResultLink">
                     Share a link to this result:
                     <input
+                      onChange={() => {}}
                       ref={this.shareResultLinkRef}
                       type="text"
                       value={formUrl}
-                      readOnly
                       onClick={event => event.target.select()}
                       className="calculatorPage-shareResultInput"
                     />
@@ -296,6 +296,9 @@ export default class InflationAdjusted extends Component {
 
     this.setState({ displayingShareLink: !displayingShareLink }, () => {
       if (!displayingShareLink && this.shareResultLinkEl) {
+        // This doesn't select the text on iOS. Instead, users must manually
+        // highlight the text and copy it.
+        // Android testing is needed.
         this.shareResultLinkEl.select();
       }
     });

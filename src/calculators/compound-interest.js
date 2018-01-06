@@ -67,7 +67,7 @@ export default class CompoundInterest extends Component {
     const formUrl = getFormUrl(location, inputs);
 
     return (
-      <form className="compoundInterest calculatorPage">
+      <div className="compoundInterest calculatorPage">
         <Link
           to="/calculators"
           className="navBackLink calculatorPage-navBackLink">
@@ -78,7 +78,7 @@ export default class CompoundInterest extends Component {
           Compound Interest
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-calculator">
+          <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
                 className={classnames('form-label calculatorPage-label', {
@@ -187,7 +187,7 @@ export default class CompoundInterest extends Component {
                 </div>
               )}
             </div>
-          </div>
+          </form>
           <div className="calculatorPage-result">
             <div className="calculatorPage-shareResult">
               <button
@@ -211,7 +211,7 @@ export default class CompoundInterest extends Component {
                       ref={this.shareResultLinkRef}
                       type="text"
                       value={formUrl}
-                      readOnly
+                      onChange={() => {}}
                       onClick={event => event.target.select()}
                       className="calculatorPage-shareResultInput"
                     />
@@ -222,7 +222,7 @@ export default class CompoundInterest extends Component {
             <span className="calculatorPage-resultText">{result}</span>
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 
@@ -306,6 +306,9 @@ export default class CompoundInterest extends Component {
 
     this.setState({ displayingShareLink: !displayingShareLink }, () => {
       if (!displayingShareLink && this.shareResultLinkEl) {
+        // This doesn't select the text on iOS. Instead, users must manually
+        // highlight the text and copy it.
+        // Android testing is needed.
         this.shareResultLinkEl.select();
       }
     });
