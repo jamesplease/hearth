@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import computeCycle from './utils/compute-cycle';
 import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
 import maxDollarInput from './utils/max-dollar-input';
-import errorMessages from './utils/error-messages';
+import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
 import {
   isRequired,
   numberRequired,
@@ -45,11 +45,86 @@ const summaryMaps = {
   }
 };
 
+function computeResult(inputs) {
+  const {
+    duration,
+    firstYearWithdrawal,
+    stockInvestmentValue,
+    spendingMethod
+  } = inputs;
+
+  // An array of years that we use as a starting year for cycles
+  const startYears = getStartYears();
+
+  const dipPercentage = 0.9;
+
+  const rebalancePortfolioAnnually = false;
+  const investments = [
+    {
+      type: 'equity',
+      fees: 0.0,
+      value: Number(stockInvestmentValue.value),
+      percentage: 1
+    }
+  ];
+
+  const spendingConfiguration = {
+    spendingMethod: spendingMethod.value,
+    firstYearWithdrawal: Number(firstYearWithdrawal.value)
+  };
+
+  //
+  // The example configuration below demonstrates using the percentOfPortfolio
+  // withdrawal method
+  //
+  // const spendingConfiguration = {
+  //   spendingMethod: 'percentOfPortfolio',
+  //   percentageOfPortfolio: 0.05,
+  //   minWithdrawal: 20000,
+  //   maxWithdrawal: 35000
+  // };
+
+  const portfolio = fromInvestments({ investments });
+
+  const cycles = _.map(startYears, startYear =>
+    computeCycle({
+      startYear,
+      dipPercentage,
+      rebalancePortfolioAnnually,
+      portfolio,
+      spendingConfiguration,
+      duration: Number(duration.value)
+    })
+  );
+
+  const results = evaluateCycles({ cycles });
+  const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
+  const successRate = `${(results.successRate * 100).toFixed(2)}%`;
+
+  let summary = results.successRate > 0.95 ? 'SUCCESSFUL' : 'UNSUCCESSFUL';
+
+  return {
+    summary,
+    dipRate,
+    successRate,
+    lowestDippedValue: results.lowestDippedValue
+  };
+}
+
 export default class HistoricalSuccess extends Component {
   render() {
-    const { inputs, result, isResultsModalOpen } = this.state;
+    const { location } = this.props;
+    const {
+      inputs,
+      result,
+      isResultsModalOpen,
+      displayingShareLink,
+      isFormValid
+    } = this.state;
     const { stockInvestmentValue, firstYearWithdrawal, duration } = inputs;
     const { summary, successRate } = result;
+
+    const formUrl = getFormUrl(location, inputs);
 
     const summaryText = `This portfolio succeeded ${successRate} of the time.`;
 
@@ -73,7 +148,7 @@ export default class HistoricalSuccess extends Component {
           Historical Success
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-calculator">
+          <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
                 className={classnames('form-label calculatorPage-label', {
@@ -88,7 +163,6 @@ export default class HistoricalSuccess extends Component {
                   input_error: stockInvestmentValue.error
                 })}
                 type="number"
-                pattern="\d*"
                 inputMode="numeric"
                 min="0"
                 max={maxDollarInput}
@@ -117,7 +191,6 @@ export default class HistoricalSuccess extends Component {
                   input_error: firstYearWithdrawal.error
                 })}
                 type="number"
-                pattern="\d*"
                 min="0"
                 max={maxDollarInput}
                 inputMode="numeric"
@@ -162,8 +235,38 @@ export default class HistoricalSuccess extends Component {
                 </div>
               )}
             </div>
-          </div>
+          </form>
           <div className="calculatorPage-expandingResult">
+            <div className="calculatorPage-shareResult">
+              <button
+                disabled={!isFormValid}
+                className="calculatorPage-shareResultBtn"
+                onClick={this.clickShareButton}>
+                <i className="zmdi zmdi-link calculatorPage-shareResultIcon" />
+                Share
+              </button>
+              {displayingShareLink && (
+                <Fragment>
+                  <div
+                    className="overlay"
+                    onClick={() =>
+                      this.setState({ displayingShareLink: false })
+                    }
+                  />
+                  <div className="calculatorPage-shareResultLink">
+                    Share a link to this result:
+                    <input
+                      onChange={() => {}}
+                      ref={this.shareResultLinkRef}
+                      type="text"
+                      value={formUrl}
+                      onClick={event => event.target.select()}
+                      className="calculatorPage-shareResultInput"
+                    />
+                  </div>
+                </Fragment>
+              )}
+            </div>
             <span>
               {summaryImg && (
                 <img
@@ -223,150 +326,78 @@ export default class HistoricalSuccess extends Component {
         value: ''
       }
     },
-    isResultsModalOpen: false
+    isFormValid: true,
+    isResultsModalOpen: false,
+    displayingShareLink: false
   };
 
   componentDidMount() {
-    const result = this.computeResult(this.state.inputs);
-    this.setState({ result });
+    const { location } = this.props;
+    const { query } = location;
+
+    // We read the input values from the query parameters to set the initial
+    // inputs. This allows users to bookmark their calculations
+    const initialInputs = _.mapValues(this.state.inputs, (value, key) => {
+      const queryParamValue = query[key];
+      if (queryParamValue !== undefined) {
+        return {
+          ...value,
+          value: queryParamValue
+        };
+      } else {
+        return value;
+      }
+    });
+
+    const newFormState = getUpdatedFormState({
+      inputs: initialInputs,
+      validators,
+      computeResult
+    });
+    this.setState(newFormState);
   }
 
   updateValue = (valueName, newValue) => {
     const { inputs } = this.state;
-    const currentValue = inputs[valueName];
 
-    const validationFns = validators[valueName];
-
-    let validationError;
-    _.forEach(validationFns, fn => {
-      validationError = fn(newValue, this.state);
-      if (validationError) {
-        return false;
-      }
-    });
-
-    let validationErrorFn = validationError && errorMessages[validationError];
-
-    const newInputObj = {
-      ...currentValue,
-      error: validationError ? validationError : null,
-      value: newValue
-    };
-
-    let errorMsg;
-    if (validationError && validationErrorFn) {
-      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
-    } else if (validationError) {
-      // The intention is that this LoC is _never_ called! There should
-      // always be a more descriptive error for each type of error. But
-      // just in case...
-      errorMsg = 'This input is invalid.';
-    } else {
-      errorMsg = null;
-    }
-
-    const newInputs = {
-      ...inputs,
+    const newInputs = _.merge({}, inputs, {
       [valueName]: {
-        ...newInputObj,
-        errorMsg
+        value: newValue
       }
-    };
-
-    const formInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = 'There was an error';
-    }
-
-    this.setState({
-      inputs: newInputs,
-      result: newResult
     });
-  };
 
-  computeResult = inputs => {
-    const {
-      duration,
-      firstYearWithdrawal,
-      stockInvestmentValue,
-      spendingMethod
-    } = inputs;
-
-    // An array of years that we use as a starting year for cycles
-    const startYears = getStartYears();
-
-    const dipPercentage = 0.9;
-
-    const rebalancePortfolioAnnually = false;
-    const investments = [
-      {
-        type: 'equity',
-        fees: 0.0,
-        value: Number(stockInvestmentValue.value),
-        percentage: 1
-      }
-    ];
-
-    const spendingConfiguration = {
-      spendingMethod: spendingMethod.value,
-      firstYearWithdrawal: Number(firstYearWithdrawal.value)
-    };
-
-    //
-    // The example configuration below demonstrates using the percentOfPortfolio
-    // withdrawal method
-    //
-    // const spendingConfiguration = {
-    //   spendingMethod: 'percentOfPortfolio',
-    //   percentageOfPortfolio: 0.05,
-    //   minWithdrawal: 20000,
-    //   maxWithdrawal: 35000
-    // };
-
-    const portfolio = fromInvestments({ investments });
-
-    const cycles = _.map(startYears, startYear =>
-      computeCycle({
-        startYear,
-        dipPercentage,
-        rebalancePortfolioAnnually,
-        portfolio,
-        spendingConfiguration,
-        duration: Number(duration.value)
-      })
-    );
-
-    const results = evaluateCycles({ cycles });
-    const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
-    const successRate = `${(results.successRate * 100).toFixed(2)}%`;
-    const summary = this.computeSummary(results.successRate);
-
-    return {
-      summary,
-      dipRate,
-      successRate,
-      lowestDippedValue: results.lowestDippedValue
-    };
-  };
-
-  computeSummary = successRate => {
-    if (successRate > 0.95) {
-      return 'SUCCESSFUL';
-    } else {
-      return 'UNSUCCESSFUL';
-    }
+    const newFormState = getUpdatedFormState({
+      inputs: newInputs,
+      computeResult,
+      validators
+    });
+    this.setState({
+      ...newFormState,
+      displayingShareLink: false
+    });
   };
 
   onToggleResultsModal = () => {
     const { isResultsModalOpen } = this.state;
 
     this.setState({ isResultsModalOpen: !isResultsModalOpen });
+  };
+
+  clickShareButton = event => {
+    const { displayingShareLink } = this.state;
+    event.preventDefault();
+
+    this.setState({ displayingShareLink: !displayingShareLink }, () => {
+      if (!displayingShareLink && this.shareResultLinkEl) {
+        // This doesn't select the text on iOS. Instead, users must manually
+        // highlight the text and copy it.
+        // Android testing is needed.
+        this.shareResultLinkEl.select();
+      }
+    });
+  };
+
+  shareResultLinkRef = ref => {
+    this.shareResultLinkEl = ref;
   };
 }

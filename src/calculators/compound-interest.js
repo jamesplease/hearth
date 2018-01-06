@@ -93,7 +93,6 @@ export default class CompoundInterest extends Component {
                   input_error: principal.error
                 })}
                 type="number"
-                pattern="\d*"
                 inputMode="numeric"
                 onChange={event =>
                   this.updateValue('principal', event.target.value)
@@ -120,7 +119,6 @@ export default class CompoundInterest extends Component {
                   input_error: annualContribution.error
                 })}
                 type="number"
-                pattern="\d*"
                 inputMode="numeric"
                 onChange={event =>
                   this.updateValue('annualContribution', event.target.value)
