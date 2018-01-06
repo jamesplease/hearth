@@ -51,8 +51,8 @@ export default class FireGuide extends Component {
           Most people don't think that FIRE'ing is possible. Or maybe it is, but
           not for them. People who feel this way will never FIRE. If this is
           you, I encourage you to open your mind for a moment and consider the
-          option that maybe it is an option for you. Who knows, you might learn
-          something new.
+          possibility that it <i>is</i> an option for you. Who knows, you might
+          learn something new.
         </p>
         <h1 className="secondaryHeader">Hearth</h1>
         <p className="appParagraph">
