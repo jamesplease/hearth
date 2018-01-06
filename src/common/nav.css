@@ -26,11 +26,15 @@
   display: block;
   height: var(--headerHeight);
   line-height: var(--headerHeight);
-  color: var(--fontColor);
+  color: #a0a0a0;
   font-size: 1.65rem;
   text-decoration: none;
   padding: 0 10px;
   position: relative;
+}
+
+.nav-navListLink_active {
+  color: var(--fontColor);
 }
 
 .nav-navListLink:after {

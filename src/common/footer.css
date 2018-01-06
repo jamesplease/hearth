@@ -4,7 +4,7 @@
 }
 
 .footerContent {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #999;
   padding: 20px var(--horizontalContentPadding);
   max-width: var(--maxAppWidth);
@@ -19,7 +19,7 @@
 }
 
 .footerLinkItem {
-  margin-right: 30px;
+  margin-right: 25px;
 }
 
 .footerLink {
