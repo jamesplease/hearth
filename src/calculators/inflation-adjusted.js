@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import queryString from 'query-string';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
 import formatOutputDollars from './utils/format-output-dollars';
 import maxDollarInput from './utils/max-dollar-input';
 import getYearRange from './utils/get-year-range';
-import errorMessages from './utils/error-messages';
+import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
 import {
   isRequired,
   numberRequired,
@@ -36,6 +35,19 @@ function endYearAfterStartYear(val, inputs) {
   }
 }
 
+function computeResult(inputs) {
+  const { initialValue, startYear, endYear } = inputs;
+
+  const marketData = marketDataByYear();
+  const startCpi = marketData[startYear.value].cpi;
+  const endCpi = marketData[endYear.value].cpi;
+
+  const inflation = inflationFromCpi({ startCpi, endCpi });
+  const rawNumber = Number(initialValue.value) * inflation;
+
+  return formatOutputDollars(rawNumber);
+}
+
 const validators = {
   initialValue: [
     isRequired,
@@ -61,11 +73,12 @@ const validators = {
 
 export default class InflationAdjusted extends Component {
   render() {
+    const { location } = this.props;
     const { inputs, result, displayingShareLink, isFormValid } = this.state;
     const { initialValue, startYear, endYear } = inputs;
 
     const { minYear, maxYear } = getYearRange();
-    const formUrl = this.getFormUrl(inputs);
+    const formUrl = getFormUrl(location, inputs);
 
     return (
       <div className="inflationAdjusted calculatorPage">
@@ -247,71 +260,12 @@ export default class InflationAdjusted extends Component {
       }
     });
 
-    const newFormState = this.getUpdatedFormState(initialInputs);
-    this.setState(newFormState);
-  }
-
-  // Pass in some `inputs`, and you'll get back an object to set on state
-  // that includes form-related information
-  getUpdatedFormState(inputs) {
-    const newInputs = this.computeInputErrors(inputs);
-
-    const formIsInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formIsInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = '–';
-    }
-
-    return {
-      isFormValid: !formIsInvalid,
-      inputs: newInputs,
-      result: newResult
-    };
-  }
-
-  // Pass in some `inputs`, and you'll get a copy of it back with
-  // updated errors.
-  computeInputErrors(inputs) {
-    return _.mapValues(inputs, (inputObj, inputName) => {
-      const validationFns = validators[inputName];
-
-      let validationError;
-      _.forEach(validationFns, fn => {
-        validationError = fn(inputObj.value, inputs);
-        if (validationError) {
-          return false;
-        }
-      });
-
-      if (!validationError) {
-        return {
-          ...inputObj,
-          error: null,
-          errorMsg: null
-        };
-      }
-
-      let validationErrorFn = errorMessages[validationError];
-
-      let validationErrorMsg;
-      if (validationErrorFn) {
-        validationErrorMsg = validationErrorFn(inputName, inputObj, inputs);
-      } else {
-        validationErrorMsg = null;
-      }
-
-      return {
-        ...inputObj,
-        error: validationError,
-        errorMsg: validationErrorMsg
-      };
+    const newFormState = getUpdatedFormState({
+      inputs: initialInputs,
+      validators,
+      computeResult
     });
+    this.setState(newFormState);
   }
 
   // The entire form needs to be revalidated when a value changes due to the
@@ -325,34 +279,15 @@ export default class InflationAdjusted extends Component {
       }
     });
 
-    const newFormState = this.getUpdatedFormState(newInputs);
+    const newFormState = getUpdatedFormState({
+      inputs: newInputs,
+      computeResult,
+      validators
+    });
     this.setState({
       ...newFormState,
       displayingShareLink: false
     });
-  };
-
-  computeResult = inputs => {
-    const { initialValue, startYear, endYear } = inputs;
-
-    const marketData = marketDataByYear();
-    const startCpi = marketData[startYear.value].cpi;
-    const endCpi = marketData[endYear.value].cpi;
-
-    const inflation = inflationFromCpi({ startCpi, endCpi });
-    const rawNumber = Number(initialValue.value) * inflation;
-
-    return formatOutputDollars(rawNumber);
-  };
-
-  getFormUrl = inputs => {
-    const { location } = this.props;
-    const { pathname } = location;
-
-    const inputValues = _.mapValues(inputs, 'value');
-    const qs = queryString.stringify(inputValues);
-
-    return `${window.location.origin}${pathname}?${qs}`;
   };
 
   clickShareButton = event => {
