@@ -8,6 +8,7 @@ import './styles/page.css';
 import './styles/landing-page.css';
 import './styles/side-nav.css';
 import './styles/inputs.css';
+import './styles/overlay.css';
 import './styles/emoji.css';
 import './styles/logo.css';
 import App from './app';

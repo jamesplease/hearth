@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import queryString from 'query-string';
 import _ from 'lodash';
 import marketDataByYear from './utils/market-data-by-year';
 import inflationFromCpi from './utils/inflation-from-cpi';
@@ -60,10 +61,12 @@ const validators = {
 
 export default class InflationAdjusted extends Component {
   render() {
-    const { inputs, result } = this.state;
+    const { inputs, result, displayingShareLink, isFormValid } = this.state;
     const { initialValue, startYear, endYear } = inputs;
 
     const { minYear, maxYear } = getYearRange();
+
+    const formUrl = this.getFormUrl(inputs);
 
     return (
       <div className="inflationAdjusted calculatorPage">
@@ -169,7 +172,39 @@ export default class InflationAdjusted extends Component {
               )}
             </div>
           </div>
-          <div className="calculatorPage-result">{result}</div>
+          <div className="calculatorPage-result">
+            <div className="calculatorPage-shareResult">
+              <button
+                disabled={!isFormValid}
+                className="calculatorPage-shareResultBtn"
+                onClick={this.clickShareButton}>
+                <i className="zmdi zmdi-link calculatorPage-shareResultIcon" />
+                Share
+              </button>
+              {displayingShareLink && (
+                <Fragment>
+                  <div
+                    className="overlay"
+                    onClick={() =>
+                      this.setState({ displayingShareLink: false })
+                    }
+                  />
+                  <div className="calculatorPage-shareResultLink">
+                    Share a link to this result:
+                    <input
+                      ref={this.shareResultLinkRef}
+                      type="text"
+                      value={formUrl}
+                      readOnly
+                      onClick={event => event.target.select()}
+                      className="calculatorPage-shareResultInput"
+                    />
+                  </div>
+                </Fragment>
+              )}
+            </div>
+            <span className="calculatorPage-resultText">{result}</span>
+          </div>
         </div>
       </div>
     );
@@ -190,79 +225,113 @@ export default class InflationAdjusted extends Component {
         error: null
       }
     },
+    isFormValid: true,
     result: '',
-    marketDataYears: []
+    displayingShareLink: false
   };
 
   componentDidMount() {
-    const marketData = marketDataByYear();
-    const marketDataYears = _.chain(marketData)
-      .map(data => Number(data.year))
+    const { location } = this.props;
+    const { query } = location;
+
+    // We read the input values from the query parameters to set the initial
+    // inputs. This allows users to bookmark their calculations
+    const initialInputs = _.mapValues(this.state.inputs, (value, key) => {
+      const queryParamValue = query[key];
+      if (queryParamValue !== undefined) {
+        return {
+          ...value,
+          value: queryParamValue
+        };
+      } else {
+        return value;
+      }
+    });
+
+    const newFormState = this.getUpdatedFormState(initialInputs);
+    this.setState(newFormState);
+  }
+
+  getUpdatedFormState(inputs) {
+    const errors = this.getInputErrors(inputs);
+    // I could avoid this `merge` if `errors` just returned the inputs as well
+    const newInputs = _.merge(inputs, errors);
+
+    const formIsInvalid = _.chain(newInputs)
+      .mapValues('error')
+      .some()
       .value();
 
-    const result = this.computeResult(this.state.inputs);
-    this.setState({ result, marketDataYears });
+    let newResult;
+    if (!formIsInvalid) {
+      newResult = this.computeResult(newInputs);
+    } else {
+      newResult = '–';
+    }
+
+    return {
+      isFormValid: !formIsInvalid,
+      inputs: newInputs,
+      result: newResult
+    };
+  }
+
+  getInputErrors(inputs) {
+    // This can be avoided if I instead pass just the inputs to the
+    // validation function, rather than the entire state (which makes more sense I think)
+    const stateToPass = _.merge({}, this.state, {
+      inputs
+    });
+
+    return _.mapValues(inputs, (inputObj, inputName) => {
+      const validationFns = validators[inputName];
+
+      let validationError;
+      _.forEach(validationFns, fn => {
+        validationError = fn(inputObj.value, stateToPass);
+        if (validationError) {
+          return false;
+        }
+      });
+
+      if (!validationError) {
+        return {
+          error: null,
+          errorMsg: null
+        };
+      }
+
+      let validationErrorFn = errorMessages[validationError];
+
+      let validationErrorMsg;
+      if (validationErrorFn) {
+        validationErrorMsg = validationErrorFn(inputName, inputObj, inputs);
+      } else {
+        validationErrorMsg = null;
+      }
+
+      return {
+        error: validationError,
+        errorMsg: validationErrorMsg
+      };
+    });
   }
 
   // The entire form needs to be revalidated when a value changes due to the
   // fact that validation depends on multiple fields.
   updateValue = (valueName, newValue) => {
     const { inputs } = this.state;
-    const currentValue = inputs[valueName];
 
-    const validationFns = validators[valueName];
-
-    let validationError;
-    _.forEach(validationFns, fn => {
-      validationError = fn(newValue, this.state);
-      if (validationError) {
-        return false;
+    const newInputs = _.merge({}, inputs, {
+      [valueName]: {
+        value: newValue
       }
     });
 
-    let validationErrorFn = validationError && errorMessages[validationError];
-
-    const newInputObj = {
-      ...currentValue,
-      error: validationError ? validationError : null,
-      value: newValue
-    };
-
-    let errorMsg;
-    if (validationError && validationErrorFn) {
-      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
-    } else if (validationError) {
-      // The intention is that this LoC is _never_ called! There should
-      // always be a more descriptive error for each type of error. But
-      // just in case...
-      errorMsg = 'This input is invalid.';
-    } else {
-      errorMsg = null;
-    }
-
-    const newInputs = {
-      ...inputs,
-      [valueName]: {
-        ...newInputObj,
-        errorMsg
-      }
-    };
-
-    const formInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = '–';
-    }
-
+    const newFormState = this.getUpdatedFormState(newInputs);
     this.setState({
-      inputs: newInputs,
-      result: newResult
+      ...newFormState,
+      displayingShareLink: false
     });
   };
 
@@ -277,5 +346,29 @@ export default class InflationAdjusted extends Component {
     const rawNumber = Number(initialValue.value) * inflation;
 
     return formatOutputDollars(rawNumber);
+  };
+
+  getFormUrl = inputs => {
+    const { location } = this.props;
+    const { pathname } = location;
+
+    const inputValues = _.mapValues(inputs, 'value');
+    const qs = queryString.stringify(inputValues);
+
+    return `${window.location.origin}${pathname}?${qs}`;
+  };
+
+  clickShareButton = () => {
+    const { displayingShareLink } = this.state;
+
+    this.setState({ displayingShareLink: !displayingShareLink }, () => {
+      if (!displayingShareLink && this.shareResultLinkEl) {
+        this.shareResultLinkEl.select();
+      }
+    });
+  };
+
+  shareResultLinkRef = ref => {
+    this.shareResultLinkEl = ref;
   };
 }
