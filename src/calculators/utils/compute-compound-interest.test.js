@@ -1,13 +1,13 @@
-import compoundInterest from './compound-interest';
+import computeCompoundInterest from './compute-compound-interest';
 
-describe('compoundInterest', () => {
+describe('computeCompoundInterest', () => {
   it('computes no inputs as 0', () => {
-    const result = compoundInterest();
+    const result = computeCompoundInterest();
     expect(result).toEqual(0);
   });
 
   it('computes one year correctly; no contributions; contributions made at end', () => {
-    const result = compoundInterest({
+    const result = computeCompoundInterest({
       principal: 1000,
       annualContribution: 0,
       numberOfYears: 1,
@@ -19,7 +19,7 @@ describe('compoundInterest', () => {
   });
 
   it('computes 10 years correctly with no interest', () => {
-    const result = compoundInterest({
+    const result = computeCompoundInterest({
       principal: 1000,
       annualContribution: 100,
       numberOfYears: 10,
@@ -31,7 +31,7 @@ describe('compoundInterest', () => {
   });
 
   it('computes 5 years correctly with 7% interest; no contribution; contributions made at end', () => {
-    const result = compoundInterest({
+    const result = computeCompoundInterest({
       principal: 1000,
       annualContribution: 0,
       numberOfYears: 5,
@@ -43,7 +43,7 @@ describe('compoundInterest', () => {
   });
 
   it('computes 10 years correctly with 10% interest; substantial contribution; contributions made at start', () => {
-    const result = compoundInterest({
+    const result = computeCompoundInterest({
       principal: 365000,
       annualContribution: 365000,
       numberOfYears: 10,
