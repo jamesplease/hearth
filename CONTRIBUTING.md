@@ -11,21 +11,27 @@ to help you get set up.
 Hearth is a JavaScript web app. To run it locally, you'll need to install the following
 prerequisites:
 
-* [Node.js v8](https://nodejs.org/en/)
-* [npm v5](https://www.npmjs.com)
+* [Node.js](https://nodejs.org/en/) v8.9.1+
+* [npm](https://www.npmjs.com) v5.5.1+
+
+To deploy the application, you will also need:
+
+* [Heroku](heroku.com) account
+* [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command)
+  * Be sure to [log in!](https://devcenter.heroku.com/articles/heroku-command#logging-in)
 
 ### Installation
 
-First, clone the repository.
+First, clone this repository.
 
 ```
-git clone https://github.com/jmeas/hearth
+git clone git@github.com:jmeas/hearth.git
 ```
 
-Then, navigate into the repository directory and install the dependencies:
+Then, navigate into the repository directory and install the [npm](https://www.npmjs.com/) dependencies:
 
 ```
-npm install
+cd hearth && npm install
 ```
 
 Lastly, build the market data:
@@ -34,19 +40,17 @@ Lastly, build the market data:
 npm run build-data
 ```
 
-### Getting Started
+#### Developer Scripts
 
-To run the application locally, use:
-
-```
-npm run watch
-```
-
-And to run the unit tests:
-
-```
-npm test
-```
+* `npm run watch`: Develop locally
+* `npm test`: Run the tests with a watcher
+* `npm run test`: Lint JS & CSS, then run all unit tests
+* `npm run test -- --coverage`: Generate a coverage report
+* `npm run build`: Build a production version of the application
+* `npm run build-data`: Build the market data
+* `npm run build-all`: Runs all scripts that build assets
+* `npm run release`: Release a new version of the production app by syncing
+  the production app with the staging app
 
 ## Updating the Data
 

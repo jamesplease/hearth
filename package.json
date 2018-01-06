@@ -17,10 +17,10 @@
     "watch": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "build-data": "node ./build-scripts/transform-data",
     "build-all": "npm run build-data && npm run build",
-    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-all; fi"
+    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-all; fi",
+    "release": "heroku pipelines:promote -r staging"
   },
   "devDependencies": {
     "chalk": "^2.3.0",
