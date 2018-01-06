@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import _ from 'lodash';
@@ -7,7 +7,7 @@ import inflationFromCpi from './utils/inflation-from-cpi';
 import formatOutputDollars from './utils/format-output-dollars';
 import maxDollarInput from './utils/max-dollar-input';
 import getYearRange from './utils/get-year-range';
-import errorMessages from './utils/error-messages';
+import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
 import {
   isRequired,
   numberRequired,
@@ -17,22 +17,35 @@ import {
   withinYearLimit
 } from './utils/validators';
 
-function startYearBeforeEndYear(val, state) {
+function startYearBeforeEndYear(val, inputs) {
   const valueToVerify = Number(val);
-  const { endYear } = state.inputs;
+  const { endYear } = inputs;
 
   if (Number(endYear.value) < valueToVerify) {
     return 'laterThanEnd';
   }
 }
 
-function endYearAfterStartYear(val, state) {
+function endYearAfterStartYear(val, inputs) {
   const valueToVerify = Number(val);
-  const { startYear } = state.inputs;
+  const { startYear } = inputs;
 
   if (Number(startYear.value) > valueToVerify) {
     return 'earlierThanStart';
   }
+}
+
+function computeResult(inputs) {
+  const { initialValue, startYear, endYear } = inputs;
+
+  const marketData = marketDataByYear();
+  const startCpi = marketData[startYear.value].cpi;
+  const endCpi = marketData[endYear.value].cpi;
+
+  const inflation = inflationFromCpi({ startCpi, endCpi });
+  const rawNumber = Number(initialValue.value) * inflation;
+
+  return formatOutputDollars(rawNumber);
 }
 
 const validators = {
@@ -60,10 +73,12 @@ const validators = {
 
 export default class InflationAdjusted extends Component {
   render() {
-    const { inputs, result } = this.state;
+    const { location } = this.props;
+    const { inputs, result, displayingShareLink, isFormValid } = this.state;
     const { initialValue, startYear, endYear } = inputs;
 
     const { minYear, maxYear } = getYearRange();
+    const formUrl = getFormUrl(location, inputs);
 
     return (
       <div className="inflationAdjusted calculatorPage">
@@ -77,7 +92,7 @@ export default class InflationAdjusted extends Component {
           Inflation Adjusted
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-calculator">
+          <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
                 htmlFor="inflationAdjusted_initialValue"
@@ -168,8 +183,40 @@ export default class InflationAdjusted extends Component {
                 </div>
               )}
             </div>
+          </form>
+          <div className="calculatorPage-result">
+            <div className="calculatorPage-shareResult">
+              <button
+                disabled={!isFormValid}
+                className="calculatorPage-shareResultBtn"
+                onClick={this.clickShareButton}>
+                <i className="zmdi zmdi-link calculatorPage-shareResultIcon" />
+                Share
+              </button>
+              {displayingShareLink && (
+                <Fragment>
+                  <div
+                    className="overlay"
+                    onClick={() =>
+                      this.setState({ displayingShareLink: false })
+                    }
+                  />
+                  <div className="calculatorPage-shareResultLink">
+                    Share a link to this result:
+                    <input
+                      onChange={() => {}}
+                      ref={this.shareResultLinkRef}
+                      type="text"
+                      value={formUrl}
+                      onClick={event => event.target.select()}
+                      className="calculatorPage-shareResultInput"
+                    />
+                  </div>
+                </Fragment>
+              )}
+            </div>
+            <span className="calculatorPage-resultText">{result}</span>
           </div>
-          <div className="calculatorPage-result">{result}</div>
         </div>
       </div>
     );
@@ -190,92 +237,74 @@ export default class InflationAdjusted extends Component {
         error: null
       }
     },
+    isFormValid: true,
     result: '',
-    marketDataYears: []
+    displayingShareLink: false
   };
 
   componentDidMount() {
-    const marketData = marketDataByYear();
-    const marketDataYears = _.chain(marketData)
-      .map(data => Number(data.year))
-      .value();
+    const { location } = this.props;
+    const { query } = location;
 
-    const result = this.computeResult(this.state.inputs);
-    this.setState({ result, marketDataYears });
+    // We read the input values from the query parameters to set the initial
+    // inputs. This allows users to bookmark their calculations
+    const initialInputs = _.mapValues(this.state.inputs, (value, key) => {
+      const queryParamValue = query[key];
+      if (queryParamValue !== undefined) {
+        return {
+          ...value,
+          value: queryParamValue
+        };
+      } else {
+        return value;
+      }
+    });
+
+    const newFormState = getUpdatedFormState({
+      inputs: initialInputs,
+      validators,
+      computeResult
+    });
+    this.setState(newFormState);
   }
 
   // The entire form needs to be revalidated when a value changes due to the
   // fact that validation depends on multiple fields.
   updateValue = (valueName, newValue) => {
     const { inputs } = this.state;
-    const currentValue = inputs[valueName];
 
-    const validationFns = validators[valueName];
-
-    let validationError;
-    _.forEach(validationFns, fn => {
-      validationError = fn(newValue, this.state);
-      if (validationError) {
-        return false;
+    const newInputs = _.merge({}, inputs, {
+      [valueName]: {
+        value: newValue
       }
     });
 
-    let validationErrorFn = validationError && errorMessages[validationError];
-
-    const newInputObj = {
-      ...currentValue,
-      error: validationError ? validationError : null,
-      value: newValue
-    };
-
-    let errorMsg;
-    if (validationError && validationErrorFn) {
-      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
-    } else if (validationError) {
-      // The intention is that this LoC is _never_ called! There should
-      // always be a more descriptive error for each type of error. But
-      // just in case...
-      errorMsg = 'This input is invalid.';
-    } else {
-      errorMsg = null;
-    }
-
-    const newInputs = {
-      ...inputs,
-      [valueName]: {
-        ...newInputObj,
-        errorMsg
-      }
-    };
-
-    const formInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = '–';
-    }
-
-    this.setState({
+    const newFormState = getUpdatedFormState({
       inputs: newInputs,
-      result: newResult
+      computeResult,
+      validators
+    });
+    this.setState({
+      ...newFormState,
+      displayingShareLink: false
     });
   };
 
-  computeResult = inputs => {
-    const { initialValue, startYear, endYear } = inputs;
+  clickShareButton = event => {
+    const { displayingShareLink } = this.state;
+    event.preventDefault();
 
-    const marketData = marketDataByYear();
-    const startCpi = marketData[startYear.value].cpi;
-    const endCpi = marketData[endYear.value].cpi;
+    this.setState({ displayingShareLink: !displayingShareLink }, () => {
+      if (!displayingShareLink && this.shareResultLinkEl) {
+        // This doesn't select the text on iOS. Instead, users must manually
+        // highlight the text and copy it.
+        // Android testing is needed.
+        this.shareResultLinkEl.select();
+      }
+    });
+  };
 
-    const inflation = inflationFromCpi({ startCpi, endCpi });
-    const rawNumber = Number(initialValue.value) * inflation;
-
-    return formatOutputDollars(rawNumber);
+  shareResultLinkRef = ref => {
+    this.shareResultLinkEl = ref;
   };
 }

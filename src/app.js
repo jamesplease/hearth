@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
+import queryString from 'query-string';
 import './app.css';
+import historyWithQuery from './common/utils/history-with-query';
 import ScrollToTop from './common/scroll-to-top';
 import Home from './common/home';
 import Header from './common/header';
@@ -15,10 +18,16 @@ import Contact from './meta/contact';
 import Privacy from './meta/privacy';
 import Terms from './meta/terms';
 
+const history = historyWithQuery(
+  createBrowserHistory(),
+  queryString.stringify,
+  queryString.parse
+);
+
 export default class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <ScrollToTop>
           <Fragment>
             <Header />

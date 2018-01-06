@@ -40,8 +40,7 @@ export default class Terms extends Component {
           When permitted by law, Hearth shall not be responsible for direct,
           indirect, incidental, special, consequential or exemplary damages
           resulting from your use of the Service. This covers, but is not
-          limited to, any data or information stored in Hearth as well as data
-          and content stored on your social media accounts linked to Hearth.
+          limited to, any data or information stored in Hearth.
         </p>
         <h2 className="secondaryHeader">Business Use of Our Services</h2>
         <p className="appParagraph">

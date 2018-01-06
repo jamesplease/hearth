@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import _ from 'lodash';
 import computeCompoundInterest from './utils/compute-compound-interest';
 import formatOutputDollars from './utils/format-output-dollars';
-import errorMessages from './utils/error-messages';
+import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
 import {
   isRequired,
   numberRequired,
@@ -29,9 +29,34 @@ const validators = {
   interestRate: [isRequired, numberRequired]
 };
 
+function computeResult(inputs) {
+  const {
+    principal,
+    annualContribution,
+    numberOfYears,
+    interestRate,
+    contributionsMadeAtStart
+  } = inputs;
+
+  // Users input the interest rate as a percentage, such as 7%.
+  // We convert that to the decimal form for the computation.
+  const decimalInterest = Number(interestRate.value) / 100;
+
+  let result = computeCompoundInterest({
+    principal: Number(principal.value),
+    annualContribution: Number(annualContribution.value),
+    numberOfYears: Number(numberOfYears.value),
+    contributionsMadeAtStart: Number(contributionsMadeAtStart.value),
+    interestRate: decimalInterest
+  });
+
+  return formatOutputDollars(result);
+}
+
 export default class CompoundInterest extends Component {
   render() {
-    const { inputs, result } = this.state;
+    const { location } = this.props;
+    const { inputs, result, displayingShareLink, isFormValid } = this.state;
     const {
       principal,
       annualContribution,
@@ -39,8 +64,10 @@ export default class CompoundInterest extends Component {
       interestRate
     } = inputs;
 
+    const formUrl = getFormUrl(location, inputs);
+
     return (
-      <form className="compoundInterest calculatorPage">
+      <div className="compoundInterest calculatorPage">
         <Link
           to="/calculators"
           className="navBackLink calculatorPage-navBackLink">
@@ -51,7 +78,7 @@ export default class CompoundInterest extends Component {
           Compound Interest
         </h1>
         <div className="panel calculatorPage-contents">
-          <div className="calculatorPage-calculator">
+          <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
                 className={classnames('form-label calculatorPage-label', {
@@ -160,10 +187,42 @@ export default class CompoundInterest extends Component {
                 </div>
               )}
             </div>
+          </form>
+          <div className="calculatorPage-result">
+            <div className="calculatorPage-shareResult">
+              <button
+                disabled={!isFormValid}
+                className="calculatorPage-shareResultBtn"
+                onClick={this.clickShareButton}>
+                <i className="zmdi zmdi-link calculatorPage-shareResultIcon" />
+                Share
+              </button>
+              {displayingShareLink && (
+                <Fragment>
+                  <div
+                    className="overlay"
+                    onClick={() =>
+                      this.setState({ displayingShareLink: false })
+                    }
+                  />
+                  <div className="calculatorPage-shareResultLink">
+                    Share a link to this result:
+                    <input
+                      ref={this.shareResultLinkRef}
+                      type="text"
+                      value={formUrl}
+                      onChange={() => {}}
+                      onClick={event => event.target.select()}
+                      className="calculatorPage-shareResultInput"
+                    />
+                  </div>
+                </Fragment>
+              )}
+            </div>
+            <span className="calculatorPage-resultText">{result}</span>
           </div>
-          <div className="calculatorPage-result">{result}</div>
         </div>
-      </form>
+      </div>
     );
   }
 
@@ -190,96 +249,72 @@ export default class CompoundInterest extends Component {
         error: null
       }
     },
-    result: ''
+    isFormValid: true,
+    result: '',
+    displayingShareLink: false
   };
 
   componentDidMount() {
-    const result = this.computeResult(this.state.inputs);
+    const { location } = this.props;
+    const { query } = location;
 
-    this.setState({ result });
+    // We read the input values from the query parameters to set the initial
+    // inputs. This allows users to bookmark their calculations
+    const initialInputs = _.mapValues(this.state.inputs, (value, key) => {
+      const queryParamValue = query[key];
+      if (queryParamValue !== undefined) {
+        return {
+          ...value,
+          value: queryParamValue
+        };
+      } else {
+        return value;
+      }
+    });
+
+    const newFormState = getUpdatedFormState({
+      inputs: initialInputs,
+      computeResult,
+      validators
+    });
+    this.setState(newFormState);
   }
 
   updateValue = (valueName, newValue) => {
     const { inputs } = this.state;
-    const currentValue = inputs[valueName];
 
-    const validationFns = validators[valueName];
-
-    let validationError;
-    _.forEach(validationFns, fn => {
-      validationError = fn(newValue, this.state);
-      if (validationError) {
-        return false;
+    const newInputs = _.merge({}, inputs, {
+      [valueName]: {
+        value: newValue
       }
     });
 
-    let validationErrorFn = validationError && errorMessages[validationError];
-
-    const newInputObj = {
-      ...currentValue,
-      error: validationError ? validationError : null,
-      value: newValue
-    };
-
-    let errorMsg;
-    if (validationError && validationErrorFn) {
-      errorMsg = validationErrorFn(valueName, newInputObj, inputs);
-    } else if (validationError) {
-      // The intention is that this LoC is _never_ called! There should
-      // always be a more descriptive error for each type of error. But
-      // just in case...
-      errorMsg = 'This input is invalid.';
-    } else {
-      errorMsg = null;
-    }
-
-    const newInputs = {
-      ...inputs,
-      [valueName]: {
-        ...newInputObj,
-        errorMsg
-      }
-    };
-
-    const formInvalid = _.chain(newInputs)
-      .mapValues('error')
-      .some()
-      .value();
-
-    let newResult;
-    if (!formInvalid) {
-      newResult = this.computeResult(newInputs);
-    } else {
-      newResult = '-';
-    }
-
-    this.setState({
+    const newFormState = getUpdatedFormState({
       inputs: newInputs,
-      result: newResult
+      computeResult,
+      validators
+    });
+    this.setState({
+      ...newFormState,
+      displayingShareLink: false
     });
   };
 
-  computeResult = inputs => {
-    const {
-      principal,
-      annualContribution,
-      numberOfYears,
-      interestRate,
-      contributionsMadeAtStart
-    } = inputs;
+  clickShareButton = event => {
+    const { displayingShareLink } = this.state;
+    event.preventDefault();
 
-    // Users input the interest rate as a percentage, such as 7%.
-    // We convert that to the decimal form for the computation.
-    const decimalInterest = Number(interestRate.value) / 100;
-
-    let result = computeCompoundInterest({
-      principal: Number(principal.value),
-      annualContribution: Number(annualContribution.value),
-      numberOfYears: Number(numberOfYears.value),
-      contributionsMadeAtStart: Number(contributionsMadeAtStart.value),
-      interestRate: decimalInterest
+    this.setState({ displayingShareLink: !displayingShareLink }, () => {
+      if (!displayingShareLink && this.shareResultLinkEl) {
+        // This doesn't select the text on iOS. Instead, users must manually
+        // highlight the text and copy it.
+        // Android testing is needed.
+        this.shareResultLinkEl.select();
+      }
     });
+  };
 
-    return formatOutputDollars(result);
+  shareResultLinkRef = ref => {
+    this.shareResultLinkEl = ref;
   };
 }
