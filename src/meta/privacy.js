@@ -9,7 +9,7 @@ export default class Privacy extends Component {
         <p className="appParagraph">
           Hearth uses common technologies for all visitors, such as cookies, to
           track the same basic information that all websites collect. This
-          occurs whether or not you have an account with us or not.
+          occurs whether or not you have an account with us.
         </p>
         <h2 className="secondaryHeader">
           How We Share the Information We Collect
