@@ -18,18 +18,18 @@ import {
   withinYearLimit
 } from './utils/validators';
 
-function startYearBeforeEndYear(val, state) {
+function startYearBeforeEndYear(val, inputs) {
   const valueToVerify = Number(val);
-  const { endYear } = state.inputs;
+  const { endYear } = inputs;
 
   if (Number(endYear.value) < valueToVerify) {
     return 'laterThanEnd';
   }
 }
 
-function endYearAfterStartYear(val, state) {
+function endYearAfterStartYear(val, inputs) {
   const valueToVerify = Number(val);
-  const { startYear } = state.inputs;
+  const { startYear } = inputs;
 
   if (Number(startYear.value) > valueToVerify) {
     return 'earlierThanStart';
@@ -65,7 +65,6 @@ export default class InflationAdjusted extends Component {
     const { initialValue, startYear, endYear } = inputs;
 
     const { minYear, maxYear } = getYearRange();
-
     const formUrl = this.getFormUrl(inputs);
 
     return (
@@ -252,10 +251,10 @@ export default class InflationAdjusted extends Component {
     this.setState(newFormState);
   }
 
+  // Pass in some `inputs`, and you'll get back an object to set on state
+  // that includes form-related information
   getUpdatedFormState(inputs) {
-    const errors = this.getInputErrors(inputs);
-    // I could avoid this `merge` if `errors` just returned the inputs as well
-    const newInputs = _.merge(inputs, errors);
+    const newInputs = this.computeInputErrors(inputs);
 
     const formIsInvalid = _.chain(newInputs)
       .mapValues('error')
@@ -276,19 +275,15 @@ export default class InflationAdjusted extends Component {
     };
   }
 
-  getInputErrors(inputs) {
-    // This can be avoided if I instead pass just the inputs to the
-    // validation function, rather than the entire state (which makes more sense I think)
-    const stateToPass = _.merge({}, this.state, {
-      inputs
-    });
-
+  // Pass in some `inputs`, and you'll get a copy of it back with
+  // updated errors.
+  computeInputErrors(inputs) {
     return _.mapValues(inputs, (inputObj, inputName) => {
       const validationFns = validators[inputName];
 
       let validationError;
       _.forEach(validationFns, fn => {
-        validationError = fn(inputObj.value, stateToPass);
+        validationError = fn(inputObj.value, inputs);
         if (validationError) {
           return false;
         }
@@ -296,6 +291,7 @@ export default class InflationAdjusted extends Component {
 
       if (!validationError) {
         return {
+          ...inputObj,
           error: null,
           errorMsg: null
         };
@@ -311,6 +307,7 @@ export default class InflationAdjusted extends Component {
       }
 
       return {
+        ...inputObj,
         error: validationError,
         errorMsg: validationErrorMsg
       };
@@ -358,8 +355,9 @@ export default class InflationAdjusted extends Component {
     return `${window.location.origin}${pathname}?${qs}`;
   };
 
-  clickShareButton = () => {
+  clickShareButton = event => {
     const { displayingShareLink } = this.state;
+    event.preventDefault();
 
     this.setState({ displayingShareLink: !displayingShareLink }, () => {
       if (!displayingShareLink && this.shareResultLinkEl) {
