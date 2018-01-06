@@ -161,7 +161,9 @@ export default class CompoundInterest extends Component {
               )}
             </div>
           </div>
-          <div className="calculatorPage-result">{result}</div>
+          <div className="calculatorPage-result">
+            <span className="calculatorPage-resultText">{result}</span>
+          </div>
         </div>
       </form>
     );
