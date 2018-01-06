@@ -104,7 +104,7 @@
 
 .calculatorPage-errorMsg {
   grid-area: error;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: var(--errorTextColor);
 }
 
