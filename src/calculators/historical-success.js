@@ -163,7 +163,6 @@ export default class HistoricalSuccess extends Component {
                   input_error: stockInvestmentValue.error
                 })}
                 type="number"
-                pattern="\d*"
                 inputMode="numeric"
                 min="0"
                 max={maxDollarInput}
@@ -192,7 +191,6 @@ export default class HistoricalSuccess extends Component {
                   input_error: firstYearWithdrawal.error
                 })}
                 type="number"
-                pattern="\d*"
                 min="0"
                 max={maxDollarInput}
                 inputMode="numeric"

@@ -107,7 +107,6 @@ export default class InflationAdjusted extends Component {
                 })}
                 id="inflationAdjusted_initialValue"
                 type="number"
-                pattern="\d*"
                 inputMode="numeric"
                 step="1"
                 min="0"
