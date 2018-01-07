@@ -34,7 +34,7 @@ export default class Nav extends Component {
     });
 
     return (
-      <nav className={`${className} nav`}>
+      <nav className={className}>
         <ul className="nav-navList">
           {navItems.map(navItem => {
             return (
