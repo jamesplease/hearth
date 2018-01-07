@@ -72,10 +72,6 @@ a {
   font-weight: 600;
 }
 
-.navBackLink-icon {
-  padding-right: 5px;
-}
-
 @media (max-width: 650px) {
   .navBackLink {
     display: block;

@@ -6,7 +6,7 @@ export default class FireGuide extends Component {
     return (
       <div className="standardPage-contentWithSideNavBody">
         <Link to="/guides" className="navBackLink">
-          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          <i className="mdi mdi-chevron-left navBackLink-icon" />
           Guides
         </Link>
         <h1 className="primaryHeader">What is FIRE?</h1>

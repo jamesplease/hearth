@@ -28,7 +28,7 @@ export default class Glossary extends Component {
     return (
       <div className="standardPage-contentWithSideNavBody">
         <Link to="/guides" className="navBackLink">
-          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          <i className="mdi mdi-chevron-left navBackLink-icon" />
           Guides
         </Link>
         <h1 className="primaryHeader">Glossary</h1>
@@ -42,7 +42,7 @@ export default class Glossary extends Component {
                     hash: `#${hash}`
                   }}
                   className="glossary-entryTitleLink">
-                  <i className="zmdi zmdi-link glossary-entryTitleLinkIcon" />
+                  <i className="mdi mdi-link glossary-entryTitleLinkIcon" />
                 </Link>
                 {term}
               </h2>
