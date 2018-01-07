@@ -36,25 +36,20 @@ function endYearAfterStartYear(val, inputs) {
 }
 
 function computeResult(inputs) {
-  const { initialValue, startYear, endYear } = inputs;
+  const { startValue, startYear, endYear } = inputs;
 
   const marketData = marketDataByYear();
   const startCpi = marketData[startYear.value].cpi;
   const endCpi = marketData[endYear.value].cpi;
 
   const inflation = inflationFromCpi({ startCpi, endCpi });
-  const rawNumber = Number(initialValue.value) * inflation;
+  const rawNumber = Number(startValue.value) * inflation;
 
   return formatOutputDollars(rawNumber);
 }
 
 const validators = {
-  initialValue: [
-    isRequired,
-    numberRequired,
-    greaterThanZero,
-    withinDollarLimit
-  ],
+  startValue: [isRequired, numberRequired, greaterThanZero, withinDollarLimit],
   startYear: [
     isRequired,
     numberRequired,
@@ -75,7 +70,7 @@ export default class InflationAdjusted extends Component {
   render() {
     const { location } = this.props;
     const { inputs, result, displayingShareLink, isFormValid } = this.state;
-    const { initialValue, startYear, endYear } = inputs;
+    const { startValue, startYear, endYear } = inputs;
 
     const { minYear, maxYear } = getYearRange();
     const formUrl = getFormUrl(location, inputs);
@@ -95,30 +90,30 @@ export default class InflationAdjusted extends Component {
           <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
               <label
-                htmlFor="inflationAdjusted_initialValue"
+                htmlFor="inflationAdjusted_startValue"
                 className={classnames('form-label calculatorPage-label', {
-                  'form-label_error': initialValue.error
+                  'form-label_error': startValue.error
                 })}>
-                Initial Value
+                Start Value ($)
               </label>
               <input
                 className={classnames('input calculatorPage-input', {
-                  input_error: initialValue.error
+                  input_error: startValue.error
                 })}
-                id="inflationAdjusted_initialValue"
+                id="inflationAdjusted_startValue"
                 type="number"
                 inputMode="numeric"
                 step="1"
                 min="0"
                 max={maxDollarInput}
                 onChange={event =>
-                  this.updateValue('initialValue', event.target.value)
+                  this.updateValue('startValue', event.target.value)
                 }
-                value={initialValue.value}
+                value={startValue.value}
               />
-              {initialValue.errorMsg && (
+              {startValue.errorMsg && (
                 <div className="calculatorPage-errorMsg">
-                  {initialValue.errorMsg}
+                  {startValue.errorMsg}
                 </div>
               )}
             </div>
@@ -223,7 +218,7 @@ export default class InflationAdjusted extends Component {
 
   state = {
     inputs: {
-      initialValue: {
+      startValue: {
         value: '10000',
         error: null
       },
