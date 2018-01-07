@@ -25,11 +25,6 @@ export default class FireGuide extends Component {
           The tendency for a currency to decrease in value over time is called
           inflation.
         </p>
-        <p className="appParagraph">
-          If you don't adjust your annual spending for inflation, then your
-          quality of life will steadily decrease as the dollar is able to buy
-          you less.
-        </p>
         <h2 className="secondaryHeader">How is Inflation Computed?</h2>
         <p className="appParagraph">
           The idea that a dollar becomes worth less over time may seem a little
@@ -106,6 +101,11 @@ export default class FireGuide extends Component {
           However, because of inflation, $30,000 toward the end of a long
           retirement will be able to buy a lot less stuff than it could at the
           start.
+        </p>
+        <p className="appParagraph">
+          If you don't adjust your annual spending for inflation, then your
+          quality of life will steadily decrease as the dollar is able to buy
+          you less.
         </p>
         <p className="appParagraph">
           Because of this, when you're retired, you'll need to know how to
