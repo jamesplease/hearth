@@ -25,16 +25,6 @@ export default class FireGuide extends Component {
           The tendency for a currency to decrease in value over time is called
           inflation.
         </p>
-        <h2 className="secondaryHeader">
-          Why does inflation matter for early retirees?
-        </h2>
-        <p className="appParagraph">
-          Typical early retirees plan to spend a certain amount of money each
-          year. For instance, you might plan on retiring on $30,000 per year.
-          However, because of inflation, $30,000 toward the end of a long
-          retirement will be able to buy a lot less stuff than it could at the
-          start.
-        </p>
         <p className="appParagraph">
           If you don't adjust your annual spending for inflation, then your
           quality of life will steadily decrease as the dollar is able to buy
@@ -48,7 +38,7 @@ export default class FireGuide extends Component {
         </p>
         <p className="appParagraph">
           The answer to this philosophical question is decidedly mundane.
-          Measuring the value of the dollar is done by just looking at how the
+          Measuring the value of the dollar is done by simply looking at how the
           price of common goods and services changes from year to year.
         </p>
         <p className="appParagraph">
@@ -67,11 +57,10 @@ export default class FireGuide extends Component {
           that's what economists do.
         </p>
         <p className="appParagraph">
-          To compute inflation, one needs to look at the cost of a wide range of
-          different goods and services to see if, on average, they cost more
-          from year to year. Although it would be a lot of work to look at the
-          cost of <i>everything</i>, you can do a good job by looking at some of
-          the most common items.
+          Although it would be a lot of work to look at the cost of everything,
+          a good estimate can be found by looking at some of the most common
+          items that people buy to see if, on average, they cost more from year
+          to year.
         </p>
         <h2 className="secondaryHeader">Who Measures These Prices?</h2>
         <p className="appParagraph">
@@ -106,17 +95,23 @@ export default class FireGuide extends Component {
         <p className="appParagraph">
           Not always. Sometimes it gains value (which over time is called
           deflation), but this is less common. Between 2014 and 2015 the dollar
-          increased in value, for instance.
+          slightly increased in value, for instance.
         </p>
-        <h2 className="secondaryHeader">Inflation for the Early Retiree</h2>
+        <h2 className="secondaryHeader">
+          Why does inflation matter for early retirees?
+        </h2>
         <p className="appParagraph">
-          Retirement plans typically account for inflation when they consider
-          their yearly withdrawal. So when you're retired, you'll need to know
-          how to compute the inflation-adjusted value based on the CPI.
+          Typical early retirees plan to spend a certain amount of money each
+          year. For instance, you might plan on retiring on $30,000 per year.
+          However, because of inflation, $30,000 toward the end of a long
+          retirement will be able to buy a lot less stuff than it could at the
+          start.
         </p>
         <p className="appParagraph">
-          If you wanted to, you could pull the CPI from the U.S. federal
-          government's website above, and run the calculations by hand.
+          Because of this, when you're retired, you'll need to know how to
+          compute the inflation-adjusted value based on the CPI. If you wanted
+          to, you could pull the CPI from the U.S. federal government's website
+          above, and run the calculations by hand.
         </p>
         <p className="appParagraph">
           Alternatively, Hearth provides a calculator that makes things easier:
