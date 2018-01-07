@@ -71,7 +71,7 @@ export default class CompoundInterest extends Component {
         <Link
           to="/calculators"
           className="navBackLink calculatorPage-navBackLink">
-          <i className="zmdi zmdi-chevron-left navBackLink-icon" />
+          <i className="mdi mdi-chevron-left navBackLink-icon" />
           Calculators
         </Link>
         <h1 className="primaryHeader calculatorPage-primaryHeader">
@@ -192,7 +192,7 @@ export default class CompoundInterest extends Component {
                 disabled={!isFormValid}
                 className="calculatorPage-shareResultBtn"
                 onClick={this.clickShareButton}>
-                <i className="zmdi zmdi-link calculatorPage-shareResultIcon" />
+                <i className="mdi mdi-link calculatorPage-shareResultIcon" />
                 Share
               </button>
               {displayingShareLink && (

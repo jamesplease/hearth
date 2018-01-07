@@ -7,17 +7,17 @@ const navItems = [
   {
     key: 'calculators',
     label: 'Calculators',
-    icon: 'zmdi-apps'
+    icon: 'mdi-calculator'
   },
   {
     key: 'guides',
     label: 'Guides',
-    icon: 'zmdi-file-text'
+    icon: 'mdi-notebook'
   },
   {
     key: 'about',
     label: 'About',
-    icon: 'zmdi-info-outline'
+    icon: 'mdi-information-outline'
   }
 ];
 
@@ -26,7 +26,7 @@ export default class Nav extends Component {
     const { isBottomNav } = this.props;
 
     const className = classnames('nav', {
-      'nav_bottom': isBottomNav
+      nav_bottom: isBottomNav
     });
 
     const linkClass = classnames('nav-navListLink', {
@@ -43,7 +43,7 @@ export default class Nav extends Component {
                   to={`/${navItem.key}`}
                   className={linkClass}
                   activeClassName="nav-navListLink_active">
-                  <i className={`zmdi ${navItem.icon} nav-navListLinkIcon`}/>
+                  <i className={`mdi ${navItem.icon} nav-navListLinkIcon`} />
                   {navItem.label}
                 </NavLink>
               </li>
