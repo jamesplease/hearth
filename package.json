@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
+    "compression": "^1.7.1",
     "express": "^4.16.2",
+    "helmet": "^3.9.0",
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "pino": "^4.10.3",
