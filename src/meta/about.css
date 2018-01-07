@@ -1,0 +1,26 @@
+.about-linksContainer {
+  display: none;
+  border-top: 1px solid #ddd;
+  margin-top: 30px;
+  padding-top: 30px;
+}
+
+.about-links {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.about-link {
+  text-decoration: none;
+}
+
+.about-linkItem {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 650px) {
+  .about-linksContainer {
+    display: block;
+  }
+}

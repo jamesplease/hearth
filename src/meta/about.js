@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import './about.css';
 
 export default class About extends Component {
   render() {
@@ -32,6 +34,25 @@ export default class About extends Component {
           your early retirement. No matter where you are in your path to FIRE,
           we hope that you find Hearth useful.
         </p>
+        <div className="about-linksContainer">
+          <ul className="about-links">
+            <li className="about-linkItem">
+              <Link to="/terms" className="about-link">
+                Terms
+              </Link>
+            </li>
+            <li className="about-linkItem">
+              <Link to="/privacy" className="about-link">
+                Privacy
+              </Link>
+            </li>
+            <li className="about-linkItem">
+              <Link to="/contact" className="about-link">
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

@@ -18,6 +18,7 @@ const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
+const csp = require('./utils/csp');
 const log = require('./utils/log');
 
 const app = express();
@@ -25,31 +26,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.set('port', port);
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: [
-          "'self'",
-          // Normalize
-          'cdnjs.cloudflare.com',
-          // Material Design Icon font
-          'cdn.materialdesignicons.com',
-          // Google fonts
-          'fonts.googleapis.com'
-        ],
-        fontSrc: [
-          "'self'",
-          // Material Design Icon font
-          'cdn.materialdesignicons.com',
-          // Google fonts
-          'fonts.gstatic.com'
-        ]
-      }
-    }
-  })
-);
+app.use(helmet({ contentSecurityPolicy: csp }));
 app.use(compression());
 
 // Serve our static files first
