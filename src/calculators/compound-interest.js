@@ -85,7 +85,7 @@ export default class CompoundInterest extends Component {
                   'form-label_error': principal.error
                 })}
                 htmlFor="compoundInterest_principal">
-                Principal
+                Principal ($)
               </label>
               <input
                 id="compoundInterest_principal"
@@ -111,7 +111,7 @@ export default class CompoundInterest extends Component {
                   'form-label_error': annualContribution.error
                 })}
                 htmlFor="compoundInterest_annualContribution">
-                Annual Contribution
+                Annual Contribution ($)
               </label>
               <input
                 id="compoundInterest_annualContribution"
