@@ -23,8 +23,26 @@ const log = require('./utils/log');
 
 const app = express();
 
-const port = process.env.PORT || 5000;
-app.set('port', port);
+const { PORT, NODE_ENV } = process.env;
+
+app.set('port', PORT || 5000);
+app.set('env', NODE_ENV || 'development');
+
+if (app.get('env') === 'production') {
+  app.use((req, res, next) => {
+    // Heroku will set this header
+    if (req.headers['x-forwarded-proto'] === 'https') {
+      return next();
+    } else if (req.secure) {
+      // This catches non-Heroku environments
+      return next();
+    } else {
+      // If neither of those pass, then we must be using HTTP, so we redirect to
+      // https
+      res.redirect(`https://${req.hostname + req.url}`);
+    }
+  });
+}
 
 app.use(helmet({ contentSecurityPolicy: csp }));
 app.use(compression());
@@ -39,4 +57,6 @@ app.get('*', function(req, res) {
   res.sendFile(appFile);
 });
 
-app.listen(port, () => log.info({ port }, 'The application has started.'));
+app.listen(app.get('port'), () =>
+  log.info({ port: app.get('port') }, 'The application has started.')
+);
