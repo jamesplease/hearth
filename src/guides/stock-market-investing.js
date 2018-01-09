@@ -71,11 +71,11 @@ export default class FireGuide extends Component {
         <p className="appParagraph">
           However, the stock market is very <i>volatile</i>. This means that the
           value of your investment may fluctuate a lot from day to day. If you
-          put in $10,000 in one day, it’s entirely possible that it could drop
-          in value to $7,500 overnight. When this happens, you need to stomach
-          the economic downturn and just leave your money there. It may take
-          some time (even a few years), but history tells us that you are likely
-          to get your money back, and then some.
+          put in $10,000 in one day, it’s possible that it could drop in value
+          to $7,500 overnight. When this happens, you need to stomach the
+          economic downturn and just leave your money alone. It may take some
+          time (even a few years), but history tells us that you are likely to
+          get your money back, and then some.
         </p>
         <p className="appParagraph">
           Because of the volatility of the stock market, it doesn't make sense
