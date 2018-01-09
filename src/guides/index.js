@@ -4,6 +4,7 @@ import LandingPage from './landing-page';
 import Glossary from './glossary';
 import Fire from './fire';
 import Inflation from './inflation';
+import StockMarketInvesting from './stock-market-investing';
 import GuidesNav from './guides-nav';
 import NotFound from '../common/not-found';
 
@@ -19,6 +20,11 @@ export default class Guides extends Component {
           <Route exact path={`${match.url}/glossary`} component={Glossary} />
           <Route exact path={`${match.url}/fire`} component={Fire} />
           <Route exact path={`${match.url}/inflation`} component={Inflation} />
+          <Route
+            exact
+            path={`${match.url}/stock-market-investing`}
+            component={StockMarketInvesting}
+          />
           <Route component={NotFound} />
         </Switch>
       </div>
