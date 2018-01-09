@@ -10,7 +10,8 @@ export default class LandingPage extends Component {
         <div className="landingPage-introduction">
           <h1 className="primaryHeader primaryHeader_centered">Calculators</h1>
           <p className="subheaderText subheaderText_centered">
-            These calculators can help you reach FIRE.
+            Personal finance often involves tricky math. Use these calculators
+            to make things simpler.
           </p>
         </div>
         <div className="panelContainer">

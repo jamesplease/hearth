@@ -11,7 +11,8 @@ export default class GuidesLandingPage extends Component {
         <div className="landingPage-introduction">
           <h1 className="primaryHeader primaryHeader_centered">Guides</h1>
           <p className="subheaderText subheaderText_centered">
-            These guides provide useful information to FIRE'd individuals.
+            These guides cover topics related to investing and financial
+            independence.
           </p>
         </div>
         <div className="panelContainer">
