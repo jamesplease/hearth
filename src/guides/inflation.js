@@ -18,8 +18,8 @@ export default class FireGuide extends Component {
           go?
         </p>
         <p className="appParagraph">
-          Over time, goods and services in the U.S. tend to cost more and more.
-          To put it another way, a single U.S. dollar buys less as time goes on.
+          Over time, goods and services in the U.S. tend to cost more. To put it
+          another way, a single U.S. dollar buys less as time goes on.
         </p>
         <p className="appParagraph">
           The tendency for a currency to decrease in value over time is called
@@ -73,17 +73,16 @@ export default class FireGuide extends Component {
         </p>
         <p className="appParagraph">
           If you're interested in learning more about the CPI, the Bureau of
-          Labor Statistics has put together an informative FAQ. You can check it
-          out online{' '}
-          <a href="https://www.bls.gov/cpi/questions-and-answers.htm">here</a>
-          . One{' '}
+          Labor Statistics has put together{' '}
+          <a href="https://www.bls.gov/cpi/questions-and-answers.htm">
+            an informative FAQ
+          </a>. One{' '}
           <a href="https://www.bls.gov/cpi/questions-and-answers.htm#Question_7">
             interesting question
           </a>{' '}
           lists the goods and services that they look at from year to year to
           compute the CPI.
         </p>
-
         <h2 className="secondaryHeader">
           Does the Dollar <i>Always</i> Lose Value From Year to Year?
         </h2>
@@ -93,8 +92,16 @@ export default class FireGuide extends Component {
           slightly increased in value, for instance.
         </p>
         <h2 className="secondaryHeader">
-          Why does inflation matter for early retirees?
+          It Doesn't Feel Like the Dollar Gets Less Valuable
         </h2>
+        <p className="appParagraph">
+          This is because inflation is typically small in the U.S., averaging
+          around 3% per year. As years go by, it's easy not to notice the price
+          of goods increasing by a few cents. However, those cents add up over
+          several years, which is why inflation matters when planning for your
+          retirement.
+        </p>
+        <h2 className="secondaryHeader">Inflation for Early Retirees</h2>
         <p className="appParagraph">
           Typical early retirees plan to spend a certain amount of money each
           year. For instance, you might plan on retiring on $30,000 per year.
@@ -130,6 +137,11 @@ export default class FireGuide extends Component {
             Click here
           </Link>{' '}
           to see this calculation.
+        </p>
+        <p className="appParagraph">
+          This example demonstrates the profound effect of inflation over long
+          time scales, and suggests that we, too, will soon be telling youngters
+          how cheap candy bars once were.
         </p>
       </div>
     );
