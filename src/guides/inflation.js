@@ -96,18 +96,17 @@ export default class FireGuide extends Component {
         </h2>
         <p className="appParagraph">
           This is because inflation is typically small in the U.S., averaging
-          around 3% per year. As years go by, it's easy not to notice the price
-          of goods increasing by a few cents. However, those cents add up over
-          several years, which is why inflation matters when planning for your
-          retirement.
+          around 3% per year. From one year to the next, it's easy not to notice
+          the price of goods increasing by a few cents. However, those cents add
+          up over many years, which is why inflation matters when planning for
+          your retirement.
         </p>
-        <h2 className="secondaryHeader">Inflation for Early Retirees</h2>
+        <h2 className="secondaryHeader">Inflation for Retirement</h2>
         <p className="appParagraph">
-          Typical early retirees plan to spend a certain amount of money each
-          year. For instance, you might plan on retiring on $30,000 per year.
-          However, because of inflation, $30,000 toward the end of a long
-          retirement will be able to buy a lot less stuff than it could at the
-          start.
+          Typical retirees plan to spend a certain amount of money each year.
+          For instance, you might plan on retiring on $30,000 per year. However,
+          because of inflation, $30,000 toward the end of a long retirement will
+          be able to buy a lot less stuff than it could at the start.
         </p>
         <p className="appParagraph">
           If you don't adjust your annual spending for inflation, then your
