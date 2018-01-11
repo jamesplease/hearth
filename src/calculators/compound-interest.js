@@ -218,6 +218,14 @@ export default class CompoundInterest extends Component {
               )}
             </div>
             <span className="calculatorPage-resultText">{result}</span>
+            {isFormValid && (
+              <span className="calculatorPage-summaryText">
+                {formatOutputDollars(principal.value)} will become {result}{' '}
+                after {numberOfYears.value} years with {interestRate.value}%
+                compounding interest and an annual contribution of{' '}
+                {formatOutputDollars(annualContribution.value)}.
+              </span>
+            )}
           </div>
         </div>
       </div>
