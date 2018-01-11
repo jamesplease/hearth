@@ -78,6 +78,7 @@
     background: #fafafa;
     height: 50px;
     border-top: 1px solid #ddd;
+    padding: 0;
   }
 
   .nav_bottom {
