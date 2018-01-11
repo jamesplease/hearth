@@ -185,7 +185,7 @@ export default class InflationAdjusted extends Component {
                 className="calculatorPage-shareResultBtn"
                 onClick={this.clickShareButton}>
                 <i className="mdi mdi-link calculatorPage-shareResultIcon" />
-                Share
+                Share Result
               </button>
               {displayingShareLink && (
                 <Fragment>
