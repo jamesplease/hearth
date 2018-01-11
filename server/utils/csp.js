@@ -1,6 +1,6 @@
 module.exports = {
   directives: {
-    defaultSrc: ["'self'"],
+    defaultSrc: ["'self'", 'https://www.google-analytics.com'],
     styleSrc: [
       "'self'",
       // Normalize
