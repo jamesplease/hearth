@@ -29,7 +29,7 @@
     "release": "heroku pipelines:promote -r staging"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.1",
+    "babel-eslint": "^7.0.0",
     "chalk": "^2.3.0",
     "eslint": "4.15.0",
     "eslint-plugin-import": "2.8.0",

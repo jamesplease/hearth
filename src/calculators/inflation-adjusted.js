@@ -210,6 +210,13 @@ export default class InflationAdjusted extends Component {
               )}
             </div>
             <span className="calculatorPage-resultText">{result}</span>
+            {isFormValid && (
+              <span className="calculatorPage-summaryText">
+                {result} in the year {endYear.value} can buy the same amount of
+                things as {formatOutputDollars(startValue.value)} could buy in
+                the year {startYear.value}.
+              </span>
+            )}
           </div>
         </div>
       </div>
