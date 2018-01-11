@@ -144,9 +144,17 @@ export default class HistoricalSuccess extends Component {
           <i className="mdi mdi-chevron-left navBackLink-icon" />
           Calculators
         </Link>
-        <h1 className="primaryHeader calculatorPage-primaryHeader">
-          Historical Success
-        </h1>
+        <div className="calculatorPage-head">
+          <h1 className="primaryHeader calculatorPage-primaryHeader">
+            Historical Success
+          </h1>
+          {/* <Link
+            to={`${location.pathname}/about`}
+            className="calculatorPage-learnMoreLink">
+            <i className="mdi mdi-information-outline calculatorPage-learnMoreIcon" />
+            Learn about this calculator
+          </Link> */}
+        </div>
         <div className="panel calculatorPage-contents">
           <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
@@ -267,24 +275,26 @@ export default class HistoricalSuccess extends Component {
                 </Fragment>
               )}
             </div>
-            <span>
-              {summaryImg && (
-                <img
-                  alt=""
-                  className="emoji-img calculatorPage-emojiResult"
-                  src={`/${summaryImg}`}
-                />
-              )}
-            </span>
-            <div>
-              <span className="calculatorPage-viewResultsText">
-                {summaryText}
+            <div className="calculatorPage-emojiResultContainer">
+              <span>
+                {summaryImg && (
+                  <img
+                    alt=""
+                    className="emoji-img calculatorPage-emojiResult"
+                    src={`/${summaryImg}`}
+                  />
+                )}
               </span>
-              {/* <button
+              <div>
+                <span className="calculatorPage-viewResultsText">
+                  {summaryText}
+                </span>
+                {/* <button
                 onClick={() => this.setState({ isResultsModalOpen: true })}
                 className="calculatorPage-viewResultsBtn">
                 View results
               </button> */}
+              </div>
             </div>
           </div>
         </div>

@@ -83,9 +83,17 @@ export default class InflationAdjusted extends Component {
           <i className="mdi mdi-chevron-left navBackLink-icon" />
           Calculators
         </Link>
-        <h1 className="primaryHeader calculatorPage-primaryHeader">
-          Inflation Adjusted
-        </h1>
+        <div className="calculatorPage-head">
+          <h1 className="primaryHeader calculatorPage-primaryHeader">
+            Inflation Adjusted
+          </h1>
+          <Link
+            to={`${location.pathname}/about`}
+            className="calculatorPage-learnMoreLink">
+            <i className="mdi mdi-file-document calculatorPage-learnMoreIcon" />
+            Learn about this calculator
+          </Link>
+        </div>
         <div className="panel calculatorPage-contents">
           <form className="calculatorPage-calculator">
             <div className="calculatorPage-formRow">
