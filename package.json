@@ -21,13 +21,18 @@
     "watch": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "lint": "eslint src/**/*.js",
     "build-data": "node ./build-scripts/transform-data",
     "build-all": "npm run build-data && npm run build",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-all; fi",
     "release": "heroku pipelines:promote -r staging"
   },
   "devDependencies": {
+    "babel-eslint": "8.2.1",
     "chalk": "^2.3.0",
+    "eslint": "4.15.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-react": "7.5.1",
     "mkdirp": "^0.5.1"
   },
   "engines": {
