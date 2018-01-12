@@ -190,6 +190,10 @@
   z-index: 11000;
 }
 
+.calculatorPage-shareResultText {
+  margin-bottom: 7px;
+}
+
 .calculatorPage-shareResultInput {
   font-size: 1.6rem;
   color: #000;

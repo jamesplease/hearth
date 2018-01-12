@@ -269,7 +269,9 @@ export default class HistoricalSuccess extends Component {
                     }
                   />
                   <div className="calculatorPage-shareResultLink">
-                    Share a link to this result:
+                    <div className="calculatorPage-shareResultText">
+                      Share a link to this result:
+                    </div>
                     <input
                       onChange={() => {}}
                       ref={this.shareResultLinkRef}

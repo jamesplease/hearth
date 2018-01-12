@@ -217,7 +217,9 @@ export default class CompoundInterest extends Component {
                     }
                   />
                   <div className="calculatorPage-shareResultLink">
-                    Share a link to this result:
+                    <div className="calculatorPage-shareResultText">
+                      Share a link to this result:
+                    </div>
                     <input
                       ref={this.shareResultLinkRef}
                       type="text"
