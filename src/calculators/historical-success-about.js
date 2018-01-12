@@ -31,8 +31,8 @@ export default class HistoricalSuccessAbout extends Component {
         <p className="appParagraph">
           Let’s say you plan to retire with $700,000, and want to see how
           frequently your portfolio would have succeeded or failed with a
-          withdrawal of $30,000 (which is just above 4%). Because you're
-          relatively young, you're planning for a 45 year long retirement.
+          withdrawal of $30,000 (which is just above 4%). Lastly, you're
+          planning for a 30 year long retirement.
         </p>
         <p className="appParagraph">
           Throw these numbers into the calculator and you see the success rate:
