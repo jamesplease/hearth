@@ -17,7 +17,7 @@ const navItems = [
   {
     key: 'about',
     label: 'About',
-    icon: 'mdi-information-outline'
+    icon: 'mdi-information'
   }
 ];
 
