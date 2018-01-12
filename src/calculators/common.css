@@ -20,7 +20,6 @@
 
 .calculatorPage-head {
   display: flex;
-  align-items: center;
 }
 
 .calculatorPage .calculatorPage-head {
@@ -221,6 +220,7 @@
   .calculatorPage-learnMoreLink {
     margin-left: 0;
     margin-top: 10px;
+    align-self: center;
   }
 
   .calculatorPage .primaryHeader {
