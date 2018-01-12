@@ -12,8 +12,8 @@ export default [
       'Compound interest is key to how early retirement works. This calculator computes the growth of principal over a number of years given an interest rate.'
   },
   {
-    name: 'Inflation Adjusted',
-    url: '/inflation-adjusted',
+    name: 'Inflation-Adjusted Spending',
+    url: '/inflation-adjusted-spending',
     description:
       'Inflation is the tendency for the US Dollar to be worth less each year. Many FIRE portfolios involve adjusting spending to account for inflation. This calculator helps with that.'
   }

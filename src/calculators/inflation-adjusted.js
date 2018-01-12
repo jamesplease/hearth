@@ -85,7 +85,7 @@ export default class InflationAdjusted extends Component {
         </Link>
         <div className="calculatorPage-head">
           <h1 className="primaryHeader calculatorPage-primaryHeader">
-            Inflation Adjusted
+            Inflation-Adjusted Spending
           </h1>
           <Link
             to={`${location.pathname}/about`}

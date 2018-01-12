@@ -44,12 +44,12 @@ export default class Calculators extends Component {
           />
           <Route
             exact
-            path={`${match.url}/inflation-adjusted`}
+            path={`${match.url}/inflation-adjusted-spending`}
             component={InflationAdjusted}
           />
           <Route
             exact
-            path={`${match.url}/inflation-adjusted/about`}
+            path={`${match.url}/inflation-adjusted-spending/about`}
             component={InflationAdjustedAbout}
           />
           <Route component={NotFound} />

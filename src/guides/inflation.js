@@ -122,17 +122,18 @@ export default class FireGuide extends Component {
         <p className="appParagraph">
           Alternatively, Hearth provides a calculator that makes things easier:
           the{' '}
-          <Link to="/calculators/inflation-adjusted">Inflation Calculator</Link>.
-          With that calculator, you input a Start Value, a Start Year, and an
-          End Year. The calculator outputs how many dollars you'll need in the
-          End Year to be able to purchase the same amount of stuff as you could
-          with the Start Value in Start Year.
+          <Link to="/calculators/inflation-adjusted-spending">
+            Inflation Calculator
+          </Link>. With that calculator, you input a Start Value, a Start Year,
+          and an End Year. The calculator outputs how many dollars you'll need
+          in the End Year to be able to purchase the same amount of stuff as you
+          could with the Start Value in Start Year.
         </p>
         <p className="appParagraph">
           Here's an example: let's say you retired in the 2000 on $25,000 per
           year. Adjusting for inflation, in 2017 you would need to withdraw
           $35,965 to be able to purchase the same amount of stuff.{' '}
-          <Link to="/calculators/inflation-adjusted?endYear=2017&startValue=25000&startYear=2000">
+          <Link to="/calculators/inflation-adjusted-spending?endYear=2017&startValue=25000&startYear=2000">
             Click here
           </Link>{' '}
           to see this calculation.

@@ -7,6 +7,7 @@
   max-width: var(--_sideNavWidth);
   min-width: 160px;
   flex: 1 1;
+  font-size: 1.5rem;
 }
 
 .sideNav-header {
