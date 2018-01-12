@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './common.css';
+import './results.css';
+import './share-results.css';
 import LandingPage from './landing-page';
 import CompoundInterest from './compound-interest';
 import CompoundInterestAbout from './compound-interest-about';
