@@ -285,6 +285,7 @@
 
   .calculatorPage-contentWithSideNav .standardPage-contentWithSideNavBody {
     padding: 0 var(--horizontalContentPadding);
+    margin: var(--verticalMargins) 0;
   }
 }
 
