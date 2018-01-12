@@ -72,6 +72,10 @@ a {
   font-weight: 600;
 }
 
+.navBackLink_persistent {
+  display: block;
+}
+
 @media (max-width: 650px) {
   .navBackLink {
     display: block;

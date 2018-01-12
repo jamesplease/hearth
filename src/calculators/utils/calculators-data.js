@@ -6,7 +6,7 @@ export default [
       "The Trinity Study popularized a method of evaluating retirement portfolios that looks at historical data. This calculator is an advanced version of the Trinity Study's calculation."
   },
   {
-    name: 'Compound interest',
+    name: 'Compound Interest',
     url: '/compound-interest',
     description:
       'Compound interest is key to how early retirement works. This calculator computes the growth of principal over a number of years given an interest rate.'
