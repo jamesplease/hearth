@@ -6,12 +6,12 @@ export default class InflationAdjustedAbout extends Component {
     return (
       <div className="standardPage-contentWithSideNavBody">
         <Link
-          to="/calculators/inflation-adjusted"
+          to="/calculators/inflation-adjusted-spending"
           className="navBackLink navBackLink_persistent">
           <i className="mdi mdi-chevron-left navBackLink-icon" />
           Return to Calculator
         </Link>
-        <h1 className="primaryHeader">About "Inflation Adjusted"</h1>
+        <h1 className="primaryHeader">About "Inflation-Adjusted Spending"</h1>
         <p className="appParagraph">
           Due to inflation, the value of a dollar tends to decrease over time.
           Most retirement strategies involve adjusting your spending for
@@ -37,7 +37,7 @@ export default class InflationAdjustedAbout extends Component {
         </p>
         <p className="appParagraph">
           View this calculation{' '}
-          <Link to="/calculators/inflation-adjusted?endYear=2017&startValue=30000&startYear=2000">
+          <Link to="/calculators/inflation-adjusted-spending?endYear=2017&startValue=30000&startYear=2000">
             here
           </Link>.
         </p>
