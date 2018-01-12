@@ -48,12 +48,12 @@ export default {
   durationTooLong() {
     return 'The duration cannot be more than 300 years.';
   },
-  tooLarge(inputName) {
+  tooLarge(inputName, inputObj, inputs, validationError) {
     const displayName = _.startCase(inputName);
-    return `${displayName} is too large.`;
+    return `${displayName} must be less than ${validationError.limit}.`;
   },
-  tooSmall(inputName) {
+  tooSmall(inputName, inputObj, inputs, validationError) {
     const displayName = _.startCase(inputName);
-    return `${displayName} is too small.`;
+    return `${displayName} must be greater than ${validationError.limit}.`;
   }
 };

@@ -24,11 +24,17 @@ function computeInputErrors(inputs, validators) {
       };
     }
 
-    let validationErrorFn = errorMessages[validationError];
+    const validationCode = _.get(validationError, 'code', validationError);
+    let validationErrorFn = errorMessages[validationCode];
 
     let validationErrorMsg;
     if (validationErrorFn) {
-      validationErrorMsg = validationErrorFn(inputName, inputObj, inputs);
+      validationErrorMsg = validationErrorFn(
+        inputName,
+        inputObj,
+        inputs,
+        validationError
+      );
     } else {
       validationErrorMsg = null;
     }

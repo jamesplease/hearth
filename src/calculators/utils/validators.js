@@ -48,7 +48,10 @@ export function withinYearLimit(val) {
 export function tooLarge(limit) {
   return val => {
     if (Number(val) > limit) {
-      return 'tooLarge';
+      return {
+        code: 'tooLarge',
+        limit
+      };
     }
   };
 }
@@ -56,7 +59,10 @@ export function tooLarge(limit) {
 export function tooSmall(limit) {
   return val => {
     if (Number(val) < limit) {
-      return 'tooSmall';
+      return {
+        code: 'tooSmall',
+        limit
+      };
     }
   };
 }
