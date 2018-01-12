@@ -14,6 +14,7 @@ export default [
   {
     name: 'Inflation-Adjusted Spending',
     url: '/inflation-adjusted-spending',
+    pastUrls: ['/inflation-adjusted'],
     description:
       'Inflation is the tendency for the US Dollar to be worth less each year. Many FIRE portfolios involve adjusting spending to account for inflation. This calculator helps with that.'
   }

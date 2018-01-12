@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './common.css';
 import './results.css';
 import './share-results.css';
@@ -51,6 +51,14 @@ export default class Calculators extends Component {
             exact
             path={`${match.url}/inflation-adjusted-spending/about`}
             component={InflationAdjustedAbout}
+          />
+          <Redirect
+            from={`${match.url}/inflation-adjusted`}
+            to={`${match.url}/inflation-adjusted-spending`}
+          />
+          <Redirect
+            from={`${match.url}/inflation-adjusted/about`}
+            to={`${match.url}/inflation-adjusted-spending/about`}
           />
           <Route component={NotFound} />
         </Switch>
