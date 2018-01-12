@@ -9,6 +9,7 @@ import evaluateCycles from './utils/evaluate-cycles';
 import { fromInvestments } from './utils/normalize-portfolio';
 import maxDollarInput from './utils/max-dollar-input';
 import { getUpdatedFormState, getFormUrl } from './utils/form-utils';
+import marketDataByYear from './utils/market-data-by-year';
 import {
   isRequired,
   numberRequired,
@@ -17,6 +18,11 @@ import {
   withinDollarLimit,
   tooLarge
 } from './utils/validators';
+
+const marketData = marketDataByYear();
+// If the duration goes higher than the number of years in our market data, then no cycles complete,
+// and we cannot output any results.
+const maxDuration = _.size(marketData);
 
 const validators = {
   // Ensure this is larger than firstYearWithdrawal
@@ -33,13 +39,12 @@ const validators = {
     greaterThanZero,
     withinDollarLimit
   ],
-  // Add limit: 300
   duration: [
     isRequired,
     numberRequired,
     integerRequired,
     greaterThanZero,
-    tooLarge(300)
+    tooLarge(maxDuration)
   ]
 };
 
@@ -105,6 +110,7 @@ function computeResult(inputs) {
   );
 
   const results = evaluateCycles({ cycles });
+
   const dipRate = `${(results.dipRate * 100).toFixed(2)}%`;
   const successRate = `${(results.successRate * 100).toFixed(2)}%`;
 
