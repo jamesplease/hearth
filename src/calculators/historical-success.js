@@ -155,12 +155,12 @@ export default class HistoricalSuccess extends Component {
           <h1 className="primaryHeader calculatorPage-primaryHeader">
             Historical Success
           </h1>
-          {/* <Link
+          <Link
             to={`${location.pathname}/about`}
             className="calculatorPage-learnMoreLink">
-            <i className="mdi mdi-information-outline calculatorPage-learnMoreIcon" />
+            <i className="mdi mdi-file-document calculatorPage-learnMoreIcon" />
             Learn about this calculator
-          </Link> */}
+          </Link>
         </div>
         <div className="panel calculatorPage-contents">
           <form className="calculatorPage-calculator">
