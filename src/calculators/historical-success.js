@@ -14,7 +14,8 @@ import {
   numberRequired,
   integerRequired,
   greaterThanZero,
-  withinDollarLimit
+  withinDollarLimit,
+  tooLarge
 } from './utils/validators';
 
 const validators = {
@@ -33,7 +34,13 @@ const validators = {
     withinDollarLimit
   ],
   // Add limit: 300
-  duration: [isRequired, numberRequired, integerRequired, greaterThanZero]
+  duration: [
+    isRequired,
+    numberRequired,
+    integerRequired,
+    greaterThanZero,
+    tooLarge(300)
+  ]
 };
 
 const summaryMaps = {
@@ -275,27 +282,29 @@ export default class HistoricalSuccess extends Component {
                 </Fragment>
               )}
             </div>
-            <div className="calculatorPage-emojiResultContainer">
-              <span>
-                {summaryImg && (
-                  <img
-                    alt=""
-                    className="emoji-img calculatorPage-emojiResult"
-                    src={`/${summaryImg}`}
-                  />
-                )}
-              </span>
-              <div>
-                <span className="calculatorPage-viewResultsText">
-                  {summaryText}
+            {isFormValid && (
+              <div className="calculatorPage-emojiResultContainer">
+                <span>
+                  {summaryImg && (
+                    <img
+                      alt=""
+                      className="emoji-img calculatorPage-emojiResult"
+                      src={`/${summaryImg}`}
+                    />
+                  )}
                 </span>
-                {/* <button
+                <div>
+                  <span className="calculatorPage-viewResultsText">
+                    {summaryText}
+                  </span>
+                  {/* <button
                 onClick={() => this.setState({ isResultsModalOpen: true })}
                 className="calculatorPage-viewResultsBtn">
                 View results
               </button> */}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         <CalculatorResultsModal

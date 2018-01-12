@@ -39,8 +39,30 @@ export function withinYearLimit(val) {
 
   const year = Number(val);
   if (year > maxYear) {
-    return 'tooLarge';
+    return 'yearTooLarge';
   } else if (year < minYear) {
-    return 'tooSmall';
+    return 'yearTooSmall';
   }
+}
+
+export function tooLarge(limit) {
+  return val => {
+    if (Number(val) > limit) {
+      return {
+        code: 'tooLarge',
+        limit
+      };
+    }
+  };
+}
+
+export function tooSmall(limit) {
+  return val => {
+    if (Number(val) < limit) {
+      return {
+        code: 'tooSmall',
+        limit
+      };
+    }
+  };
 }

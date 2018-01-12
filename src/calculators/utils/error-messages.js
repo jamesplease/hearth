@@ -6,12 +6,12 @@ export default {
     const displayName = _.startCase(inputName);
     return `${displayName} is required.`;
   },
-  tooSmall(inputName) {
+  yearTooSmall(inputName) {
     const displayName = _.startCase(inputName);
     const { minYear } = getYearRange();
     return `${displayName} must be later than ${minYear - 1}.`;
   },
-  tooLarge(inputName, inputValue, inputs) {
+  yearTooLarge(inputName) {
     const displayName = _.startCase(inputName);
     const { maxYear } = getYearRange();
     return `${displayName} must be earlier than ${maxYear + 1}.`;
@@ -47,5 +47,13 @@ export default {
   },
   durationTooLong() {
     return 'The duration cannot be more than 300 years.';
+  },
+  tooLarge(inputName, inputObj, inputs, validationError) {
+    const displayName = _.startCase(inputName);
+    return `${displayName} must be less than ${validationError.limit}.`;
+  },
+  tooSmall(inputName, inputObj, inputs, validationError) {
+    const displayName = _.startCase(inputName);
+    return `${displayName} must be greater than ${validationError.limit}.`;
   }
 };

@@ -10,7 +10,8 @@ import {
   numberRequired,
   greaterThanZero,
   withinDollarLimit,
-  integerRequired
+  integerRequired,
+  tooLarge
 } from './utils/validators';
 
 // These return `undefined` if validation succeeds. Otherwise,
@@ -23,10 +24,14 @@ const validators = {
     greaterThanZero,
     withinDollarLimit
   ],
-  // Add numberLimit: 1000
-  numberOfYears: [isRequired, numberRequired, integerRequired, greaterThanZero],
-  // Add numberLimit: 1000000
-  interestRate: [isRequired, numberRequired]
+  numberOfYears: [
+    isRequired,
+    numberRequired,
+    integerRequired,
+    greaterThanZero,
+    tooLarge(1000)
+  ],
+  interestRate: [isRequired, numberRequired, tooLarge(1000000)]
 };
 
 function computeResult(inputs) {
