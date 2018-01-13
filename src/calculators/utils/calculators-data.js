@@ -7,6 +7,8 @@ import HistoricalSuccess from '../historical-success';
 import HistoricalSuccessAbout from '../historical-success-about';
 import InflationAdjusted from '../inflation-adjusted';
 import InflationAdjustedAbout from '../inflation-adjusted-about';
+import EffectOfInflation from '../effect-of-inflation';
+import EffectOfInflationAbout from '../effect-of-inflation-about';
 
 export default [
   {
@@ -33,5 +35,13 @@ export default [
     aboutComponent: InflationAdjustedAbout,
     description:
       'Inflation is the tendency for the US Dollar to be worth less each year. Many FIRE portfolios involve adjusting spending to account for inflation. This calculator helps with that.'
+  },
+  {
+    name: 'Effect of Inflation',
+    url: '/effect-of-inflation',
+    component: EffectOfInflation,
+    aboutComponent: EffectOfInflationAbout,
+    description:
+      'This calculator computes how inflation reduces the purchasing power of the dollar over time.'
   }
 ];
