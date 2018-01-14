@@ -1,10 +1,9 @@
 .calculatorPage {
-  margin: var(--verticalMargins) 0;
+  margin: var(--standardVerticalPadding) 0;
   flex: 2 2;
 }
 
 .calculatorPage-contentWithSideNav {
-  --verticalMargins: 60px;
   --sideNavWidth: 250px;
   display: flex;
   padding: 0 var(--horizontalContentPadding);
@@ -112,7 +111,6 @@
   }
 
   .calculatorPage-contentWithSideNav {
-    --verticalMargins: 15px;
     padding: 0 0 50px;
     display: block;
   }
@@ -135,6 +133,6 @@
 
   .calculatorPage-contentWithSideNav .standardPage-contentWithSideNavBody {
     padding: 0 var(--horizontalContentPadding);
-    margin: var(--verticalMargins) 0;
+    margin: var(--standardVerticalPadding) 0;
   }
 }
