@@ -5,6 +5,7 @@
 
 .calculatorPage-contentWithSideNav {
   --sideNavWidth: 250px;
+  --verticalMargins: 60px;
   display: flex;
   padding: 0 var(--horizontalContentPadding);
 }
@@ -111,6 +112,7 @@
   }
 
   .calculatorPage-contentWithSideNav {
+    --verticalMargins: 15px;
     padding: 0 0 50px;
     display: block;
   }
