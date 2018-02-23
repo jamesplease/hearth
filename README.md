@@ -1,8 +1,8 @@
 # Hearth
 
-[![Travis build status](http://img.shields.io/travis/jmeas/hearth.svg?style=flat)](https://travis-ci.org/jmeas/hearth)
-[![Dependency Status](https://david-dm.org/jmeas/hearth.svg)](https://david-dm.org/jmeas/hearth)
-[![devDependency Status](https://david-dm.org/jmeas/hearth/dev-status.svg)](https://david-dm.org/jmeas/hearth#info=devDependencies)
+[![Travis build status](http://img.shields.io/travis/jamesplease/hearth.svg?style=flat)](https://travis-ci.org/jamesplease/hearth)
+[![Dependency Status](https://david-dm.org/jamesplease/hearth.svg)](https://david-dm.org/jamesplease/hearth)
+[![devDependency Status](https://david-dm.org/jamesplease/hearth/dev-status.svg)](https://david-dm.org/jamesplease/hearth#info=devDependencies)
 
 Useful tools for Financial Independence / Retiring Early (FIRE).
 
