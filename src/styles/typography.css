@@ -25,12 +25,14 @@ a {
   padding: 0 30px;
 }
 
+.guideContent_text h1,
 .primaryHeader {
   font-size: 3rem;
   margin: 0 0 15px;
   padding: 0;
 }
 
+.guideContent_text h2,
 .secondaryHeader {
   font-size: 2rem;
   margin: 20px 0 15px;
@@ -53,6 +55,7 @@ a {
   text-align: center;
 }
 
+.guideContent_text p,
 .appParagraph {
   margin: 0 0 10px 0;
   max-width: 650px;
