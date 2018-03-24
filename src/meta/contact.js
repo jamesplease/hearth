@@ -11,7 +11,7 @@ export default class Contact extends Component {
         </p>
         <p className="appParagraph">
           The best way to reach us is through email at{' '}
-          <a href="mailto:hello@hearth-app.com">hello@hearth-app.com</a>.
+          <a href="mailto:jellyes2@gmail.com">jellyes2@gmail.com</a>.
         </p>
       </div>
     );
