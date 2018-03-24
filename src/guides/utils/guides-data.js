@@ -1,6 +1,7 @@
 import whatIsFireUrl from '../content/what-is-fire.md';
 import inflationUrl from '../content/inflation.md';
 import stockMarketInvestingUrl from '../content/stock-market-investing.md';
+import riskVersusVolatilityUrl from '../content/risk-versus-volatility.md';
 import Glossary from '../glossary';
 
 export default [
@@ -30,5 +31,12 @@ export default [
     description:
       "Investing in the stock market isn't just for wealthy people. For many of us it's one of best investments we can make.",
     markdownUrl: stockMarketInvestingUrl
+  },
+  {
+    name: 'Risk versus Volatility',
+    url: '/risk-versus-volatility',
+    description:
+      'Risk and volatility are two important properties of any investment that are often conflated.',
+    markdownUrl: riskVersusVolatilityUrl
   }
 ];
