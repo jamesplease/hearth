@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import _ from 'lodash';
 import LandingPage from './landing-page';
-import Glossary from './glossary';
-import Fire from './fire';
-import Inflation from './inflation';
-import StockMarketInvesting from './stock-market-investing';
+import guidesData from './utils/guides-data';
+import GuideContent from './guide-content';
 import GuidesNav from './guides-nav';
 import NotFound from '../common/not-found';
 
@@ -17,14 +16,29 @@ export default class Guides extends Component {
         <Route path={`${match.url}/:foo+`} component={GuidesNav} />
         <Switch>
           <Route exact path={`${match.url}`} component={LandingPage} />
-          <Route exact path={`${match.url}/glossary`} component={Glossary} />
-          <Route exact path={`${match.url}/fire`} component={Fire} />
-          <Route exact path={`${match.url}/inflation`} component={Inflation} />
-          <Route
-            exact
-            path={`${match.url}/stock-market-investing`}
-            component={StockMarketInvesting}
-          />
+          {_.map(guidesData, guide => {
+            if (guide.component) {
+              return (
+                <Route
+                  key={`${guide.name}-main`}
+                  exact
+                  path={`${match.url}${guide.url}`}
+                  component={guide.component}
+                />
+              );
+            }
+
+            return (
+              <Route
+                key={`${guide.name}-main`}
+                exact
+                path={`${match.url}${guide.url}`}
+                render={props => (
+                  <GuideContent {...props} markdownUrl={guide.markdownUrl} />
+                )}
+              />
+            );
+          })}
           <Route component={NotFound} />
         </Switch>
       </div>
