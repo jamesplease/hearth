@@ -16,7 +16,8 @@
     "react-ga": "2.4.1",
     "react-markdown": "3.3.0",
     "react-router-dom": "4.2.2",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "stock-market-data": "0.0.2"
   },
   "scripts": {
     "start": "node server/index.js",
@@ -24,9 +25,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src/**/*.js",
-    "build-data": "node ./build-scripts/transform-data",
-    "build-all": "npm run build-data && npm run build",
-    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-all; fi",
     "release": "heroku pipelines:promote -r staging"
   },
   "devDependencies": {
@@ -36,9 +34,5 @@
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-react": "7.5.1",
     "mkdirp": "^0.5.1"
-  },
-  "engines": {
-    "node": "8.9.4",
-    "npm": "5.6.0"
   }
 }

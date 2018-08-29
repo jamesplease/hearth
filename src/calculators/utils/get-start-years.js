@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import marketData from '../../common/data/market-data.json';
+import marketData from 'stock-market-data';
 
 // Returns an array of starting years for a calculation.
 // For now, it returns every year within `market-data.json`, which represents
