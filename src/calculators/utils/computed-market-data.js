@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import marketData from '../../common/data/market-data.json';
+import marketData from 'stock-market-data';
 
 // This method is pretty bad right now. It computes calculated data, but
 // it looks one year in advance rather than looking by-month. I'll need to
@@ -20,7 +20,7 @@ export default function computedMarketData() {
     return {
       ...data,
       stockMarketGrowth,
-      dividendYields
+      dividendYields,
     };
   });
 }
