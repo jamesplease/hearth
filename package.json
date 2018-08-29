@@ -17,15 +17,14 @@
     "react-markdown": "3.3.0",
     "react-router-dom": "4.2.2",
     "react-scripts": "1.0.17",
-    "stock-market-data": "0.0.2"
+    "stock-market-data": "1.0.0"
   },
   "scripts": {
     "start": "node server/index.js",
     "watch": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "lint": "eslint src/**/*.js",
-    "release": "heroku pipelines:promote -r staging"
+    "lint": "eslint src/**/*.js"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",

@@ -11,14 +11,8 @@ to help you get set up.
 Hearth is a JavaScript web app. To run it locally, you'll need to install the following
 prerequisites:
 
-* [Node.js](https://nodejs.org/en/) v8.9.1+
-* [npm](https://www.npmjs.com) v5.5.1+
-
-To deploy the application, you will also need:
-
-* [Heroku](heroku.com) account
-* [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command)
-  * Be sure to [log in!](https://devcenter.heroku.com/articles/heroku-command#logging-in)
+- [Node.js](https://nodejs.org/en/) v8.9.1+
+- [npm](https://www.npmjs.com) v5.5.1+
 
 ### Installation
 
@@ -42,15 +36,11 @@ npm run build-data
 
 #### Developer Scripts
 
-* `npm run watch`: Develop locally
-* `npm test`: Run the tests with a watcher
-* `npm run test`: Lint JS & CSS, then run all unit tests
-* `npm run test -- --coverage`: Generate a coverage report
-* `npm run build`: Build a production version of the application
-* `npm run build-data`: Build the market data
-* `npm run build-all`: Runs all scripts that build assets
-* `npm run release`: Release a new version of the production app by syncing
-  the production app with the staging app
+- `npm run watch`: Develop locally
+- `npm test`: Run the tests with a watcher
+- `npm run test`: Lint JS & CSS, then run all unit tests
+- `npm run test -- --coverage`: Generate a coverage report
+- `npm run build`: Build a production version of the application
 
 ## Updating the Data
 
