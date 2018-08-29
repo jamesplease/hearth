@@ -8,7 +8,7 @@
     "express": "4.16.2",
     "helmet": "3.9.0",
     "history": "4.7.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.10",
     "pino": "4.10.3",
     "query-string": "5.0.1",
     "react": "16.2.0",
