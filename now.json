@@ -1,0 +1,7 @@
+{
+  "name": "hearth",
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  }
+}
