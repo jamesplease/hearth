@@ -24,7 +24,13 @@
     "watch": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "deploy": "bash deploy/to-staging.sh",
+    "deploy-staging": "bash deploy/to-staging.sh",
+    "deploy-test": "bash deploy/to-staging.sh",
+    "deploy-prod": "bash deploy/to-prod.sh",
+    "deploy-production": "bash deploy/to-prod.sh",
+    "promote-staging": "bash deploy/promote-staging.sh"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
