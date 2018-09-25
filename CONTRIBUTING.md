@@ -28,26 +28,9 @@ Then, navigate into the repository directory and install the [npm](https://www.n
 cd hearth && npm install
 ```
 
-Lastly, build the market data:
-
-```
-npm run build-data
-```
-
 #### Developer Scripts
 
 - `npm run watch`: Develop locally
 - `npm test`: Run the tests with a watcher
-- `npm run test`: Lint JS & CSS, then run all unit tests
 - `npm run test -- --coverage`: Generate a coverage report
 - `npm run build`: Build a production version of the application
-
-## Updating the Data
-
-First, download [the Market Data spreadsheet](http://www.econ.yale.edu/%7Eshiller/data/ie_data.xls). Open
-the file in your favorite spreadsheet software, and export the sheet named "Data" as a CSV file.
-
-Replace the file in this repository found at `./data/ie_data.csv` with the file you just exported.
-
-If you're developing locally, you'll want to run `npm run build-data` for the web app to see
-the changes.
